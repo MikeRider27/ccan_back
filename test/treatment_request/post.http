@@ -1,0 +1,112 @@
+GET http://localhost:5000/api/treatment_request?page=1&jsondepth=4
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:5000/api/search/treatment_request
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "code": "TSC",
+  "name": "Protocol"
+}
+
+###
+GET http://localhost:5000/api/treatment_request/f66224cb-ff5b-440b-9463-9b4a573393be
+Authorization: Bearer {{token}}
+
+###
+DELETE http://localhost:5000/api/treatment_request/54803d00-fe4c-4bba-a43e-47e433f0d478
+Authorization: Bearer {{token}}
+
+
+###
+POST http://localhost:5000/api/search/patient_evaluation?page=1
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:5000/api/establishment_change
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "hospital_id":  4
+}
+
+###
+POST http://localhost:5000/api/treatment_request
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "patient_id": 118,
+  "protocol_id": 239,
+  "specialty_id": 1,
+  "stage_id": 250,
+  "criteria_id": 285,
+  "date": "2025-01-01",
+  "is_urgent": true,
+  "status": 1,
+  "comment": "PRIMERA SOLICITUD PARA PRUEBA DE FUNCIONALIDAD",
+  "patient_weight": 80,
+  "patient_height": 175,
+
+  "diagnosis_id": 25,
+  "topography_id": null,
+  "morphology_id": 6135,
+
+  "base_treatment_scheme_uuid": "bedf2c61-a636-4c13-aa44-0af54839f4c0",
+
+  "name": "Chemotherapy Protocol A (COPY)",
+  "description": "A multi-step chemotherapy protocol. (COPY)",
+  "periodicity_id": 264,
+  "series_count": 5,
+  "pre_medication": "Administer antihistamines. (COPY)",
+  "medication": "Cisplatin and Etoposide. (COPY)",
+  "post_medication": "Ensure hydration. (COPY)",
+  "notes": "Renal function monitoring required. (COPY)",
+  "preparation_instructions": "Dilute in 500ml saline. (COPY)",
+  "scheme_products": [
+    {
+      "product_uuid": "7365b412-8dd3-4604-a68b-2492347ddcbb",
+      "administration_route_id": 226,
+      "calculation_type_id": 293,
+      "frequency_id": 300,
+      "administration_time": 8,
+      "note": "Unas simples anotaciones",
+      "adjustable": true,
+      "status": 1,
+      "loading_dose": 10,
+      "session_dose": 11,
+      "infusion_dose": 12
+    }
+  ]
+}
+
+###
+PUT http://localhost:5000/api/treatment_request/f66224cb-ff5b-440b-9463-9b4a573393be
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "uuid": "f66224cb-ff5b-440b-9463-9b4a573393be",
+  "name": "Chemotherapy Protocol A",
+  "description": "A multi-step chemotherapy protocol.",
+  "periodicity_id": 205,
+  "series_count": 5,
+  "pre_medication": "Administer antihistamines.",
+  "medication": "Cisplatin and Etoposide.",
+  "post_medication": "Ensure hydration.",
+  "category_id": 219,
+  "notes": "Renal function monitoring required.",
+  "preparation_instructions": "Dilute in 500ml saline.",
+  "status": 1,
+  "scheme_products": [
+    {
+      "uuid": "700fef61-28fe-4896-a8ba-9aa480a18bb7",
+      "product_uuid": "7365b412-8dd3-4604-a68b-2492347ddcbb",
+      "administration_route_id": 226,
+      "status": 0
+    }
+  ]
+}

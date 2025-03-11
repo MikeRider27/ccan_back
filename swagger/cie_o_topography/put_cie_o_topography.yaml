@@ -1,0 +1,41 @@
+Actualiza Cie-O Topografia
+---
+tags:
+- "cie-o-topography"
+responses:
+  200:
+    description: Se actualiza Cie-O
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/Cie_OPut"
+definitions:
+    Cie_OPut:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            code:
+              type: "string"
+            description_es:
+              type: "string"
+            description_en:
+              type: "string"
+        example:
+            id: 12
+            code: Lorem ipsum dolor sit am
+            description_es: Lorem ipsum dolor sit am
+            description_en: Lorem ipsum dolor sit am

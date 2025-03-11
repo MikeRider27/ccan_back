@@ -1,0 +1,35 @@
+Guarda un Patient_hospital
+---
+tags:
+- "patient-hospital"
+responses:
+  200:
+    description: Se guarda Patient_hospital
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/PatientHospitalPost"
+definitions:
+    PatientHospitalPost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            patient_id:
+              type: "int64"
+            hospital_id:
+              type: "int64"
+        example:
+            id: 19
+            patient_id: 39
+            hospital_id: 4

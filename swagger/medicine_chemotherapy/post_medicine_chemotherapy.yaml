@@ -1,0 +1,50 @@
+Guarda un Medicine_chemotherapy
+---
+tags:
+- "medicine-chemotherapy"
+responses:
+  200:
+    description: Se guarda Medicine_chemotherapy
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/MedicineChemotherapyPost"
+definitions:
+    MedicineChemotherapyPost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            medicine_id:
+              type: "int64"
+            chemotherapy_id:
+              type: "int64"
+            quantity:
+              type: "float"
+            observation:
+              type: "string"
+            dose:
+              type: "float"
+            presentation:
+              type: "string"
+            concentration:
+              type: "string"
+        example:
+            id: 44
+            medicine_id: 8
+            chemotherapy_id: 26
+            quantity: 28.5
+            observation: Lorem ipsum dolor sit am
+            dose: 27.5
+            presentation: Lorem ipsum dolor sit am
+            concentration: Lorem ipsum dolor sit am

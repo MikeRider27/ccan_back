@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//patient/summarize.jrxml=UTF-8
+encoding//subreports/chemotherapy_medicine.jrxml=UTF-8
+encoding//subreports/committee.jrxml=UTF-8
+encoding//subreports/diagnosis.jrxml=UTF-8
+encoding//subreports/diagnosis_ap.jrxml=UTF-8
+encoding//subreports/follow_up_treatment.jrxml=UTF-8
+encoding//subreports/medical_consultation.jrxml=UTF-8
+encoding//subreports/medical_consultation_medicine.jrxml=UTF-8
+encoding//subreports/patient_family_with_cancer.jrxml=UTF-8
+encoding//subreports/personal_pathological_history.jrxml=UTF-8
+encoding//subreports/radiotherapy.jrxml=UTF-8
+encoding//subreports/treatment_plan.jrxml=UTF-8
+encoding/<project>=UTF-8

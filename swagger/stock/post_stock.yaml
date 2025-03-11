@@ -1,0 +1,38 @@
+Guarda un Stock
+---
+tags:
+- "stock"
+responses:
+  200:
+    description: Se guarda Stock
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/StockPost"
+definitions:
+    StockPost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            medicine_id:
+              type: "int64"
+            quantity:
+              type: "float"
+            state_id:
+              type: "int64"
+        example:
+            id: 37
+            medicine_id: 47
+            quantity: 6.5
+            state_id: 23

@@ -1,0 +1,39 @@
+Notificaciones
+---
+tags:
+  - "notificaciones"
+responses:
+  200:
+    description: Se lista las Notificaciones
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - in: query
+    name: page
+    description: Current items page
+    default: 1
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/NotificacionesSearch"
+definitions:
+    NotificacionesSearch:
+        type: "object"
+        properties:
+          id:
+            type: "int64"
+            user_id:
+              type: "int64"
+            message_id:
+              type: "int64"
+        example:
+            id: 5
+            user_id: 2
+            message_id: 3

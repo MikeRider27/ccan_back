@@ -1,0 +1,185 @@
+Search Products
+---
+tags:
+  - "search"
+summary: "Search and filter products"
+description: >
+  This endpoint allows searching and filtering for products associated with
+  the current hospital. 
+  The user's hospital is determined automatically via the JWT token in the
+  `Authorization` header.
+  Filters are applied based on the product's attributes. All filters are
+  optional, and pagination is supported.
+  Results are sorted by `code` and then by `id` in ascending order.
+parameters:
+  - in: header
+    name: Authorization
+    description: Bearer token for authentication.
+    required: true
+    schema:
+      type: string
+      default: "Bearer [access_token]"
+  - in: body
+    name: body
+    description: JSON object containing filters for the search.
+    required: false
+    schema:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Filter by product code (supports partial matches).
+          example: "PROD001"
+        description:
+          type: string
+          description: Filter by product description (supports partial matches).
+          example: "Paracetamol 500mg tablet"
+        medication:
+          type: string
+          description: Search within medication instructions.
+          example: "Take one tablet daily"
+        premedication:
+          type: string
+          description: Search within premedication instructions.
+          example: "Take on an empty stomach"
+        postmedication:
+          type: string
+          description: Search within postmedication instructions.
+          example: "Drink plenty of water"
+        contraindications:
+          type: string
+          description: Search within contraindications text.
+          example: "Not suitable for patients with liver issues"
+        type_id:
+          type: integer
+          description: Filter by product type ID.
+          example: 1
+        status:
+          type: integer
+          description: "Filter by product status (`1` for active, `0` for inactive)."
+          example: 1
+responses:
+  200:
+    description: Products returned successfully.
+    schema:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of products matching the filters.
+          example: 50
+        page:
+          type: integer
+          description: Current page number.
+          example: 1
+        per_page:
+          type: integer
+          description: Number of products per page in the paginated results.
+          example: 10
+        items:
+          type: array
+          description: List of product objects matching the filters.
+          items:
+            type: object
+            properties:
+              uuid:
+                type: string
+                format: uuid
+                description: Unique identifier for the product.
+                example: "123e4567-e89b-12d3-a456-426614174000"
+              hospital_id:
+                type: integer
+                description: ID of the hospital associated with the product.
+                example: 1
+              medicine_id:
+                type: integer
+                description: ID for the medicine (if applicable).
+                example: 20
+              drug_id:
+                type: string
+                description: UUID for the drug (if applicable).
+                format: uuid
+                example: "abcd1234-5678-4efe-bb89-abcdef123456"
+              code:
+                type: string
+                description: Product code.
+                maxLength: 15
+                example: "PROD001"
+              description:
+                type: string
+                description: Short description of the product.
+                maxLength: 255
+                example: "Paracetamol 500mg tablet"
+              concentration:
+                type: number
+                format: float
+                description: Concentration of the product (if any).
+                example: 500.0
+              concentration_unit_id:
+                type: integer
+                description: ID for concentration units (if any).
+                example: 11
+              quantity:
+                type: number
+                format: float
+                description: Quantity of the product in stock.
+                example: 100.0
+              quantity_unit_id:
+                type: integer
+                description: ID indicating the unit type of the quantity.
+                example: 2
+              type_id:
+                type: integer
+                description: Product type ID.
+                example: 1
+              status:
+                type: integer
+                description: "Product status (`1` for active, `0` for inactive)."
+                example: 1
+              premedication:
+                type: string
+                description: Pre-administration instructions for the product.
+                example: "Take on an empty stomach"
+              medication:
+                type: string
+                description: Medication instructions for the product.
+                example: "Take one tablet daily"
+              postmedication:
+                type: string
+                description: Post-administration instructions for the product.
+                example: "Drink plenty of water after taking the tablet"
+              dose_limit:
+                type: number
+                format: float
+                description: Maximum allowed dosage for the product.
+                example: 2000.0
+              dose_unit_id:
+                type: integer
+                description: Unit ID related to the product dosage.
+                example: 3
+              contraindications:
+                type: string
+                description: Warnings or contraindications for the product.
+                example: "Not suitable for patients with liver issues"
+  400:
+    description: Invalid request or missing required parameters.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message, describing the issue.
+          example: "INVALID_SEARCH_PARAMETERS"
+  500:
+    description: Internal server error during search processing.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Informational error message.
+          example: "PROCESS_ERROR"
+        error:
+          type: string
+          description: Detailed technical error description (if available).
+          example: "Unexpected database connection issue."

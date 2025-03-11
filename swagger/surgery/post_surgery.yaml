@@ -1,0 +1,41 @@
+Guarda un Surgery
+---
+tags:
+- "surgery"
+responses:
+  200:
+    description: Se guarda Surgery
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/SurgeryPost"
+definitions:
+    SurgeryPost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            paciente_id:
+              type: "int64"
+            date:
+              type: "datetime"
+            observation:
+              type: "string"
+            hospital_id:
+              type: "int64"
+        example:
+            id: 10
+            paciente_id: 22
+            hospital_id: 22
+            date: '2019-01-01T00:00:00'
+            observation: Lorem ipsum dolor sit am

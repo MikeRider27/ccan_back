@@ -1,0 +1,41 @@
+Actualiza Medical_committee
+---
+tags:
+- "medical-committee"
+responses:
+  200:
+    description: Se actualiza Medical_committee
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/MedicalCommitteePut"
+definitions:
+    MedicalCommitteePut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            committee_id:
+                type: "int64"
+            doctor_id:
+                type: "int64"
+            priority:
+                type: "string"
+        example:
+            id: 26
+            committee_id: 32
+            doctor_id: 21
+            priority: Lorem ipsum dolor sit amet

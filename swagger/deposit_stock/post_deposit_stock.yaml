@@ -1,0 +1,38 @@
+Guarda un Deposit_stock
+---
+tags:
+- "deposit-stock"
+responses:
+  200:
+    description: Se guarda Deposit_stock
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/DepositStockPost"
+definitions:
+    DepositStockPost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            deposit_id:
+              type: "int64"
+            stock_id:
+              type: "int64"
+            quantity:
+              type: "float"
+        example:
+            id: 22
+            deposit_id: 28
+            stock_id: 47
+            quantity: 43.5

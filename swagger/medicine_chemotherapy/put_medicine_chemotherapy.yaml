@@ -1,0 +1,53 @@
+Actualiza Medicine_chemotherapy
+---
+tags:
+- "medicine-chemotherapy"
+responses:
+  200:
+    description: Se actualiza Medicine_chemotherapy
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/MedicineChemotherapyPut"
+definitions:
+    MedicineChemotherapyPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            medicine_id:
+                type: "int64"
+            chemotherapy_id:
+                type: "int64"
+            quantity:
+                type: "float"
+            observation:
+                type: "string"
+            dose:
+                type: "float"
+            presentation:
+                type: "string"
+            concentration:
+                type: "string"
+        example:
+            id: 41
+            medicine_id: 17
+            chemotherapy_id: 50
+            quantity: 10.5
+            observation: Lorem ipsum dolor sit am
+            dose: 43.5
+            presentation: Lorem ipsum dolor sit am
+            concentration: Lorem ipsum dolor sit am

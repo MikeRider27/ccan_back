@@ -1,0 +1,94 @@
+Create a Drug
+---
+tags:
+  - "drug"
+summary: "Create a new drug."
+description: "Creates a new drug record with the specified data."
+parameters:
+  - in: header
+    name: Authorization
+    required: true
+    type: string
+    default: Bearer [access_token]
+    description: "Bearer token required for authentication."
+  - in: body
+    name: body
+    required: true
+    description: "The drug details to be created."
+    schema:
+      $ref: "#/definitions/DrugPost"
+responses:
+  201:
+    description: "Drug created successfully."
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "Message indicating success."
+          example: "PROCESS_SUCCESS"
+        drug:
+          type: object
+          description: "The created drug information."
+          properties:
+            uuid:
+              type: string
+              description: "The unique UUID of the drug."
+              example: "6e9557c3-7b44-4892-97bb-c3dc82d565ab"
+            generic_name:
+              type: string
+              description: "The generic name assigned to the drug."
+              example: "Amoxicillin"
+            therapeutic_action:
+              type: string
+              description: "A description of the therapeutic action of the drug."
+              example: "Broad-spectrum antibiotic used for bacterial infections."
+            category_id:
+              type: integer
+              description: "Category ID for the drug."
+              example: 10
+            status:
+              type: integer
+              description: "Drug status. Active (1) or Inactive (0)."
+              example: 1
+  400:
+    description: "Validation error or duplicated Generic Name."
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "Error message indicating why the request failed."
+          example: "ALREADY_EXISTS_ERROR or REQUIRED_FIELD_ERROR"
+  500:
+    description: "Server Error."
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "A general error message for unexpected server failures."
+          example: "PROCESS_ERROR"
+definitions:
+  DrugPost:
+    type: object
+    required:
+      - generic_name
+    properties:
+      generic_name:
+        type: string
+        description: "The generic name assigned to the drug."
+      therapeutic_action:
+        type: string
+        description: "A description of the therapeutic action of the drug."
+      category_id:
+        type: integer
+        description: "Category ID for the drug."
+      status:
+        type: integer
+        description: "Drug status. Active (1) or Inactive (0)."
+    example:
+      generic_name: "Amoxicillin"
+      therapeutic_action: "Broad-spectrum antibiotic"
+      category_id: 10
+      status: 1

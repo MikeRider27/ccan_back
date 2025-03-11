@@ -1,0 +1,41 @@
+Actualiza Patient_family_with_cancer
+---
+tags:
+- "patient-family-with-cancer"
+responses:
+  200:
+    description: Se actualiza Patient_family_with_cancer
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/PatientFamilyWithCancerPut"
+definitions:
+    PatientFamilyWithCancerPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            personal_pathological_history_id:
+                type: "int64"
+            family_id:
+                type: "int64"
+            family_vital_state_id:
+                type: "int64"
+        example:
+            id: 8
+            personal_pathological_history_id: 43
+            family_id: 34
+            family_vital_state_id: 27

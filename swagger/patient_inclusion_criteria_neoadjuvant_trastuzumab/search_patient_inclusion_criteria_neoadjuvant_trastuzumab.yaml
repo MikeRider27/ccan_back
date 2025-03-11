@@ -1,0 +1,48 @@
+Lista de Patient_inclusion_criteria_neoadjuvant_trastuzumab
+---
+tags:
+  - "search"
+responses:
+  200:
+    description: Se lista Patient_inclusion_criteria_neoadjuvant_trastuzumab filtrados
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - in: query
+    name: page
+    description: Current items page
+    default: 1
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/PatientInclusionCriteriaNeoadjuvantTrastuzumabSearch"
+definitions:
+    PatientInclusionCriteriaNeoadjuvantTrastuzumabSearch:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            patient_id:
+                type: "int64"
+            diagnosed_invasive_adenocarcinoma:
+                type: "boolean"
+            her2_positive:
+                type: "boolean"
+            tumor_eq_ge_2cm:
+                type: "boolean"
+            positive_axilla:
+                type: "boolean"
+            marked_tumor_bed:
+                type: "boolean"
+            blood_count_renal_hepatic_appropriate:
+                type: "boolean"
+        example:
+            id: 38
+            patient_id: 19

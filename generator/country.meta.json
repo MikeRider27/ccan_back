@@ -1,0 +1,19 @@
+{
+  "icon": "",
+  "main_title": null,
+  "titles": {
+  },
+  "no_list": [
+    "id"
+  ],
+  "no_edit": [
+    "id"
+  ],
+  "required": [
+    "id",
+    "code",
+    "description",
+    "nationality"
+  ],
+  "currency_fields": [ ],
+  "image_fields": [ ]}

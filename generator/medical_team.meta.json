@@ -1,0 +1,31 @@
+{
+  "icon": "chevron_right",
+  "main_title": null,
+  "titles": {
+  },
+  "no_list": [
+    "id"
+  ],
+  "no_edit": [
+    "id"
+  ],
+  "required": [
+    "id"
+  ],
+  "currency_fields": [ ],
+  "image_fields": [ ],
+  "relations": { 
+    "surgery": {
+      "dependent_attr": "surgery_id",
+      "origin_attr": "id",
+      "origin_model": "surgery",
+      "label_attr": "observation"
+    },
+    "doctor": {
+      "dependent_attr": "doctor_id",
+      "origin_attr": "id",
+      "origin_model": "doctor",
+      "label_attr": "document_number"
+    }
+  }
+}

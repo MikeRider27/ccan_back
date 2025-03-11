@@ -1,0 +1,62 @@
+Guarda un Supplier
+---
+tags:
+- "supplier"
+responses:
+  200:
+    description: Se guarda Supplier
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/SupplierPost"
+definitions:
+    SupplierPost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            name:
+              type: "string"
+            county_id:
+              type: "int64"
+            address:
+              type: "string"
+            phone:
+              type: "string"
+            email:
+              type: "string"
+            description:
+              type: "string"
+            state_id:
+              type: "int64"
+            date_create:
+              type: "datetime"
+            user_create:
+              type: "string"
+            date_modify:
+              type: "datetime"
+            user_modify:
+              type: "string"
+        example:
+            id: 14
+            name: Lorem ipsum dolor sit amet
+            county_id: 29
+            address: Lorem ipsum dolor sit amet
+            phone: Lorem ipsum dolor sit amet
+            email: Lorem ipsum dolor si
+            description: Lorem ipsum dolor sit amet
+            state_id: 21
+            date_create: '2019-01-01T00:00:00'
+            user_create: Lorem ipsum dolor sit amet
+            date_modify: '2019-01-01T00:00:00'
+            user_modify: Lorem ipsum dolor sit amet

@@ -1,0 +1,71 @@
+Actualiza Patient_inclusion_criteria
+---
+tags:
+- "patient-inclusion-criteria"
+responses:
+  200:
+    description: Se actualiza Patient_inclusion_criteria
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/PatientInclusionCriteriaPut"
+definitions:
+    PatientInclusionCriteriaPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            patient_id:
+                type: "int64"
+            treatment_type:
+                type: "string"
+            patient_inclusion_criteria_adjuvant_id:
+                type: "int64"
+            patient_inclusion_criteria_neoadjuvant_id:
+                type: "int64"
+            has_signed_informed_consent:
+                type: "boolean"
+            patient_received_document:
+                type: "boolean"
+            consent_obtained_through_dialogue:
+                type: "boolean"
+            has_received_sufficient_sufficient:
+                type: "boolean"
+            has_asked_questions_and_can_continue_asking:
+                type: "boolean"
+            informed_receive_permanent_continuous_information:
+                type: "boolean"
+            information_received_clear_complete:
+                type: "boolean"
+            received_information_understandable_language:
+                type: "boolean"
+            treatment_hospital_id:
+                type: "int64"
+        example:
+            id: 47
+            patient_id: 45
+            treatment_type: Lorem ipsum dolor sit amet
+            patient_inclusion_criteria_adjuvant_id: 16
+            patient_inclusion_criteria_neoadjuvant_id: 18
+            has_signed_informed_consent: false
+            patient_received_document: false
+            consent_obtained_through_dialogue: false
+            has_received_sufficient_sufficient: false
+            has_asked_questions_and_can_continue_asking: false
+            informed_receive_permanent_continuous_information: false
+            information_received_clear_complete: false
+            received_information_understandable_language: false
+            treatment_hospital_id: 25

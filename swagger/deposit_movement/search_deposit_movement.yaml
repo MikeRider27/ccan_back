@@ -1,0 +1,44 @@
+Lista de Deposit_movement
+---
+tags:
+  - "search"
+responses:
+  200:
+    description: Se lista Deposit_movement filtrados
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - in: query
+    name: page
+    description: Current items page
+    default: 1
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/DepositMovementSearch"
+definitions:
+    DepositMovementSearch:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            deposit_stock_in_id:
+                type: "int64"
+            deposit_stock_out_id:
+                type: "int64"
+            quantity:
+                type: "float"
+            date_create:
+                type: "datetime"
+        example:
+            id: 7
+            deposit_stock_in_id: 24
+            deposit_stock_out_id: 34
+            date_create: '2019-01-01T00:00:00'

@@ -1,0 +1,35 @@
+{
+  "icon": "chevron_right",
+  "main_title": null,
+  "titles": {
+  },
+  "no_list": [
+    "id"
+  ],
+  "no_edit": [
+    "id"
+  ],
+  "required": [
+    "id",
+    "patient",
+    "cie_10",
+    "date",
+    "user"
+  ],
+  "currency_fields": [ ],
+  "image_fields": [ ],
+  "relations": { 
+    "patient": {
+      "dependent_attr": "patient_id",
+      "origin_attr": "id",
+      "origin_model": "patient",
+      "label_attr": "address"
+    },
+    "cie_10": {
+      "dependent_attr": "cie_10_code_id",
+      "origin_attr": "id",
+      "origin_model": "cie_10",
+      "label_attr": "code"
+    }
+  }
+}

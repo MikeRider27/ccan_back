@@ -1,0 +1,38 @@
+Actualiza Doctor_specialty
+---
+tags:
+- "doctor-specialty"
+responses:
+  200:
+    description: Se actualiza Doctor_specialty
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/DoctorSpecialtyPut"
+definitions:
+    DoctorSpecialtyPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            doctor_id:
+                type: "int64"
+            specialty_id:
+                type: "int64"
+        example:
+            id: 23
+            doctor_id: 49
+            specialty_id: 38

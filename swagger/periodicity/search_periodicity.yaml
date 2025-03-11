@@ -1,0 +1,38 @@
+Lista de Periodicity
+---
+tags:
+  - "search"
+responses:
+  200:
+    description: Se lista Periodicity filtrados
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - in: query
+    name: page
+    description: Current items page
+    default: 1
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/PeriodicitySearch"
+definitions:
+    PeriodicitySearch:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            description:
+                type: "string"
+            active:
+                type: "boolean"
+        example:
+            id: 21
+            description: Lorem ipsum dolor sit amet

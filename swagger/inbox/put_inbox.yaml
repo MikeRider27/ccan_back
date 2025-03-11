@@ -1,0 +1,42 @@
+Actualiza un mensaje recibido
+---
+tags:
+- "inbox"
+responses:
+  200:
+    description: Se actualiza un mensaje recibido
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/DestinatariosPut"
+definitions:
+    DestinatariosPut:
+        type: "object"
+        properties:
+          id:
+            type: "int64"
+            message_id:
+              type: "int64"
+            destinatarios_id:
+              type: "int64"
+            estado_id:
+              type: "int64"
+        example:
+            id: 1
+            message_id: 1
+            destinatarios_id: 2
+            estado_id: 95
+

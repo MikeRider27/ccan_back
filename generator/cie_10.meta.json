@@ -1,0 +1,19 @@
+{
+  "icon": "chevron_right",
+  "main_title": null,
+  "titles": {
+  },
+  "no_list": [
+    "id"
+  ],
+  "no_edit": [
+    "id"
+  ],
+  "required": [
+    "id",
+    "level",
+    "code",
+    "description_es"
+  ],
+  "currency_fields": [ ],
+  "image_fields": [ ]}

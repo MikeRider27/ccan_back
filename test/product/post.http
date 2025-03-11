@@ -1,0 +1,71 @@
+GET http://localhost:5000/api/product?page=1
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:5000/api/search/product
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "generic_name": "dipi"
+}
+
+###
+GET http://localhost:5000/api/product/0f940e5b-796d-4146-989c-bdaca43b5801
+Authorization: Bearer {{token}}
+
+###
+DELETE http://localhost:5000/api/product/a1d5d3a8-e5da-46ac-b241-a461291e1c47
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:5000/api/search/product?page=1
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:5000/api/establishment_change
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "hospital_id":  4
+}
+
+###
+POST http://localhost:5000/api/product
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "medicine_id": 6198,
+  "drug_id": "1413f513-939d-4d23-918e-149bc5b995a5",
+  "code": "TEST Product #1",
+  "description": "Hola que tal",
+  "concentration": 1.1,
+  "concentration_unit_id": 192,
+  "quantity": 1,
+  "quantity_unit_id": 196,
+  "dose_limit": 2,
+  "dose_unit_id": 200,
+  "status": 1,
+  "medication": "Lo que sea nomas para el dolor",
+  "contraindications": "Ninguna wa'u"
+}
+
+###
+POST http://localhost:5000/api/search/parameter
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "domain": "DRUG_CATEGORY"
+}
+
+###
+PUT http://localhost:5000/api/product/7365b412-8dd3-4604-a68b-2492347ddcbb
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "quantity": 2
+}

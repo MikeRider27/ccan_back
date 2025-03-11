@@ -1,0 +1,140 @@
+Get a Product
+---
+tags:
+  - "product"
+summary: "Get a Product"
+description: Retrieves the details of a specific product using its unique
+  identifier (`uuid`).
+  The hospital is determined from the JWT token of the authenticated user.
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    schema:
+      type: string
+    default: "Bearer [access_token]"
+  - in: path
+    name: uuid
+    description: Unique identifier of the product
+    required: true
+    schema:
+      type: string
+      example: "123e4567-e89b-12d3-a456-426614174000"
+  - in: query
+    name: jsondepth
+    description: Determines the depth of nested relationships in the response.
+    required: false
+    schema:
+      type: integer
+      example: 1
+responses:
+  200:
+    description: Returns the requested product.
+    schema:
+      type: object
+      properties:
+        product:
+          schema:
+            $ref: "#/definitions/Product"
+  400:
+    description: Invalid request data or incorrect identifier format.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+  500:
+    description: Internal server error - Unhandled exception during
+      processing.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "PROCESS_ERROR"
+            error:
+              type: string
+              example: "Internal database error"
+definitions:
+  Product:
+    type: object
+    properties:
+      uuid:
+        type: string
+        format: uuid
+        description: Unique identifier for the product.
+        example: "123e4567-e89b-12d3-a456-426614174000"
+      hospital_id:
+        type: integer
+        example: 1
+        description: ID of the hospital to which the product belongs.
+      medicine_id:
+        type: integer
+        description: Linked medicine ID
+        example: 10
+      drug_id:
+        type: string
+        description: Linked drug UUID
+        example: "abcd1234-5678-4efe-bb89-abcdef123456"
+      code:
+        type: string
+        description: Product code.
+        example: "MED001"
+      description:
+        type: string
+        description: Description of the product.
+        example: "Paracetamol 500mg tablet"
+      concentration:
+        type: number
+        format: float
+        description: Concentration of the product.
+        example: 500.0
+      concentration_unit_id:
+        type: integer
+        example: 1
+      quantity:
+        type: number
+        format: float
+        description: Quantity of the product.
+        example: 10.0
+      quantity_unit_id:
+        type: integer
+        example: 2
+      type_id:
+        type: integer
+        description: Product type ID.
+        example: 1
+      status:
+        type: integer
+        description: Status of the product (e.g., active/inactive).
+        example: 1
+      premedication:
+        type: string
+        description: Specific instructions for premedication
+        example: "Take on an empty stomach"
+      medication:
+        type: string
+        description: Product medication instructions
+        example: "Take one tablet daily"
+      postmedication:
+        type: string
+        description: Post-medication instructions
+        example: "Drink plenty of water after taking the tablet"
+      dose_limit:
+        type: number
+        format: float
+        description: Maximum allowable dosage for the product
+        example: 2000.0
+      dose_unit_id:
+        type: integer
+        description: ID for the dose unit
+        example: 3
+      contraindications:
+        type: string
+        description: Contraindications or warnings for this product
+        example: "Not suitable for patients with liver issues"

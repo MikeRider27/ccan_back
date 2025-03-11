@@ -1,0 +1,235 @@
+Update a Product
+---
+tags:
+  - "product"
+summary: "Update an Existing Product"
+description: >
+  Updates the details of a specific product identified by its unique `uuid`. 
+  The hospital is determined from the JWT token of the request. 
+  Only the fields explicitly provided in the request body will be updated,
+  leaving other fields unchanged. 
+  The `code` must remain unique within the associated hospital.
+parameters:
+  - in: header
+    name: Authorization
+    description: Bearer token for authentication.
+    required: true
+    schema:
+      type: string
+      default: "Bearer [access_token]"
+  - in: path
+    name: uuid
+    description: Unique identifier of the product.
+    required: true
+    schema:
+      type: string
+      format: uuid
+      example: "123e4567-e89b-12d3-a456-426614174000"
+  - in: body
+    name: body
+    description: JSON object containing product fields to update.
+    required: true
+    schema:
+      type: object
+      properties:
+        medicine_id:
+          type: integer
+          description: Linked medicine ID (optional).
+          example: 10
+        drug_id:
+          type: string
+          description: Linked drug UUID (optional).
+          format: uuid
+          example: "abcd1234-5678-4efe-bb89-abcdef123456"
+        code:
+          type: string
+          description: Unique product code (within the hospital).
+          maxLength: 15
+          example: "PROD001"
+        description:
+          type: string
+          description: Description of the product.
+          maxLength: 255
+          example: "Aspirin 500mg tablet"
+        concentration:
+          type: number
+          format: float
+          description: Concentration of the product (optional).
+          example: 500.0
+        concentration_unit_id:
+          type: integer
+          description: Reference ID for concentration units (optional).
+          example: 2
+        quantity:
+          type: number
+          format: float
+          description: Quantity of the product (optional).
+          example: 20.0
+        quantity_unit_id:
+          type: integer
+          description: Reference ID for quantity units (optional).
+          example: 4
+        type_id:
+          type: integer
+          description: Product type ID (optional).
+          example: 1
+        status:
+          type: integer
+          enum: [0, 1]
+          description: "Status of the product: `1` for active, `0` for inactive."
+          example: 1
+        premedication:
+          type: string
+          description: Instructions for premedication (optional).
+          example: "Take on an empty stomach"
+        medication:
+          type: string
+          description: General instructions for medication use (optional).
+          example: "Take one tablet daily"
+        postmedication:
+          type: string
+          description: Post-medication instructions (optional).
+          example: "Drink plenty of water after taking the tablet"
+        dose_limit:
+          type: number
+          format: float
+          description: Maximum allowable dosage for the product (optional).
+          example: 2000.0
+        dose_unit_id:
+          type: integer
+          description: Reference ID for dosage units (optional).
+          example: 3
+        contraindications:
+          type: string
+          description: Contraindications or warning information (optional).
+          example: "Not suitable for patients with liver issues"
+responses:
+  200:
+    description: Product updated successfully.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "PROCESS_SUCCESS"
+        product:
+          type: object
+          description: The updated product details.
+          properties:
+            uuid:
+              type: string
+              format: uuid
+              description: Unique identifier for the product.
+              example: "123e4567-e89b-12d3-a456-426614174000"
+            medicine_id:
+              type: integer
+              description: Linked medicine ID.
+              example: 10
+            drug_id:
+              type: string
+              description: Linked drug UUID.
+              format: uuid
+              example: "abcd1234-5678-4efe-bb89-abcdef123456"
+            code:
+              type: string
+              description: Product code.
+              example: "PROD001"
+            description:
+              type: string
+              description: Product description.
+              example: "Aspirin 500mg tablet"
+            concentration:
+              type: number
+              format: float
+              description: Product concentration.
+              example: 500.0
+            concentration_unit_id:
+              type: integer
+              description: Unit of concentration measurement.
+              example: 2
+            quantity:
+              type: number
+              format: float
+              description: Quantity in stock.
+              example: 20.0
+            quantity_unit_id:
+              type: integer
+              description: Unit of quantity measurement.
+              example: 4
+            type_id:
+              type: integer
+              description: Product type identifier.
+              example: 1
+            status:
+              type: integer
+              description: "`1` for active, `0` for inactive products."
+              example: 1
+            premedication:
+              type: string
+              description: Pre-administration instructions.
+              example: "Take on an empty stomach"
+            medication:
+              type: string
+              description: Instructions for medicating with this product.
+              example: "Take one tablet daily"
+            postmedication:
+              type: string
+              description: After-administration instructions.
+              example: "Drink plenty of water after taking the tablet"
+            dose_limit:
+              type: number
+              format: float
+              description: Maximum allowable dosage.
+              example: 2000.0
+            dose_unit_id:
+              type: integer
+              description: Dosage measurement unit ID.
+              example: 3
+            contraindications:
+              type: string
+              description: Product-related warnings or contraindications.
+              example: "Not suitable for patients with liver issues"
+            created_at:
+              type: string
+              format: date-time
+              description: Timestamp when this product was created.
+              example: "2025-01-18T12:00:00Z"
+            edited_at:
+              type: string
+              format: date-time
+              description: Last timestamp when this product was edited.
+              example: "2025-02-25T15:30:00Z"
+  400:
+    description: Missing or invalid request parameters or product not found.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error description.
+          example: "RECORD_NOT_FOUND"
+        error:
+          type: string
+          description: Additional error details.
+          example: "Invalid UUID provided."
+  403:
+    description: Unauthorized access to the product (e.g., belongs to another hospital).
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Authorization error message.
+          example: "UNAUTHORIZED_ACCESS"
+  500:
+    description: Internal server error due to unforeseen issues.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "PROCESS_ERROR"
+        error:
+          type: string
+          description: Debug information for developers.
+          example: "Unexpected database error occurred."

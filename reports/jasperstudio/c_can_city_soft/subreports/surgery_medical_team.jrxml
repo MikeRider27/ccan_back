@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="committee_medical" pageWidth="580" pageHeight="802" columnWidth="580" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c7c61c00-4e93-4df4-87b5-9e013780f4ec">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="arasydev"/>
+	<parameter name="surgery_id" class="java.lang.Long"/>
+	<queryString language="SQL">
+		<![CDATA[select d.document_number||' - '||d.firstname||' '||d.lastname as medico,
+mt.rol 
+from medical_team mt  
+join doctor d on d.id =mt.doctor_id 
+where mt.surgery_id = $P{surgery_id}]]>
+	</queryString>
+	<field name="medico" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="medico"/>
+		<property name="com.jaspersoft.studio.field.label" value="medico"/>
+	</field>
+	<field name="rol" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="rol"/>
+		<property name="com.jaspersoft.studio.field.label" value="rol"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medical_team"/>
+	</field>
+	<background>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</background>
+	<columnHeader>
+		<band height="41">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="0" width="500" height="21" forecolor="#616161" backcolor="#E0E0E0" uuid="a1bc9133-8ef3-4943-bdc4-bd723a0c031a">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Equipo médico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="21" width="260" height="20" uuid="326f32e4-8968-4031-95ae-ad3021cd9feb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c868b5d3-f120-4531-82d7-7a1da4496e21"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Médico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="21" width="240" height="19" uuid="3633db10-6874-4608-a1ae-0fa35c110638">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d8e04127-3dbc-48bf-b5a0-bdbe5969db3f"/>
+				</reportElement>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rol]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="0" width="260" height="20" uuid="94b8db96-1671-400b-9527-da1ef50c9aeb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e827ead6-d899-49a6-bbfd-147af970e314"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" markup="html">
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medico}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="270" y="-1" width="240" height="20" uuid="7a51e09c-72f7-4a96-a5ba-b94182db69f5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d8e04127-3dbc-48bf-b5a0-bdbe5969db3f"/>
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle" markup="html">
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rol}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

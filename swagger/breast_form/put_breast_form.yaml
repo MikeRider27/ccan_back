@@ -1,0 +1,188 @@
+Actualiza Breast_form
+---
+tags:
+- "breast-form"
+responses:
+  200:
+    description: Se actualiza Breast_form
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/BreastFormPut"
+definitions:
+    BreastFormPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            patient_id:
+                type: "int64"
+            departament:
+                type: "int"
+            residential_address:
+                type: "string"
+            parity:
+                type: "boolean"
+            pmhx:
+                type: "string"
+            presenting_complaint:
+                type: "string"
+            main_physical_clinical_findings:
+                type: "string"
+            performance_status_ecog_id:
+                type: "int64"
+            treatment_decision:
+                type: "string"
+            mammogram_date:
+                type: "datetime"
+            mammogram_birads_id:
+                type: "int64"
+            mammogram_report_id:
+                type: "int64"
+            usg_breast_date:
+                type: "datetime"
+            usg_breast_birads_id:
+                type: "int64"
+            usg_breast_report_id:
+                type: "int64"
+            fnac_date:
+                type: "datetime"
+            fnac_report_id:
+                type: "int64"
+            fnac_summary:
+                type: "string"
+            trucut_date:
+                type: "datetime"
+            trucut_histology_report_id:
+                type: "int64"
+            trucut_morphology_id:
+                type: "int64"
+            trucut_others:
+                type: "string"
+            trucut_grade:
+                type: "string"
+            trucut_hormone_receptor_status_id:
+                type: "int64"
+            trucut_her2_neu_id:
+                type: "int64"
+            other_biopsy_date:
+                type: "datetime"
+            other_biopsy_histology_report_id:
+                type: "int64"
+            other_biopsy_morphology_id:
+                type: "int64"
+            other_biopsy_others:
+                type: "string"
+            other_biopsy_grade:
+                type: "string"
+            other_biopsy_hormone_receptor_status_id:
+                type: "int64"
+            other_biopsy_her2_neu_id:
+                type: "int64"
+            chest_xray_date:
+                type: "datetime"
+            chest_xray_report_id:
+                type: "int64"
+            chest_xray_summary_id:
+                type: "int64"
+            chest_ct_date:
+                type: "datetime"
+            chest_ct_report_id:
+                type: "int64"
+            chest_ct_summary_id:
+                type: "int64"
+            usg_liver_date:
+                type: "datetime"
+            usg_liver_summary_id:
+                type: "int64"
+            blood_date:
+                type: "datetime"
+            blood_fbc_id:
+                type: "int64"
+            blood_fbc:
+                type: "string"
+            blood_fbc_report_id:
+                type: "int64"
+            blood_lft_report_id:
+                type: "int64"
+            blood_urea_creatinine_report_id:
+                type: "int64"
+            bone_scan_date:
+                type: "datetime"
+            bone_scan_summary:
+                type: "string"
+            date_create:
+                type: "datetime"
+            user_create:
+                type: "string"
+            date_modify:
+                type: "datetime"
+            user_modify:
+                type: "string"
+        example:
+            id: 20
+            patient_id: 34
+            departament: 32
+            residential_address: Lorem ipsum dolor sit am
+            parity: false
+            pmhx: Lorem ipsum dolor sit am
+            presenting_complaint: Lorem ipsum dolor sit am
+            main_physical_clinical_findings: Lorem ipsum dolor sit am
+            performance_status_ecog_id: 17
+            treatment_decision: Lorem ipsum dolor sit am
+            mammogram_date: '2019-01-01T00:00:00'
+            mammogram_birads_id: 17
+            mammogram_report_id: 36
+            usg_breast_date: '2019-01-01T00:00:00'
+            usg_breast_birads_id: 50
+            usg_breast_report_id: 37
+            fnac_date: '2019-01-01T00:00:00'
+            fnac_report_id: 20
+            fnac_summary: Lorem ipsum dolor sit am
+            trucut_date: '2019-01-01T00:00:00'
+            trucut_histology_report_id: 10
+            trucut_morphology_id: 18
+            trucut_others: Lorem ipsum dolor sit am
+            trucut_grade: Lorem ipsum dolor sit am
+            trucut_hormone_receptor_status_id: 18
+            trucut_her2_neu_id: 15
+            other_biopsy_date: '2019-01-01T00:00:00'
+            other_biopsy_histology_report_id: 45
+            other_biopsy_morphology_id: 26
+            other_biopsy_others: Lorem ipsum dolor sit am
+            other_biopsy_grade: Lorem ipsum dolor sit am
+            other_biopsy_hormone_receptor_status_id: 39
+            other_biopsy_her2_neu_id: 39
+            chest_xray_date: '2019-01-01T00:00:00'
+            chest_xray_report_id: 37
+            chest_xray_summary_id: 6
+            chest_ct_date: '2019-01-01T00:00:00'
+            chest_ct_report_id: 15
+            chest_ct_summary_id: 49
+            usg_liver_date: '2019-01-01T00:00:00'
+            usg_liver_summary_id: 48
+            blood_date: '2019-01-01T00:00:00'
+            blood_fbc_id: 17
+            blood_fbc: Lorem ipsum dolor sit am
+            blood_fbc_report_id: 6
+            blood_lft_report_id: 28
+            blood_urea_creatinine_report_id: 33
+            bone_scan_date: '2019-01-01T00:00:00'
+            bone_scan_summary: Lorem ipsum dolor sit am
+            date_create: '2019-01-01T00:00:00'
+            user_create: Lorem ipsum dolor sit amet
+            date_modify: '2019-01-01T00:00:00'
+            user_modify: Lorem ipsum dolor sit amet

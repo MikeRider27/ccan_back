@@ -1,0 +1,300 @@
+Fetch all treatment schemes
+---
+tags:
+  - "treatment-scheme"
+summary: "Fetch all treatment schemes"
+description: >
+  Fetch a paginated list of treatment schemes, filtered by the user's current
+  selected hospital. The results include detailed information about each
+  treatment scheme, such as periodicity, product information, and other
+  optional nested relationship data, depending on query parameters.
+parameters:
+  - in: header
+    name: Authorization
+    description: Bearer access token for authentication.
+    required: true
+    schema:
+      type: string
+      example: "Bearer [access_token]"
+  - in: query
+    name: page
+    description: >
+      The page number of the paginated results to retrieve.
+    required: false
+    schema:
+      type: integer
+      minimum: 1
+      default: 1
+    example: 1
+  - in: query
+    name: rowsPerPage
+    description: >
+      The number of items to retrieve per page in the paginated results.
+    required: false
+    schema:
+      type: integer
+      minimum: 1
+      default: 20
+    example: 10
+  - in: query
+    name: sortBy
+    description: >
+      Sorting criteria for the results.
+    required: false
+    schema:
+      type: string
+      example: "name"
+  - in: query
+    name: descending
+    description: >
+      Descending sorting order. If true, the order is descending, if it is
+      false or non-present, the order is ascending.
+    required: false
+    schema:
+      type: string
+      example: "true"
+security:
+  - bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+responses:
+  200:
+    description: "A paginated list of treatment schemes."
+    schema:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: "Total number of records."
+          example: 57
+        page:
+          type: integer
+          description: "Current page number."
+          example: 1
+        per_page:
+          type: integer
+          description: "Number of items included per page."
+          example: 10
+        total_pages:
+          type: integer
+          description: "Total number of pages available based on the given
+            number per page."
+          example: 6
+        treatment_schemas:
+          type: array
+          items:
+            type: object
+            properties:
+              uuid:
+                type: string
+                format: uuid
+                description: "Unique identifier for the treatment schema."
+                example: "123e4567-e89b-12d3-a456-426614174000"
+              id:
+                type: integer
+                description: "Internal ID of the schema."
+                example: 15
+              hospital_id:
+                type: integer
+                description: "ID of the hospital associated with the schema."
+                example: 5
+              name:
+                type: string
+                description: "User-friendly name of the schema."
+                example: "Chemotherapy Protocol Alpha"
+              description:
+                type: string
+                description: "Detailed description of the treatment schema."
+                example: "A multi-stage chemotherapy protocol."
+              periodicity:
+                type: object
+                description: "Details of the periodicity of the schema (if
+                  available)."
+                properties:
+                  id:
+                    type: integer
+                    example: 3
+                  name:
+                    type: string
+                    example: "Weekly"
+              series_count:
+                type: integer
+                description: "The number of cycle series in the schema."
+                example: 6
+              pre_medication:
+                type: string
+                description: "Instructions or requirements for pre-medication."
+                example: "Administer antihistamine and anti-nausea medication."
+              medication:
+                type: string
+                description: "Medication instructions during the schema."
+                example: "Cisplatin 100mg; Etoposide 500mg infusion."
+              post_medication:
+                type: string
+                description: "Instructions or follow-ups for post-medication."
+                example: "Drink fluids and take prescribed painkillers."
+              category:
+                type: object
+                description: "Details of the category (e.g., Oncology,
+                  Radiology) of the schema."
+                properties:
+                  id:
+                    type: integer
+                    description: "Category ID."
+                    example: 7
+                  name:
+                    type: string
+                    description: "Category name."
+                    example: "Oncology"
+              status:
+                type: integer
+                description: "Status of the schema (e.g., 1 for active, 0 for
+                  inactive)."
+                example: 1
+              notes:
+                type: string
+                description: "Additional notes about the schema."
+                example: "Requires close monitoring for potential adverse
+                  reactions."
+              administration_time:
+                type: integer
+                description: Administration time (in hours).
+                example: 2
+              preparation_instructions:
+                type: string
+                description: "Instructions for preparation before administering
+                  the schema."
+                example: "Dilute solution with 500ml of saline."
+              created_at:
+                type: string
+                format: date-time
+                description: "Timestamp of when the schema was created."
+                example: "2023-01-18T12:34:56Z"
+              edited_at:
+                type: string
+                format: date-time
+                description: "Timestamp of the most recent update to the
+                  schema."
+                example: "2023-02-25T18:20:15Z"
+              schema_products:
+                type: array
+                description: >
+                  List of products associated with the schema (optional,
+                  depending on nested depth queried).
+                items:
+                  type: object
+                  properties:
+                    uuid:
+                      type: string
+                      format: uuid
+                      example: "234e5678-e89b-12d3-a456-426614174111"
+                    product_id:
+                      type: integer
+                      example: 101
+                    administration_route_id:
+                      type: integer
+                      example: 3
+                    calculation_type_id:
+                      type: integer
+                      example: 2
+                    frequency_id:
+                      type: integer
+                      example: 1
+                    note:
+                      type: string
+                      example: "Administer slowly over 2 hours."
+                    adjustable:
+                      type: boolean
+                      example: true
+                    status:
+                      type: integer
+                      description: >
+                        Current status of the treatment scheme product.
+                        Values may correspond to (1: active, 0: inactive).
+                      example: 1
+                    index:
+                      type: integer
+                      description: >
+                        Custom index value to maintain order of products
+                        within the treatment scheme.
+                      example: 5
+                    loading_dose:
+                      type: number
+                      format: float
+                      example: 250.00
+                    session_dose:
+                      type: number
+                      format: float
+                      example: 350.00
+                    infusion_dose:
+                      type: number
+                      format: float
+                      example: 200.00
+                    administration_route:
+                      type: object
+                      description: "Relationship data for the administration route
+                        parameter (if `jsondepth > 1`)."
+                      properties:
+                        id:
+                          type: integer
+                          example: 3
+                        name:
+                          type: string
+                          example: "Intravenous"
+                    calculation_type:
+                      type: object
+                      description: "Relationship data for the calculation type
+                        parameter (if `jsondepth > 1`)."
+                      properties:
+                        id:
+                          type: integer
+                          example: 2
+                        name:
+                          type: string
+                          example: "Weight-based"
+                    frequency:
+                      type: object
+                      description: "Relationship data for the frequency parameter (if
+                        `jsondepth > 1`)."
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Once Daily"
+  401:
+    description: >
+      Unauthorized - The user is not authenticated or the access token is
+      expired.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "AUTHENTICATION_FAILED"
+  403:
+    description: >
+      Forbidden - User lacks the required permissions to access this endpoint.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "PERMISSION_DENIED"
+  500:
+    description: >
+      Internal server error due to an unexpected exception during back-end
+      processing.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "PROCESS_ERROR"
+        error:
+          type: string
+          example: "Unhandled database exception during query execution."

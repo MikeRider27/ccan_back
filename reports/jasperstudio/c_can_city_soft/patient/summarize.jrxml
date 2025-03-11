@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="summarize" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="c7c61c00-4e93-4df4-87b5-9e013780f4ec">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CCAN_PY"/>
+	<parameter name="patient_id" class="java.lang.Integer"/>
+	<parameter name="cipher_key" class="java.lang.String">
+		<defaultValueExpression><![CDATA["q2_fbWIugwcQSwvXE5SVeRBAR0CgLQNGkJYEJsyU5zM="]]></defaultValueExpression>
+	</parameter>
+	<parameter name="treatment_plan_report" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="follow_up_treatment_report" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="medical_consultation_report" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="diagnosis_report" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="diagnosis_ap_report" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="personal_pathological_history_report" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="committee_report" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="surgery_report" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="chemotherapy_report" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="user_report" class="java.lang.String">
+		<defaultValueExpression><![CDATA["test_report"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="subreports_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA["../subreports/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="radiotherapy_report" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT document_type.description AS patient_document_type,
+	decrypt_data( patient.document_number, $P{cipher_key} ) AS patient_document_number,
+	decrypt_data( patient.firstname, $P{cipher_key} ) AS patient_firstname,
+	decrypt_data( patient.lastname, $P{cipher_key} ) AS patient_lastname,
+	patient.birthdate AS patient_birthdate,
+	DATE_PART('year', AGE(NOW(), patient.birthdate))                                      AS patient_age,
+	gender.description AS patient_gender,
+	country.nationality AS patient_nationality,
+	country.nationality AS patient_country,
+	area.description AS patient_area,
+	city.description AS patient_city,
+	patient.address AS patient_address,
+	patient.phone AS patient_phone,
+	estado.value AS patient_state,
+	vital_state.value AS patient_vital_state,
+	patient.date_create AS patient_date_create,
+	patient.user_create AS patient_user_create,
+	patient.date_modify AS patient_date_modify,
+	patient.user_modify AS patient_user_modify,
+	patient.registration_date AS patient_registration_date,
+	patient.civil_status_id AS patient_civil_status_id,
+	patient.responsible_firstname AS patient_responsible_firstname,
+	patient.responsible_lastname AS patient_responsible_lastname,
+	patient.responsible_relationship AS patient_responsible_relationship,
+	patient.responsible_phone AS patient_responsible_phone,
+	patient.number_card AS patient_number_card
+FROM patient
+	LEFT JOIN parameter AS estado ON 
+	 patient.state_id = estado.id 
+	 AND estado.domain = 'PATIENT_STATE' 
+	LEFT JOIN document_type ON 
+	 patient.document_type_id = document_type.id 
+	LEFT JOIN gender ON 
+	 patient.gender_id = gender.id 
+	LEFT JOIN country ON 
+	 patient.nationality_id = country.id 
+	LEFT JOIN area ON 
+	 patient.area_id = area.id 
+	LEFT JOIN city ON 
+	 patient.city_id = city.id 
+	LEFT JOIN parameter AS vital_state ON 
+	 patient.vital_state_id = vital_state.id 
+	 AND vital_state.domain = 'PATIENT_VITAL_STATE' 
+WHERE 
+	 patient.id = $P{patient_id}]]>
+	</queryString>
+	<field name="patient_document_type" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_document_type"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_document_type"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="document_type"/>
+	</field>
+	<field name="patient_document_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_document_number"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_document_number"/>
+	</field>
+	<field name="patient_firstname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_firstname"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_firstname"/>
+	</field>
+	<field name="patient_lastname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_lastname"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_lastname"/>
+	</field>
+	<field name="patient_birthdate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="patient_birthdate"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_birthdate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="patient_age" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="patient_age"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_age"/>
+	</field>
+	<field name="patient_gender" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_gender"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_gender"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="gender"/>
+	</field>
+	<field name="patient_nationality" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_nationality"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_nationality"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="country"/>
+	</field>
+	<field name="patient_country" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_country"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_country"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="country"/>
+	</field>
+	<field name="patient_area" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_area"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_area"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="area"/>
+	</field>
+	<field name="patient_city" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_city"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_city"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="city"/>
+	</field>
+	<field name="patient_address" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_address"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_address"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="patient_phone" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_phone"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_phone"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="patient_state" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_state"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_state"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="parameter"/>
+	</field>
+	<field name="patient_vital_state" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_vital_state"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_vital_state"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="parameter"/>
+	</field>
+	<field name="patient_date_create" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="patient_date_create"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_date_create"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="patient_user_create" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_user_create"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_user_create"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="patient_date_modify" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="patient_date_modify"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_date_modify"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="patient_user_modify" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_user_modify"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_user_modify"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="patient_registration_date" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="patient_registration_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_registration_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="patient_civil_status_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="patient_civil_status_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_civil_status_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="patient_responsible_firstname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_responsible_firstname"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_responsible_firstname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="patient_responsible_lastname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_responsible_lastname"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_responsible_lastname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="patient_responsible_relationship" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_responsible_relationship"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_responsible_relationship"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="patient_responsible_phone" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="patient_responsible_phone"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_responsible_phone"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="patient_number_card" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="patient_number_card"/>
+		<property name="com.jaspersoft.studio.field.label" value="patient_number_card"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<title>
+		<band height="93" splitType="Stretch">
+			<staticText>
+				<reportElement x="194" y="20" width="201" height="41" uuid="d2f6e7a2-d755-4607-ba32-3d95492cde52"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resumen de Paciente]]></text>
+			</staticText>
+			<image>
+				<reportElement x="28" y="0" width="90" height="93" uuid="89949df8-872e-43e0-90da-c2fa67fe9b65"/>
+				<imageExpression><![CDATA["resources/images/logo_ccan_secondary_1.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="380" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="10" y="30" width="260" height="20" uuid="41a7daa0-4112-41aa-a97b-522fe960b1e1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="0" width="534" height="21" forecolor="#616161" backcolor="#E0E0E0" uuid="8d828ac9-debc-464a-95ac-e31b745d8a3a">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Datos personales]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="50" width="260" height="20" uuid="992d1c06-1b4a-4ae3-a54b-053a19bce7ed"/>
+				<textFieldExpression><![CDATA[$F{patient_document_type}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="285" y="30" width="260" height="20" uuid="a0678032-8d89-4033-834a-2d6ab1738337">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número de Documento]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="285" y="50" width="260" height="20" uuid="cc198a11-8d39-438e-ace6-1d05536aeda8"/>
+				<textFieldExpression><![CDATA[$F{patient_document_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="80" width="260" height="20" uuid="7c4e2eb8-1c16-4318-950d-a0b50984c8f4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="100" width="260" height="20" uuid="a339a4e0-1418-41b3-bfc0-4a22c30822fa"/>
+				<textFieldExpression><![CDATA[$F{patient_firstname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="285" y="80" width="260" height="20" uuid="300bb74a-daf1-4d1e-87cf-65f12c5d6ba9">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellidos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="285" y="100" width="260" height="20" uuid="9398ab13-8a0f-480a-b032-8b748e496821"/>
+				<textFieldExpression><![CDATA[$F{patient_lastname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="130" width="170" height="20" uuid="041d637f-2090-4089-b772-39a5c41b179e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Nacimiento]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="150" width="170" height="20" uuid="1674679d-f00c-41b5-be80-55e95aa33a90"/>
+				<textFieldExpression><![CDATA[$F{patient_birthdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="190" y="130" width="170" height="20" uuid="aa1c6ec9-3f40-4459-9294-457c21fcc5bb"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Años]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="190" y="150" width="170" height="20" uuid="6eb9cde0-d5b0-458e-bbff-f42bcd7b2ff3"/>
+				<textFieldExpression><![CDATA[$F{patient_age}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="130" width="174" height="20" uuid="5469b52a-4eac-4a86-a4c4-84587e906084"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sexo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="370" y="150" width="174" height="20" uuid="5c7e16c7-2130-4a46-bd75-aa15762b6be2"/>
+				<textFieldExpression><![CDATA[$F{patient_gender}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="180" width="534" height="21" forecolor="#616161" backcolor="#E0E0E0" uuid="ca64db2e-dc22-4674-ba0d-1e78670949af">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Datos de contacto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="210" width="130" height="20" uuid="abcb2a84-47a5-4738-ba99-14ed78a9e917"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nacionalidad]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="230" width="130" height="20" uuid="a9b40f3e-3684-4345-8257-9860ef49030e"/>
+				<textFieldExpression><![CDATA[$F{patient_nationality}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="145" y="210" width="130" height="20" uuid="971a2781-dcc8-42a7-b80a-e0e5be8efa03"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[País]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="145" y="230" width="130" height="20" uuid="bce0642c-a2f1-4388-bd54-161c0ff962aa"/>
+				<textFieldExpression><![CDATA[$F{patient_country}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="280" y="210" width="130" height="20" uuid="1206a63b-597b-453d-ae3d-3d05aff4406b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departamento]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="230" width="130" height="20" uuid="8ce998aa-8f54-43a5-ad2c-1f2a57e37442">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{patient_area}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="415" y="210" width="130" height="20" uuid="130f1ead-68db-4aa6-8688-2601b366618a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ciudad]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="415" y="230" width="130" height="20" uuid="cb78a015-689f-42d4-ad69-7d07146ee3e2"/>
+				<textFieldExpression><![CDATA[$F{patient_city}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="260" width="260" height="20" uuid="e00a75f3-f63c-4961-93e2-78e53a41308d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="280" width="260" height="20" uuid="fab06067-4c45-429f-9fd8-c9e384c3d147"/>
+				<textFieldExpression><![CDATA[$F{patient_address}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="285" y="260" width="260" height="20" uuid="24aad9db-7b0a-4a72-af08-3d76a6979a79">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="285" y="280" width="260" height="20" uuid="28a62f13-8dd0-46cf-af20-46aeb881c658"/>
+				<textFieldExpression><![CDATA[$F{patient_phone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="310" width="534" height="21" forecolor="#616161" backcolor="#E0E0E0" uuid="baa6bfce-80ea-4185-94be-99b35ed36fce">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Datos médicos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="340" width="260" height="20" uuid="10092c34-727f-4a54-b0f5-800fd87fc103"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="360" width="260" height="20" uuid="81f22145-8c19-4f5c-be7a-59a1b6addac8"/>
+				<textFieldExpression><![CDATA[$F{patient_state}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="285" y="340" width="260" height="20" uuid="08a543c9-db3b-4cd6-889e-11532941d7c0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado vital del paciente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="285" y="360" width="260" height="20" uuid="ac960ed5-5ed9-405a-9eec-a48728c64c0e"/>
+				<textFieldExpression><![CDATA[$F{patient_vital_state}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="20" isRemoveLineWhenBlank="true" uuid="c4b6051a-bb37-4412-8e1e-da65d1004367">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cipher_key">
+					<subreportParameterExpression><![CDATA[$P{cipher_key}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="medical_consultation_report">
+					<subreportParameterExpression><![CDATA[$P{medical_consultation_report}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreports_path} + "medical_consultation.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="20">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="20" isRemoveLineWhenBlank="true" uuid="5380d986-5773-434d-b495-1c33595c9ca0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cipher_key">
+					<subreportParameterExpression><![CDATA[$P{cipher_key}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="follow_up_treatment_report">
+					<subreportParameterExpression><![CDATA[$P{follow_up_treatment_report}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreports_path} + "follow_up_treatment.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="20">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="20" isRemoveLineWhenBlank="true" uuid="8400a17f-acd1-4b07-a487-1de0a85ab627">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cipher_key">
+					<subreportParameterExpression><![CDATA[$P{cipher_key}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="treatment_plan_report">
+					<subreportParameterExpression><![CDATA[$P{treatment_plan_report}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreports_path} + "treatment_plan.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="20">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="20" isRemoveLineWhenBlank="true" uuid="03459a23-43bd-4bba-a2c7-26df56b78887">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cipher_key">
+					<subreportParameterExpression><![CDATA[$P{cipher_key}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="diagnosis_report">
+					<subreportParameterExpression><![CDATA[$P{diagnosis_report}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreports_path} + "diagnosis.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="20">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="20" isRemoveLineWhenBlank="true" uuid="318fc4e1-9056-485d-99f8-25bae5b8cfe4">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cipher_key">
+					<subreportParameterExpression><![CDATA[$P{cipher_key}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="diagnosis_ap_report">
+					<subreportParameterExpression><![CDATA[$P{diagnosis_ap_report}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreports_path} + "diagnosis_ap.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="20">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="20" isRemoveLineWhenBlank="true" uuid="927e3df7-9154-483a-8672-7756bcfc0320">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cipher_key">
+					<subreportParameterExpression><![CDATA[$P{cipher_key}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="personal_pathological_history_report">
+					<subreportParameterExpression><![CDATA[$P{personal_pathological_history_report}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreports_path} + "personal_pathological_history.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="20">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="20" isRemoveLineWhenBlank="true" uuid="ed5a7d77-efdf-4149-b49f-8a9b4bc14e8c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cipher_key">
+					<subreportParameterExpression><![CDATA[$P{cipher_key}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="committee_report">
+					<subreportParameterExpression><![CDATA[$P{committee_report}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreports_path} + "committee.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="20">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="20" isRemoveLineWhenBlank="true" uuid="2f36dc8d-0033-4f79-878f-52121ffa3842">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cipher_key">
+					<subreportParameterExpression><![CDATA[$P{cipher_key}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="surgery_report">
+					<subreportParameterExpression><![CDATA[$P{surgery_report}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreports_path} + "surgery.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="20">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="20" isRemoveLineWhenBlank="true" uuid="c67b7786-b9c5-452a-b420-8ffa3aa2a7ae">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cipher_key">
+					<subreportParameterExpression><![CDATA[$P{cipher_key}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="chemotherapy_report">
+					<subreportParameterExpression><![CDATA[$P{chemotherapy_report}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreports_path} + "chemotherapy.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="20">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="20" isRemoveLineWhenBlank="true" uuid="bbb52548-2833-4207-93c1-a236a8c6f758">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cipher_key">
+					<subreportParameterExpression><![CDATA[$P{cipher_key}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="chemotherapy_report">
+					<subreportParameterExpression><![CDATA[$P{chemotherapy_report}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreports_path} + "radiotherapy.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="380" y="0" width="80" height="20" uuid="86275444-db0a-45c0-933b-5e2e6ded939b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="460" y="0" width="95" height="20" uuid="980a0c4b-1197-4c5c-8ade-7c5f345d2fd6">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA["  de  " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="70" height="20" uuid="7f065998-031c-44f4-9b41-ecea2c10081a"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Usuario: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="0" width="110" height="20" uuid="4abbca9c-ee55-4389-bbcf-3e25979394ee">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<paragraph firstLineIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{user_report}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d/M/yy HH:mm">
+				<reportElement x="280" y="0" width="100" height="20" uuid="df4aad38-c856-409f-a3e0-a4402798f778">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement>
+					<paragraph firstLineIndent="1"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="180" y="0" width="100" height="20" uuid="4cf6aa87-8109-41c1-85a0-4efb3cd5b22d"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Fecha de impresión:  ]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,47 @@
+Actualiza Puncture
+---
+tags:
+- "puncture"
+responses:
+  200:
+    description: Se actualiza Puncture
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/PuncturePut"
+definitions:
+    PuncturePut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            patient_id:
+                type: "int64"
+            date:
+                type: "datetime"
+            observation:
+                type: "string"
+            doctor_id:
+                type: "int64"
+            hospital_id:
+                type: "int64"
+        example:
+            id: 34
+            patient_id: 40
+            date: '2019-01-01T00:00:00'
+            observation: Lorem ipsum dolor sit am
+            doctor_id: 16
+            hospital_id: 12

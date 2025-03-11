@@ -1,0 +1,38 @@
+Actualiza Follow_up_treatment_plan
+---
+tags:
+- "follow-up-treatment-plan"
+responses:
+  200:
+    description: Se actualiza Follow_up_treatment_plan
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/FollowUpTreatmentPlanPut"
+definitions:
+    FollowUpTreatmentPlanPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            follow_up_id:
+                type: "int64"
+            treatment_plan_id:
+                type: "int64"
+        example:
+            id: 1
+            follow_up_id: 28
+            treatment_plan_id: 8

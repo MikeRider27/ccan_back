@@ -1,0 +1,41 @@
+Guarda un Parameter
+---
+tags:
+- "parameter"
+responses:
+  200:
+    description: Se guarda Parameter
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/ParameterPost"
+definitions:
+    ParameterPost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            domain:
+              type: "string"
+            value:
+              type: "string"
+            active:
+              type: "boolean"
+            code:
+              type: "string"
+        example:
+            id: 24
+            domain: Lorem ipsum dolor sit amet
+            value: Lorem ipsum dolor sit amet
+            active: false
+            code: Lorem ipsum dolor si

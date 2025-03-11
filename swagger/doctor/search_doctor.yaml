@@ -1,0 +1,45 @@
+Lista de Doctor
+---
+tags:
+  - "search"
+responses:
+  200:
+    description: Se lista Doctor filtrados
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - in: query
+    name: page
+    description: Current items page
+    default: 1
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/DoctorSearch"
+definitions:
+    DoctorSearch:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            firstname:
+                type: "string"
+            lastname:
+                type: "string"
+            registry_number:
+                type: "string"
+            document_number:
+                type: "string"
+        example:
+            id: 26
+            firstname: Lorem ipsum dolor sit amet
+            lastname: Lorem ipsum dolor sit amet
+            registry_number: Lorem ipsum dolor sit amet
+            document_number: Lorem ipsum dolor sit amet

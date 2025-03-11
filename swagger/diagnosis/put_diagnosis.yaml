@@ -1,0 +1,53 @@
+Actualiza Diagnosis
+---
+tags:
+- "diagnosis"
+responses:
+  200:
+    description: Se actualiza Diagnosis
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/DiagnosisPut"
+definitions:
+    DiagnosisPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            patient_id:
+                type: "int64"
+            cie_10_code_id:
+                type: "int64"
+            cie_o_morphology_id:
+                type: "int64"
+            cie_o_topography_id:
+                type: "int64"
+            cie_o_tumor_location_id:
+                type: "int64"
+            date:
+                type: "datetime"
+            codification_type:
+                type: "string"
+        example:
+            id: 17
+            patient_id: 30
+            cie_10_code_id: 21
+            cie_o_morphology_id: 21
+            cie_o_topography_id: 21
+            cie_o_tumor_location_id: 21
+            codification_type: Lorem ipsum dolor sit amet
+            date: '2019-01-01T00:00:00'

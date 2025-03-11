@@ -1,0 +1,44 @@
+Guarda un Lot
+---
+tags:
+- "lot"
+responses:
+  200:
+    description: Se guarda Lot
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/LotPost"
+definitions:
+    LotPost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            num_lot:
+              type: "int64"
+            date_create:
+              type: "datetime"
+            user_create:
+              type: "string"
+            date_modify:
+              type: "datetime"
+            user_modify:
+              type: "string"
+        example:
+            id: 9
+            num_lot: 13
+            date_create: '2019-01-01T00:00:00'
+            user_create: Lorem ipsum dolor sit amet
+            date_modify: '2019-01-01T00:00:00'
+            user_modify: Lorem ipsum dolor sit amet

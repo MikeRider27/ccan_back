@@ -1,0 +1,33 @@
+{
+  "icon": "chevron_right",
+  "main_title": null,
+  "titles": {
+  },
+  "no_list": [
+    "id"
+  ],
+  "no_edit": [
+    "id"
+  ],
+  "required": [
+    "id",
+    "user",
+    "role"
+  ],
+  "currency_fields": [ ],
+  "image_fields": [ ],
+  "relations": { 
+    "user": {
+      "dependent_attr": "user_id",
+      "origin_attr": "id",
+      "origin_model": "user",
+      "label_attr": "email"
+    },
+    "role": {
+      "dependent_attr": "role_id",
+      "origin_attr": "id",
+      "origin_model": "role",
+      "label_attr": "description"
+    }
+  }
+}

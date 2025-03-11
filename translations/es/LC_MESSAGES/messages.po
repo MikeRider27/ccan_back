@@ -1,0 +1,1122 @@
+# Spanish translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-04-10 22:43-0400\n"
+"PO-Revision-Date: 2024-04-10 22:49-0400\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: es\n"
+"Language-Team: es <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.14.0\n"
+
+#: app.py:255
+msgid "BAD_REQUEST"
+msgstr "Solicitud invalida"
+
+#: app.py:260
+msgid "BAD_USERNAME_OR_PASSWORD"
+msgstr "Nombre de usuario o contraseña incorrectos. Este incidente quedará registrado."
+
+#: app.py:282
+msgid "SUCCESSFULLY_OUT"
+msgstr "Cierre de sesión exitoso"
+
+#: security.py:19 security.py:34 security.py:37
+msgid "NO_PERMISSION"
+msgstr "No tiene permisos para realizar esta acción"
+
+# Area
+msgid "AREA_NOT_FOUND"
+msgstr "No se encontró departamento"
+
+msgid "AREA_DELETED"
+msgstr "Se ha borrado el departamento"
+
+msgid "AREA_DUPLICATED"
+msgstr "Ya existe un departamento con id '{}'."
+
+msgid "AREA_CREATE_ERROR"
+msgstr "Ocurrió un error al crear departamento."
+
+# CTP
+msgid "CTP_NOT_FOUND"
+msgstr "No se encontró Plan de tratamiento de quimioterapia"
+
+msgid "CTP_DELETED"
+msgstr "Se ha borrado el Plan de tratamiento de quimioterapia"
+
+msgid "CTP_DUPLICATED"
+msgstr "Ya existe un Plan de tratamiento de quimioterapia con id '{}'."
+
+msgid "CTP_CREATE_ERROR"
+msgstr "Ocurrió un error al crear Plan de tratamiento de quimioterapia."
+
+# CHEMOTHERAPY
+msgid "CHEMOTHERAPY_NOT_FOUND"
+msgstr "No se encontró quimioterapia"
+
+msgid "CHEMOTHERAPY_DELETED"
+msgstr "Se ha borrado la quimioterapia"
+
+msgid "CHEMOTHERAPY_DUPLICATED"
+msgstr "Ya existe una quimioterapia con id '{}'."
+
+msgid "CHEMOTHERAPY_CREATE_ERROR"
+msgstr "Ocurrió un error al crear quimioterapia."
+
+# CIE10
+msgid "CIE10_NOT_FOUND"
+msgstr "No se encontró CIE10"
+
+msgid "CIE10_DELETED"
+msgstr "Se ha borrado el CIE10"
+
+msgid "CIE10_DUPLICATED"
+msgstr "Ya existe un CIE10 con id '{}'."
+
+msgid "CIE10_CREATE_ERROR"
+msgstr "Ocurrió un error al crear CIE10."
+
+# CIEOM
+msgid "CIEOM_NOT_FOUND"
+msgstr "No se encontró CIE-O Morfologia"
+
+msgid "CIEOM_DELETED"
+msgstr "Se ha borrado el CIE-O Morfologia"
+
+msgid "CIEOM_DUPLICATED"
+msgstr "Ya existe un CIE-O Morfologia con id '{}'."
+
+msgid "CIEOM_CREATE_ERROR"
+msgstr "Ocurrió un error al crear CIE-O Morfologia."
+
+# CIEOT
+msgid "CIEOT_NOT_FOUND"
+msgstr "No se encontró CIE-O Topografia"
+
+msgid "CIEOT_DELETED"
+msgstr "Se ha borrado el CIE-O Topografia"
+
+msgid "CIEOT_DUPLICATED"
+msgstr "Ya existe un CIE-O Topografia con id '{}'."
+
+msgid "CIEOT_CREATE_ERROR"
+msgstr "Ocurrió un error al crear CIE-O Topografia."
+
+# CIEOTL
+msgid "CIEOTL_NOT_FOUND"
+msgstr "No se encontró CIE-O Ubicación del tumor"
+
+msgid "CIEOTL_DELETED"
+msgstr "Se ha borrado el CIE-O Ubicación del tumor"
+
+msgid "CIEOTL_DUPLICATED"
+msgstr "Ya existe un CIE-O Ubicación del tumor con id '{}'."
+
+msgid "CIEOTL_CREATE_ERROR"
+msgstr "Ocurrió un error al crear CIE-O Ubicación del tumor."
+
+# CITY
+msgid "CITY_NOT_FOUND"
+msgstr "No se encontró la ciudad"
+
+msgid "CITY_DELETED"
+msgstr "Se ha borrado el Ciudad"
+
+msgid "CITY_DUPLICATED"
+msgstr "Ya existe una ciudad con id '{}'."
+
+msgid "CITY_CREATE_ERROR"
+msgstr "Ocurrió un error al crear ciudad."
+
+# COMMITTEE
+msgid "COMMITTEE_NOT_FOUND"
+msgstr "No se encontró el comite"
+
+msgid "COMMITTEE_DELETED"
+msgstr "Se ha borrado el comite"
+
+msgid "COMMITTEE_DUPLICATED"
+msgstr "Ya existe un comite con id '{}'."
+
+msgid "COMMITTEE_CREATE_ERROR"
+msgstr "Ocurrió un error al crear comite."
+
+# CONFIGURATION
+msgid "CONFIGURATION_NOT_FOUND"
+msgstr "No se encontró la configuración"
+
+msgid "CONFIGURATION_DELETED"
+msgstr "Se ha borrado la configuración"
+
+msgid "CONFIGURATION_DUPLICATED"
+msgstr "Ya existe una configuración con id '{}'."
+
+msgid "CONFIGURATION_CREATE_ERROR"
+msgstr "Ocurrió un error al crear configuración."
+
+# COUNTRY
+msgid "COUNTRY_NOT_FOUND"
+msgstr "No se encontró el pais"
+
+msgid "COUNTRY_DELETED"
+msgstr "Se ha borrado el pais"
+
+msgid "COUNTRY_DUPLICATED"
+msgstr "Ya existe un pais con id '{}'."
+
+msgid "COUNTRY_CREATE_ERROR"
+msgstr "Ocurrió un error al crear pais."
+
+# DEPOSIT_MOVEMENT
+msgid "DEPOSIT_MOVEMENT_NOT_FOUND"
+msgstr "No se encontró el movimiento de deposito"
+
+msgid "DEPOSIT_MOVEMENT_DELETED"
+msgstr "Se ha borrado el movimiento de deposito"
+
+msgid "DEPOSIT_MOVEMENT_DUPLICATED"
+msgstr "Ya existe un movimiento de deposito con id '{}'."
+
+msgid "DEPOSIT_MOVEMENT_CREATE_ERROR"
+msgstr "Ocurrió un error al crear movimiento de deposito."
+
+# DEPOSIT_STOCK
+msgid "DEPOSIT_STOCK_NOT_FOUND"
+msgstr "No se encontró el stock de deposito"
+
+msgid "DEPOSIT_STOCK_DELETED"
+msgstr "Se ha borrado el stock de deposito"
+
+msgid "DEPOSIT_STOCK_DUPLICATED"
+msgstr "Ya existe un stock de deposito con id '{}'."
+
+msgid "DEPOSIT_STOCK_CREATE_ERROR"
+msgstr "Ocurrió un error al crear stock de deposito."
+
+msgid "DEPOSIT_STOCK_0"
+msgstr "The stock cannot be less than zero."
+
+# DEPOSIT
+msgid "DEPOSIT_NOT_FOUND"
+msgstr "No se encontró el deposito"
+
+msgid "DEPOSIT_DELETED"
+msgstr "Se ha borrado el deposito"
+
+msgid "DEPOSIT_DUPLICATED"
+msgstr "Ya existe un deposito con id '{}'."
+
+msgid "DEPOSIT_CREATE_ERROR"
+msgstr "Ocurrió un error al crear deposito."
+
+# DIAGNOSIS_AP
+msgid "DIAGNOSIS_AP_NOT_FOUND"
+msgstr "No se encontró el diagnostico AP"
+
+msgid "DIAGNOSIS_AP_DELETED"
+msgstr "Se ha borrado el diagnostico AP"
+
+msgid "DIAGNOSIS_AP_DUPLICATED"
+msgstr "Ya existe un diagnostico AP con id '{}'."
+
+msgid "DIAGNOSIS_AP_CREATE_ERROR"
+msgstr "Ocurrió un error al crear diagnostico AP."
+
+# DIAGNOSIS
+msgid "DIAGNOSIS_NOT_FOUND"
+msgstr "No se encontró el diagnostico"
+
+msgid "DIAGNOSIS_DELETED"
+msgstr "Se ha borrado el diagnostico"
+
+msgid "DIAGNOSIS_DUPLICATED"
+msgstr "Ya existe un diagnostico con id '{}'."
+
+msgid "DIAGNOSIS_CREATE_ERROR"
+msgstr "Ocurrió un error al crear diagnostico."
+
+# DISPATCH_MEDICATIONS
+msgid "DISPATCH_MEDICATIONS_NOT_FOUND"
+msgstr "No se encontró la entrega del medicamento al paciente"
+
+msgid "DISPATCH_MEDICATIONS_DELETED"
+msgstr "Se ha borrado la entrega del medicamento al paciente"
+
+msgid "DISPATCH_MEDICATIONS_DUPLICATED"
+msgstr "Ya existe una entrega del medicamento al paciente con id '{}'."
+
+msgid "DISPATCH_MEDICATIONS_CREATE_ERROR"
+msgstr "Ocurrió un error al crear la entrega del medicamento al paciente."
+
+# DOCTOR_SPECIALITY
+msgid "DOCTOR_SPECIALITY_NOT_FOUND"
+msgstr "No se encontró la especialidad del doctor."
+
+msgid "DOCTOR_SPECIALITY_DELETED"
+msgstr "Se ha borrado la especialidad del doctor"
+
+msgid "DOCTOR_SPECIALITY_DUPLICATED"
+msgstr "Ya existe un especialidad para el doctor con id '{}'."
+
+msgid "DOCTOR_SPECIALITY_CREATE_ERROR"
+msgstr "Ocurrió un error al crear una especialidad para doctor."
+
+# DOCTOR
+msgid "DOCTOR_NOT_FOUND"
+msgstr "No se encontró el doctor."
+
+msgid "DOCTOR_DELETED"
+msgstr "Se ha borrado el doctor"
+
+msgid "DOCTOR_DUPLICATED"
+msgstr "Ya existe un doctor con id '{}'."
+
+msgid "DOCTOR_CREATE_ERROR"
+msgstr "Ocurrió un error al crear un doctor."
+
+# DOCUMENT_TYPE
+msgid "DOCUMENT_TYPE_NOT_FOUND"
+msgstr "No se encontró el tipo de documento."
+
+msgid "DOCUMENT_TYPE_DELETED"
+msgstr "Se ha borrado el tipo de documento"
+
+msgid "DOCUMENT_TYPE_DUPLICATED"
+msgstr "Ya existe un tipo de documento con id '{}'."
+
+msgid "DOCUMENT_TYPE_CREATE_ERROR"
+msgstr "Ocurrió un error al crear un tipo de documento."
+
+# ENTRIES_DEPOSIT_STOCK
+msgid "ENTRIES_DEPOSIT_STOCK_NOT_FOUND"
+msgstr "No se encontró entrada de stock para el deposito."
+
+msgid "ENTRIES_DEPOSIT_STOCK_DELETED"
+msgstr "Se ha borrado la entrada de stock para el deposito"
+
+msgid "ENTRIES_DEPOSIT_STOCK_DUPLICATED"
+msgstr "Ya existe una entrada de stock para el deposito con id '{}'."
+
+msgid "ENTRIES_DEPOSIT_STOCK_CREATE_ERROR"
+msgstr "Ocurrió un error al crear entrada de stock para el deposito."
+
+# ENTRIES_LOT
+msgid "ENTRIES_LOT_NOT_FOUND"
+msgstr "No se encontró entrada de lote."
+
+msgid "ENTRIES_LOT_DELETED"
+msgstr "Se ha borrado la entrada de lote."
+
+msgid "ENTRIES_LOT_DUPLICATED"
+msgstr "Ya existe una entrada de lote. con id '{}'."
+
+msgid "ENTRIES_LOT_CREATE_ERROR"
+msgstr "Ocurrió un error al crear entrada de lote."
+
+# ENTRIES
+msgid "ENTRIES_NOT_FOUND"
+msgstr "No se encontró entrada."
+
+msgid "ENTRIES_DELETED"
+msgstr "Se ha borrado la entrada."
+
+msgid "ENTRIES_DUPLICATED"
+msgstr "Ya existe una entrada con id '{}'."
+
+msgid "ENTRIES_CREATE_ERROR"
+msgstr "Ocurrió un error al crear entrada."
+
+msgid "ENTRIES_UPDATE_ERROR"
+msgstr "Ocurrió un error al actualizar entrada."
+
+msgid "ENTRIES_CREATE_0"
+msgstr "No se puede eliminar la entrada debido a que la existencia final es menor a cero"
+
+# EVALUATION
+msgid "EVALUATION_NOT_FOUND"
+msgstr "No se encontró evaluación."
+
+msgid "EVALUATION_DELETED"
+msgstr "Se ha borrado la evaluación."
+
+msgid "EVALUATION_DUPLICATED"
+msgstr "Ya existe una evaluación con id '{}'."
+
+msgid "EVALUATION_STATUS"
+msgstr "El paciente no esta en estado de Evaluación."
+
+msgid "EVALUATION_CREATE_ERROR"
+msgstr "Ocurrió un error al crear evaluación."
+
+# EVALUATORS
+msgid "EVALUATORS_NOT_FOUND"
+msgstr "No se encontró el evaluador"
+
+msgid "EVALUATORS_DELETED"
+msgstr "Se ha borrado el evaluador."
+
+msgid "EVALUATORS_DUPLICATED"
+msgstr "Ya existe un evaluador con id '{}'."
+
+msgid "EVALUATORS_CREATE_ERROR"
+msgstr "Ocurrió un error al crear evaluador."
+
+# FOLLOW_UP_TREATMENT_PLAN
+msgid "FOLLOW_UP_TREATMENT_PLAN_NOT_FOUND"
+msgstr "No se encontró seguimiento al plan de tratamiento."
+
+msgid "FOLLOW_UP_TREATMENT_PLAN_DELETED"
+msgstr "Se ha borrado el seguimiento al plan de tratamiento."
+
+msgid "FOLLOW_UP_TREATMENT_PLAN_DUPLICATED"
+msgstr "Ya existe un seguimiento al plan de tratamiento con id '{}'."
+
+msgid "FOLLOW_UP_TREATMENT_PLAN_CREATE_ERROR"
+msgstr "Ocurrió un error al crear seguimiento al plan de tratamiento."
+
+# GENDER
+msgid "GENDER_NOT_FOUND"
+msgstr "No se encontró sexo."
+
+msgid "GENDER_DELETED"
+msgstr "Se ha borrado el sexo."
+
+msgid "GENDER_DUPLICATED"
+msgstr "Ya existe un sexo con id '{}'."
+
+msgid "GENDER_CREATE_ERROR"
+msgstr "Ocurrió un error al crear sexo."
+
+# HISTORY
+msgid "HISTORY_NOT_FOUND"
+msgstr "No se encontró historial."
+
+msgid "HISTORY_DELETED"
+msgstr "Se ha borrado el historial."
+
+msgid "HISTORY_DUPLICATED"
+msgstr "Ya existe un historial con id '{}'."
+
+msgid "HISTORY_CREATE_ERROR"
+msgstr "Ocurrió un error al crear historial."
+
+# HOSPITAL
+msgid "HOSPITAL_NOT_FOUND"
+msgstr "No se encontró establecimiento de salud."
+
+msgid "HOSPITAL_DELETED"
+msgstr "Se ha borrado el establecimiento de salud."
+
+msgid "HOSPITAL_DUPLICATED"
+msgstr "Ya existe un establecimiento de salud con id '{}'."
+
+msgid "HOSPITAL_CREATE_ERROR"
+msgstr "Ocurrió un error al crear establecimiento de salud."
+
+# INTEROPERABILITY
+msgid "INTEROPERABILITY_NOT_ACTIVE"
+msgstr "Los servicios de interoperabilidad no se encuentran activados."
+
+msgid "INTEROPERABILITY_AP_OK"
+msgstr "Biopsia sincronizado correctamente en paciente"
+
+# LOT
+msgid "LOT_NOT_DELETED"
+msgstr "No se puede eliminar el detalle del lote debido a que la existencia final es menor a cero"
+
+msgid "LOT_NOT_FOUND"
+msgstr "No se encontró lote."
+
+msgid "LOT_DELETED"
+msgstr "Se ha borrado el lote."
+
+msgid "LOT_DUPLICATED"
+msgstr "Ya existe un lote con id '{}'."
+
+msgid "LOT_CREATE_ERROR"
+msgstr "Ocurrió un error al crear lote."
+
+msgid "LOT_UPDATE_ERROR"
+msgstr "Ocurrió un error al actualizar lote."
+
+# MANUFACTURER
+msgid "MANUFACTURER_NOT_FOUND"
+msgstr "No se encontró fabricante."
+
+msgid "MANUFACTURER_DELETED"
+msgstr "Se ha borrado el fabricante."
+
+msgid "MANUFACTURER_DUPLICATED"
+msgstr "Ya existe un fabricante con id '{}'."
+
+msgid "MANUFACTURER_CREATE_ERROR"
+msgstr "Ocurrió un error al crear fabricante."
+
+# MEDICAL_COMMITTEE
+msgid "MEDICAL_COMMITTEE_NOT_FOUND"
+msgstr "No se encontró comité médico."
+
+msgid "MEDICAL_COMMITTEE_DELETED"
+msgstr "Se ha borrado el comité médico."
+
+msgid "MEDICAL_COMMITTEE_DUPLICATED"
+msgstr "Ya existe un comité médico con id '{}'."
+
+msgid "MEDICAL_COMMITTEE_CREATE_ERROR"
+msgstr "Ocurrió un error al crear un comité médico."
+
+# MEDICAL_CONSULTATION
+msgid "MEDICAL_CONSULTATION_NOT_FOUND"
+msgstr "No se encontró consulta médica."
+
+msgid "MEDICAL_CONSULTATION_DELETED"
+msgstr "Se ha borrado la consulta médica."
+
+msgid "MEDICAL_CONSULTATION_DUPLICATED"
+msgstr "Ya existe una consulta médica con id '{}'."
+
+msgid "MEDICAL_CONSULTATION_CREATE_ERROR"
+msgstr "Ocurrió un error al crear una consulta médica."
+
+# MEDICAL_DOCUMENT_TYPE
+msgid "MEDICAL_DOCUMENT_TYPE_NOT_FOUND"
+msgstr "No se encontró tipo de documento médico."
+
+msgid "MEDICAL_DOCUMENT_TYPE_DELETED"
+msgstr "Se ha borrado el tipo de documento médico."
+
+msgid "MEDICAL_DOCUMENT_TYPE_DUPLICATED"
+msgstr "Ya existe un tipo de documento médico con id '{}'."
+
+msgid "MEDICAL_DOCUMENT_TYPE_CREATE_ERROR"
+msgstr "Ocurrió un error al crear un tipo de documento médico."
+
+# MEDICAL_DOCUMENT
+msgid "MEDICAL_DOCUMENT_NOT_FOUND"
+msgstr "No se encontró documento médico."
+
+msgid "MEDICAL_DOCUMENT_DELETED"
+msgstr "Se ha borrado el documento médico."
+
+msgid "MEDICAL_DOCUMENT_DUPLICATED"
+msgstr "Ya existe un documento médico con id '{}'."
+
+msgid "MEDICAL_DOCUMENT_CREATE_ERROR"
+msgstr "Ocurrió un error al crear un documento médico."
+
+msgid "MEDICAL_DOCUMENT_SAVED"
+msgstr "Documento médico guardado."
+
+msgid "MEDICAL_DOCUMENT_PERSIST_ERROR"
+msgstr "Ocurrió un error al guardar un documento médico."
+
+# MEDICAL_TEAM
+msgid "MEDICAL_TEAM_NOT_FOUND"
+msgstr "No se encontró equipo médico."
+
+msgid "MEDICAL_TEAM_DELETED"
+msgstr "Se ha borrado el equipo médico."
+
+msgid "MEDICAL_TEAM_DUPLICATED"
+msgstr "Ya existe un equipo médico con id '{}'."
+
+msgid "MEDICAL_TEAM_CREATE_ERROR"
+msgstr "Ocurrió un error al crear equipo médico."
+
+# MEDICINE_CHEMOTHERAPY
+msgid "MEDICINE_CHEMOTHERAPY_NOT_FOUND"
+msgstr "No se encontró medicamento de quimioterapia."
+
+msgid "MEDICINE_CHEMOTHERAPY_DELETED"
+msgstr "Se ha borrado el medicamento de quimioterapia."
+
+msgid "MEDICINE_CHEMOTHERAPY_DUPLICATED"
+msgstr "Ya existe un medicamento de quimioterapia con id '{}'."
+
+msgid "MEDICINE_CHEMOTHERAPY_CREATE_ERROR"
+msgstr "Ocurrió un error al crear el medicamento de quimioterapia."
+
+# MEDICINE_MEDICAL_CONSULTATION
+msgid "MEDICINE_MEDICAL_CONSULTATION_NOT_FOUND"
+msgstr "No se encontró medicamento para consulta médica."
+
+msgid "MEDICINE_MEDICAL_CONSULTATION_DELETED"
+msgstr "Se ha borrado el medicamento para consulta médica."
+
+msgid "MEDICINE_MEDICAL_CONSULTATION_DUPLICATED"
+msgstr "Ya existe un medicamento para consulta médica con id '{}'."
+
+msgid "MEDICINE_MEDICAL_CONSULTATION_CREATE_ERROR"
+msgstr "Ocurrió un error al crear el medicamento para consulta médica."
+
+# MEDICINE_TREATMENT_FOLLOW_UP
+msgid "MEDICINE_TREATMENT_FOLLOW_UP_NOT_FOUND"
+msgstr "No se encontró medicamento para seguimiento del tratamiento."
+
+msgid "MEDICINE_TREATMENT_FOLLOW_UP_DELETED"
+msgstr "Se ha borrado el medicamento para seguimiento del tratamiento."
+
+msgid "MEDICINE_TREATMENT_FOLLOW_UP_DUPLICATED"
+msgstr "Ya existe un medicamento para seguimiento del tratamiento con id '{}'."
+
+msgid "MEDICINE_TREATMENT_FOLLOW_UP_CREATE_ERROR"
+msgstr "Ocurrió un error al crear el medicamento para seguimiento del tratamiento."
+
+# MEDICINE_TREATMENT_PLAN
+msgid "MEDICINE_TREATMENT_PLAN_NOT_FOUND"
+msgstr "No se encontró medicamento para plan de tratamiento."
+
+msgid "MEDICINE_TREATMENT_PLAN_DELETED"
+msgstr "Se ha borrado el medicamento para plan de tratamiento."
+
+msgid "MEDICINE_TREATMENT_PLAN_DUPLICATED"
+msgstr "Ya existe un medicamento para plan de tratamiento con id '{}'."
+
+msgid "MEDICINE_TREATMENT_PLAN_CREATE_ERROR"
+msgstr "Ocurrió un error al crear el medicamento para plan de tratamiento."
+
+# MEDICINE
+msgid "MEDICINE_NOT_FOUND"
+msgstr "No se encontró medicamento."
+
+msgid "MEDICINE_DELETED"
+msgstr "Se ha borrado el medicamento."
+
+msgid "MEDICINE_DUPLICATED"
+msgstr "Ya existe un medicamento con id '{}'."
+
+msgid "MEDICINE_CREATE_ERROR"
+msgstr "Ocurrió un error al crear medicamento."
+
+# MENOPAUSAL_STATE
+msgid "MENOPAUSAL_STATE_NOT_FOUND"
+msgstr "No se encontró estado menopausico."
+
+msgid "MENOPAUSAL_STATE_DELETED"
+msgstr "Se ha borrado el estado menopausico."
+
+msgid "MENOPAUSAL_STATE_DUPLICATED"
+msgstr "Ya existe un estado menopausico con id '{}'."
+
+msgid "MENOPAUSAL_STATE_CREATE_ERROR"
+msgstr "Ocurrió un error al crear estado menopausico."
+
+# PARAMETER
+msgid "PARAMETER_NOT_FOUND"
+msgstr "No se encontró parámetro."
+
+msgid "PARAMETER_DELETED"
+msgstr "Se ha borrado el parámetro."
+
+msgid "PARAMETER_DUPLICATED"
+msgstr "Ya existe un parámetro con id '{}'."
+
+msgid "PARAMETER_CREATE_ERROR"
+msgstr "Ocurrió un error al crear parámetro."
+
+# PATIENT_EXCLUSION_CRITERIA
+msgid "PATIENT_EXCLUSION_CRITERIA_NOT_FOUND"
+msgstr "No se encontró el criterio de exclusión del paciente."
+
+msgid "PATIENT_EXCLUSION_CRITERIA_DELETED"
+msgstr "Se ha borrado el criterio de exclusión del paciente."
+
+msgid "PATIENT_EXCLUSION_CRITERIA_DUPLICATED"
+msgstr "Ya existe un criterio de exclusión con id '{}'."
+
+msgid "PATIENT_EXCLUSION_CRITERIA_CREATE_ERROR"
+msgstr "Ocurrió un error al crear el criterio de exclusión del paciente."
+
+msgid "PATIENT_EXCLUSION_CRITERIA_UPDATE_24"
+msgstr "El formulario de exclusión no se puede modificar después de 24 horas."
+
+# PATIENT_FAMILY_WITH_CANCER
+msgid "PATIENT_FAMILY_WITH_CANCER_NOT_FOUND"
+msgstr "No se encontró familiar con cancer."
+
+msgid "PATIENT_FAMILY_WITH_CANCER_DELETED"
+msgstr "Se ha borrado el familiar con cancer."
+
+msgid "PATIENT_FAMILY_WITH_CANCER_DUPLICATED"
+msgstr "Ya existe un familiar con cancer con id '{}'."
+
+msgid "PATIENT_FAMILY_WITH_CANCER_CREATE_ERROR"
+msgstr "Ocurrió un error al crear familiar con cancer."
+
+# PATIENT_HOSPITAL
+msgid "PATIENT_HOSPITAL_NOT_FOUND"
+msgstr "No se encontró el hospital del paciente."
+
+msgid "PATIENT_HOSPITAL_DELETED"
+msgstr "Se ha borrado el hospital del paciente."
+
+msgid "PATIENT_HOSPITAL_DUPLICATED"
+msgstr "Ya existe un el hospital paciente con id '{}'."
+
+msgid "PATIENT_HOSPITAL_CREATE_ERROR"
+msgstr "Ocurrió un error al crear el hospital del paciente."
+
+# PATIENT_INCLUSION_CRITERIA_ADJUVANT_TRASTUZUMAB
+msgid "PATIENT_INCLUSION_CRITERIA_ADJUVANT_TRASTUZUMAB_NOT_FOUND"
+msgstr "No se encontró el criterio de inclusión adjuvante trastuzumab del paciente."
+
+msgid "PATIENT_INCLUSION_CRITERIA_ADJUVANT_TRASTUZUMAB_DELETED"
+msgstr "Se ha borrado el criterio de inclusión adjuvante trastuzumab del paciente."
+
+msgid "PATIENT_INCLUSION_CRITERIA_ADJUVANT_TRASTUZUMAB_DUPLICATED"
+msgstr "Ya existe un el criterio de inclusión adjuvante trastuzumab del paciente con id '{}'."
+
+msgid "PATIENT_INCLUSION_CRITERIA_ADJUVANT_TRASTUZUMAB_CREATE_ERROR"
+msgstr "Ocurrió un error al crear el criterio de inclusión adjuvante trastuzumab del paciente."
+
+# PATIENT_INCLUSION_CRITERIA_NEOADJUVANT_TRASTUZUMAB
+msgid "PATIENT_INCLUSION_CRITERIA_NEOADJUVANT_TRASTUZUMAB_NOT_FOUND"
+msgstr "No se encontró el criterio de inclusión neoadjuvante trastuzumab del paciente."
+
+msgid "PATIENT_INCLUSION_CRITERIA_NEOADJUVANT_TRASTUZUMAB_DELETED"
+msgstr "Se ha borrado el criterio de inclusión neoadjuvante trastuzumab del paciente."
+
+msgid "PATIENT_INCLUSION_CRITERIA_NEOADJUVANT_TRASTUZUMAB_DUPLICATED"
+msgstr "Ya existe un el criterio de inclusión neoadjuvante trastuzumab del paciente con id '{}'."
+
+msgid "PATIENT_INCLUSION_CRITERIA_NEOADJUVANT_TRASTUZUMAB_CREATE_ERROR"
+msgstr "Ocurrió un error al crear el criterio de inclusión neoadjuvante trastuzumab del paciente."
+
+# PATIENT_INCLUSION_CRITERIA
+msgid "PATIENT_INCLUSION_CRITERIA_NOT_FOUND"
+msgstr "No se encontró el criterio de inclusión del paciente."
+
+msgid "PATIENT_INCLUSION_CRITERIA_DELETED"
+msgstr "Se ha borrado el criterio de inclusión del paciente."
+
+msgid "PATIENT_INCLUSION_CRITERIA_DUPLICATED"
+msgstr "Ya existe un el criterio de inclusión del paciente con id '{}'."
+
+msgid "PATIENT_INCLUSION_CRITERIA_CREATE_ERROR"
+msgstr "Ocurrió un error al crear el criterio de inclusión del paciente."
+
+msgid "PATIENT_INCLUSION_CRITERIA_UPDATE_ERROR"
+msgstr "Ocurrió un error al actualizar el criterio de inclusión del paciente."
+
+msgid "PATIENT_INCLUSION_CRITERIA_UPDATE_24"
+msgstr "El formulario de inclusión no se puede modificar después de 24 horas."
+
+# PATIENT
+msgid "PATIENT_NOT_FOUND"
+msgstr "No se encontró paciente."
+
+msgid "PATIENT_DELETED"
+msgstr "Se ha borrado el paciente."
+
+msgid "PATIENT_DUPLICATED"
+msgstr "Ya existe un paciente con id '{}'."
+
+msgid "PATIENT_CREATE_ERROR"
+msgstr "Ocurrió un error al crear paciente."
+
+msgid "PATIENT_DELETE_ERROR"
+msgstr "Ocurrió un error al borrar el paciente."
+
+# MEDICAL_DOCUMENT_TYPE_REQUIREMENTS_LIST
+msgid "INCL_DOCUMENT_FORM_MISSING"
+msgstr "Falta subir documento físico y completar formulario de criterios de inclusión electrónico"
+
+msgid "INCL_FORM_MISSING"
+msgstr "Falta completar formulario de criterios de inclusión eletrónico"
+
+msgid "DOCUMENT_MISSING"
+msgstr "Falta subir documento físico"
+
+msgid "INCL_CRITERIA_FAIL"
+msgstr "Paciente no cumple con los criterios de inclusión"
+
+msgid "EXCL_DOCUMENT_FORM_MISSING"
+msgstr "Falta subir documento físico y completar formulario de criterios de exclusión eletrónico"
+
+msgid "EXCL_FORM_MISSING"
+msgstr "Falta completar formulario de criterios de exclusión electrónico"
+
+# PERIODICITY
+msgid "PERIODICITY_NOT_FOUND"
+msgstr "No se encontró la periodicidad."
+
+msgid "PERIODICITY_DELETED"
+msgstr "Se ha borrado la periodicidad."
+
+msgid "PERIODICITY_DUPLICATED"
+msgstr "Ya existe una  periodicidad con id '{}'."
+
+msgid "PERIODICITY_CREATE_ERROR"
+msgstr "Ocurrió un error al crear periodicidad."
+
+# PERMISSION
+msgid "PERMISSION_NOT_FOUND"
+msgstr "No se encontró el permiso."
+
+msgid "PERMISSION_DELETED"
+msgstr "Se ha borrado el permiso."
+
+msgid "PERMISSION_DUPLICATED"
+msgstr "Ya existe un permiso con id '{}'."
+
+msgid "PERMISSION_CREATE_ERROR"
+msgstr "Ocurrió un error al crear permiso."
+
+# PERSONAL_PATHOLOGICAL_HISTORY
+msgid "PERSONAL_PATHOLOGICAL_HISTORY_NOT_FOUND"
+msgstr "No se encontró la Historia patológica personal."
+
+msgid "PERSONAL_PATHOLOGICAL_HISTORY_DELETED"
+msgstr "Se ha borrado la Historia patológica personal."
+
+msgid "PERSONAL_PATHOLOGICAL_HISTORY_DUPLICATED"
+msgstr "Ya existe una Historia patológica personal con id '{}'."
+
+msgid "PERSONAL_PATHOLOGICAL_HISTORY_CREATE_ERROR"
+msgstr "Ocurrió un error al crear Historia patológica personal."
+
+# PUNCTURE
+msgid "PUNCTURE_NOT_FOUND"
+msgstr "No se encontró la punción."
+
+msgid "PUNCTURE_DELETED"
+msgstr "Se ha borrado la punción."
+
+msgid "PUNCTURE_DUPLICATED"
+msgstr "Ya existe una punción con id '{}'."
+
+msgid "PUNCTURE_CREATE_ERROR"
+msgstr "Ocurrió un error al crear punción."
+
+# RADIOTHERAPY_TREATMENT_PLAN
+msgid "RADIOTHERAPY_TREATMENT_PLAN_NOT_FOUND"
+msgstr "No se encontró el plan de tratramiento de radioterapia."
+
+msgid "RADIOTHERAPY_TREATMENT_PLANE_DELETED"
+msgstr "Se ha borrado el plan de tratramiento de radioterapia."
+
+msgid "RADIOTHERAPY_TREATMENT_PLAN_DUPLICATED"
+msgstr "Ya existe un plan de tratramiento de radioterapia con id '{}'."
+
+msgid "RADIOTHERAPY_TREATMENT_PLAN_CREATE_ERROR"
+msgstr "Ocurrió un error al crear plan de tratramiento de radioterapia."
+
+# RADIOTHERAPY
+msgid "RADIOTHERAPY_NOT_FOUND"
+msgstr "No se encontró la radioterapia."
+
+msgid "RADIOTHERAPY_DELETED"
+msgstr "Se ha borrado la radioterapia."
+
+msgid "RADIOTHERAPY_DUPLICATED"
+msgstr "Ya existe una radioterapia con id '{}'."
+
+msgid "RADIOTHERAPY_CREATE_ERROR"
+msgstr "Ocurrió un error al crear radioterapia."
+
+# ROL_PERMISSION
+msgid "ROL_PERMISSION_NOT_FOUND"
+msgstr "No se encontró el rol permiso."
+
+msgid "ROL_PERMISSION_DELETED"
+msgstr "Se ha borrado el rol permiso."
+
+msgid "ROL_PERMISSION_DUPLICATED"
+msgstr "Ya existe un rol permiso con id '{}'."
+
+msgid "ROL_PERMISSION_CREATE_ERROR"
+msgstr "Ocurrió un error al crear rol permiso."
+
+# ROL
+msgid "ROL_NOT_FOUND"
+msgstr "No se encontró el rol."
+
+msgid "ROL_DELETED"
+msgstr "Se ha borrado el rol."
+
+msgid "ROL_DUPLICATED"
+msgstr "Ya existe un rol con id '{}'."
+
+msgid "ROL_CREATE_ERROR"
+msgstr "Ocurrió un error al crear rol."
+
+# MODULE
+msgid "MODULE_NOT_FOUND"
+msgstr "No se encontró el modulo."
+
+msgid "MODULE_DELETED"
+msgstr "Se ha borrado el modulo."
+
+msgid "MODULE_DUPLICATED"
+msgstr "Ya existe un modulo con id '{}'."
+
+msgid "MODULE_CREATE_ERROR"
+msgstr "Ocurrió un error al crear modulo."
+
+# SPECIALITY
+msgid "SPECIALITY_NOT_FOUND"
+msgstr "No se encontró la especialidad."
+
+msgid "SPECIALITY_DELETED"
+msgstr "Se ha borrado la especialidad."
+
+msgid "SPECIALITY_DUPLICATED"
+msgstr "Ya existe una especialidad con id '{}'."
+
+msgid "SPECIALITY_CREATE_ERROR"
+msgstr "Ocurrió un error al crear especialidad."
+
+# STOCK
+msgid "STOCK_NOT_FOUND"
+msgstr "No se encontró stock del medicamento."
+
+msgid "STOCK_DELETED"
+msgstr "Se ha borrado el stock."
+
+msgid "STOCK_DUPLICATED"
+msgstr "Ya existe un stock con id '{}'."
+
+msgid "STOCK_CREATE_ERROR"
+msgstr "Ocurrió un error al crear stock."
+
+# SUPPLIER
+msgid "SUPPLIER_NOT_FOUND"
+msgstr "No se encontró proveedor."
+
+msgid "SUPPLIER_DELETED"
+msgstr "Se ha borrado el proveedor."
+
+msgid "SUPPLIER_DUPLICATED"
+msgstr "Ya existe un proveedor con id '{}'."
+
+msgid "SUPPLIER_CREATE_ERROR"
+msgstr "Ocurrió un error al crear proveedor."
+
+# SURGERY
+msgid "SURGERY_NOT_FOUND"
+msgstr "No se encontró cirugía."
+
+msgid "SURGERY_DELETED"
+msgstr "Se ha borrado la cirugía."
+
+msgid "SURGERY_DUPLICATED"
+msgstr "Ya existe una cirugía con id '{}'."
+
+msgid "SURGERY_CREATE_ERROR"
+msgstr "Ocurrió un error al crear cirugía."
+
+# TREATMENT_FOLLOW_UP
+msgid "TREATMENT_FOLLOW_UP_NOT_FOUND"
+msgstr "No se encontró seguimiento de tratamiento."
+
+msgid "TREATMENT_FOLLOW_UP_DELETED"
+msgstr "Se ha borrado el seguimiento de tratamiento."
+
+msgid "TREATMENT_FOLLOW_UP_DUPLICATED"
+msgstr "Ya existe un seguimiento de tratamento con id '{}'."
+
+msgid "TREATMENT_FOLLOW_UP_CREATE_ERROR"
+msgstr "Ocurrió un error al crear seguimiento de tratamiento."
+
+# TREATMENT_PLAN
+msgid "TREATMENT_PLAN_NOT_FOUND"
+msgstr "No se encontró plan de tratamiento."
+
+msgid "TREATMENT_PLAN_DELETED"
+msgstr "Se ha borrado el plan de tratamiento."
+
+msgid "TREATMENT_PLAN_DUPLICATED"
+msgstr "Ya existe un plan de tratamento con id '{}'."
+
+msgid "TREATMENT_PLAN_CREATE_ERROR"
+msgstr "Ocurrió un error al crear plan de tratamiento."
+
+msgid "TREATMENT_PLAN_OBLIGATORY_PERIODICITY"
+msgstr "No se ha proveído periodicity_id."
+
+msgid "TREATMENT_PLAN_OBLIGATORY_SESSION"
+msgstr "No se ha proveído number_sessions."
+
+msgid "TREATMENT_PLAN_OBLIGATORY_DATE"
+msgstr "No se ha proveído date_first_cycle."
+
+# TYPE_TREARMENT
+msgid "TREATMENT_TYPE_NOT_FOUND"
+msgstr "No se encontró tipo de tratamiento."
+
+msgid "TREATMENT_TYPE_DELETED"
+msgstr "Se ha borrado el tipo de tratamiento."
+
+msgid "TREATMENT_TYPE_DUPLICATED"
+msgstr "Ya existe un tipo de tratamento con id '{}'."
+
+msgid "TREATMENT_TYPE_CREATE_ERROR"
+msgstr "Ocurrió un error al crear tipo de tratamiento."
+
+# USER_HOSPITAL
+msgid "USER_HOSPITAL_NOT_FOUND"
+msgstr "No se encontró hospital del usuario."
+
+msgid "USER_HOSPITAL_DELETED"
+msgstr "Se ha borrado el hospital del usuario."
+
+msgid "USER_HOSPITAL_DUPLICATED"
+msgstr "Ya existe un hospital de usuario con id '{}'."
+
+msgid "USER_HOSPITAL_CREATE_ERROR"
+msgstr "Ocurrió un error al crear hospital de usuario."
+
+# USER
+msgid "USER_NOT_FOUND"
+msgstr "No se encontró el usuario."
+
+msgid "USER_DELETED"
+msgstr "Se ha borrado el usuario."
+
+msgid "USER_DUPLICATED"
+msgstr "Ya existe un usuario con id '{}'."
+
+msgid "USER_DUPLICATED_NAME"
+msgstr "Ya existe un usuario."
+
+msgid "USER_CREATE_ERROR"
+msgstr "Ocurrió un error al crear usuario."
+
+msgid "USER_UPDATE_SUCESSFULL"
+msgstr "El usuario se actualizó correctamente."
+
+msgid "USER_CREATE_SUCESSFULL"
+msgstr "El usuario se creó correctamente."
+
+msgid "PASSWORD_CHANGE_ERROR"
+msgstr "La contraseña anterior no coincide con la contraseña actual."
+
+msgid "PASSWORD_CHANGE_SUCESSFULL"
+msgstr "La contraseña se actualizó correctamente."
+
+msgid "USER_AUTH_NOT_FOUND"
+msgstr "Usuario autenticado no encontrado."
+
+msgid "CERVIX_FORM_CREATE_ERROR"
+msgstr "Ocurrió un error al crear formulario cérvix."
+
+msgid "CERVIX_FORM_DUPLICATED"
+msgstr "Ya existe un formulario cérvix."
+
+msgid "CERVIX_FORM_NOT_FOUND"
+msgstr "No se encontró el formulario cérvix."
+
+msgid "CERVIX_FORM_DELETED"
+msgstr "Se ha borrado el formulario cérvix."
+
+msgid "CERVIX_FORM_UPDATE_ERROR"
+msgstr "Ocurrió un error al actualizar cervix form."
+
+msgid "BREAST_FORM_CREATE_ERROR"
+msgstr "Ocurrió un error al crear formulario mama."
+
+msgid "BREAST_FORM_DUPLICATED"
+msgstr "Ya existe un formulario mama."
+
+msgid "BREAST_FORM_NOT_FOUND"
+msgstr "No se encontró el formulario mama."
+
+msgid "BREAST_FORM_DELETED"
+msgstr "Se ha borrado el formulario mama."
+
+msgid "BREAST_FORM_UPDATE_ERROR"
+msgstr "Ocurrió un error al actualizar mama form."
+
+msgid "REPORT_DATA_NOT_FOUND"
+msgstr "El reporte no ha generado datos"
+
+msgid "UNSUPPORTED_FILE_FORMAT"
+msgstr "Formato de archivo no soportado"
+
+msgid "IMPORT_MISSING_COLUMNS"
+msgstr "Columnas requeridas no encontradas"
+
+msgid "IMPORT_FILE_NOT_PROVIDED"
+msgstr "Archivo no proveído"
+
+msgid "IMPORT_FILE_PROCESSED"
+msgstr "Archivo procesado"
+
+msgid "IMPORT_NO_IMPORTED"
+msgstr "No importado"
+
+msgid "IMPORT_ROWS"
+msgstr "filas"
+
+msgid "IMPORT_NOT_INSERTING_PATIENT"
+msgstr "Paciente no insertado"
+
+msgid "FREQUENCY_DAILY"
+msgstr "Diaria"
+
+msgid "FREQUENCY_WEEKLY"
+msgstr "Semanal"
+
+msgid "FREQUENCY_MONTHLY"
+msgstr "Mensual"
+
+msgid "FREQUENCY_YEARLY"
+msgstr "Anual"
+
+msgid "INVALID_CATEGORY"
+msgstr "Categoría Inválida"
+
+msgid "INVALID_CONCENTRATION"
+msgstr "Concentración Inválida"
+
+msgid "INVALID_QUANTITY"
+msgstr "Cantidad Inválida"
+
+msgid "INVALID_UNIT"
+msgstr "Unidad Inválida"
+
+msgid "HOSPITAL_ID_REQUIRED"
+msgstr "El Establecimiento de Salud es un dato requerido"
+
+msgid "USER_NOT_ASSOCIATED_WITH_HOSPITAL"
+msgstr "Usuario no asociado al Hospital"
+
+msgid "REQUIRED_FIELD"
+msgstr "El Campo es requerido"
+
+msgid "CODE_ALREADY_EXISTS"
+msgstr "El Código ya existe"
+
+msgid "ALREADY_EXISTS_ERROR"
+msgstr "Ya existe"
+
+msgid "PROCESS_SUCCESS"
+msgstr "Proceso exitoso"
+
+msgid "PROCESS_ERROR"
+msgstr "Error en el proceso"
+
+msgid "EXPECTED_STRING"
+msgstr "Se esperaba una cadena"
+
+msgid "RECORD_NOT_FOUND"
+msgstr "Registro no encontrado"
+
+msgid "ERROR_TEXT_TOO_LONG"
+msgstr "El campo excede la longitud máxima permitida de {length} caracteres."
+
+msgid "INVALID_TYPE"
+msgstr "Tipo Inválido"
+
+msgid "DOSE_NOT_ADJUSTABLE"
+msgstr "La dosis no es ajustable"

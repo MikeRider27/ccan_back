@@ -1,0 +1,42 @@
+Lista de User_hospital
+---
+tags:
+  - "search"
+responses:
+  200:
+    description: Se lista User_hospital filtrados
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - in: query
+    name: page
+    description: Current items page
+    default: 1
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/UserHospitalSearch"
+definitions:
+    UserHospitalSearch:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            user_id:
+                type: "int64"
+            role_id:
+                type: "int64"
+            hospital_id:
+                type: "int64"
+        example:
+            id: 5
+            user_id: 12
+            role_id: 23
+            hospital_id: 10

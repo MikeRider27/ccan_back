@@ -1,0 +1,53 @@
+Actualiza Medicine_medical_consultation
+---
+tags:
+- "medicine-medical-consultation"
+responses:
+  200:
+    description: Se actualiza Medicine_medical_consultation
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/MedicineMedicalConsultationPut"
+definitions:
+    MedicineMedicalConsultationPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            medicine_id:
+                type: "int64"
+            medical_consultation_id:
+                type: "int64"
+            quantity:
+                type: "float"
+            observation:
+                type: "string"
+            dose:
+                type: "float"
+            presentation:
+                type: "string"
+            concentration:
+                type: "string"
+        example:
+            id: 46
+            medicine_id: 30
+            medical_consultation_id: 28
+            quantity: 26.5
+            observation: Lorem ipsum dolor sit am
+            dose: 37.5
+            presentation: Lorem ipsum dolor sit am
+            concentration: Lorem ipsum dolor sit am

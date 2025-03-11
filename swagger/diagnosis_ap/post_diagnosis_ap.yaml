@@ -1,0 +1,74 @@
+Guarda un Diagnosis_ap
+---
+tags:
+- "diagnosis-ap"
+responses:
+  200:
+    description: Se guarda Diagnosis_ap
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/DiagnosisApPost"
+definitions:
+    DiagnosisApPost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            observation:
+              type: "string"
+            date:
+              type: "datetime"
+            tumor_size:
+              type: "int"
+            armpit_negative:
+              type: "string"
+            armpit_positive:
+              type: "string"
+            patient_id:
+              type: "int64"
+            re_positive:
+              type: "boolean"
+            re_negative:
+              type: "boolean"
+            rp_negative:
+              type: "boolean"
+            rp_positive:
+              type: "boolean"
+            her2_positive:
+              type: "boolean"
+            her2_negative:
+              type: "boolean"
+            ihq_3_pos:
+              type: "boolean"
+            ihq_2_pos_fish:
+              type: "boolean"
+            hospital_id:
+              type: "int64"
+        example:
+            id: 21
+            observation: Lorem ipsum dolor sit am
+            date: '2019-01-01T00:00:00'
+            tumor_size: 28
+            armpit_negative: Lorem ipsu
+            armpit_positive: Lorem ipsu
+            patient_id: 1
+            re_positive: false
+            re_negative: false
+            rp_negative: false
+            rp_positive: false
+            her2_positive: false
+            her2_negative: false
+            ihq_3_pos: false
+            ihq_2_pos_fish: false
+            hospital_id: 1

@@ -1,0 +1,98 @@
+Update Drug
+---
+tags:
+  - "drug"
+summary: "Update details of an existing drug by its UUID"
+description: Updates the details of a drug by providing its UUID.
+parameters:
+  - in: path
+    name: uuid
+    required: true
+    type: string
+    description: "The unique identifier of the drug to update."
+  - in: header
+    name: Authorization
+    required: true
+    type: string
+    description: "Bearer token for authorization."
+    default: "Bearer <access_token>"
+  - in: body
+    name: body
+    required: true
+    schema:
+      type: object
+      properties:
+        generic_name:
+          type: string
+          description: "The Generic Name assigned to the drug. Maximum length:
+            200 characters."
+          example: "Amoxicillin"
+        therapeutic_action:
+          type: string
+          description: "A description of the therapeutic action of the drug."
+          example: "A broad-spectrum antibiotic used to treat bacterial infections."
+        category_id:
+          type: integer
+          description: "The identifier of the drug's category."
+          example: 10
+        status:
+          type: integer
+          description: "The status of the drug. Allowed values: 1 (Active) or 0 (Inactive)."
+          example: 1
+responses:
+  200:
+    description: "The drug was successfully updated."
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "PROCESS_SUCCESS"
+        drug:
+          $ref: "#/definitions/Drug"
+  400:
+    description: >
+      Bad request. Possible causes:
+      - The `uuid` provided does not match any existing drug.
+      - Validation error in the provided data.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "Error message explaining the issue."
+          example: "RECORD_NOT_FOUND"
+  500:
+    description: "Internal server error."
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "A general error message for unexpected server-side
+            errors."
+          example: "INTERNAL_SERVER_ERROR"
+definitions:
+  Drug:
+    type: object
+    properties:
+      uuid:
+        type: string
+        description: "The unique UUID of the drug."
+        example: "6e9557c3-7b44-4892-97bb-c3dc82d565ab"
+      generic_name:
+        type: string
+        description: "The generic name assigned to the drug."
+        example: "Amoxicillin"
+      therapeutic_action:
+        type: string
+        description: "A description of the therapeutic action."
+        example: "Broad-spectrum antibiotic used to treat bacterial infections."
+      category_id:
+        type: integer
+        description: "The category ID of the drug."
+        example: 10
+      status:
+        type: integer
+        description: "The status of the drug. Allowed values: 1 (Active), 0 (Inactive)."
+        example: 1

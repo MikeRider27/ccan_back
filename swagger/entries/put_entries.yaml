@@ -1,0 +1,62 @@
+Actualiza Entries
+---
+tags:
+- "entries"
+responses:
+  200:
+    description: Se actualiza Entries
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/EntriesPut"
+definitions:
+    EntriesPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            lot_id:
+                type: "int64"
+            medicine_id:
+                type: "int64"
+            description:
+                type: "string"
+            expiration_date:
+                type: "datetime"
+            quantity:
+                type: "float"
+            manufacturer_id:
+                type: "int64"
+            manufacturing_date:
+                type: "datetime"
+            supplier_id:
+                type: "int64"
+            storage_conditions:
+                type: "string"
+            observation:
+                type: "string"
+        example:
+            id: 12
+            deposit_id: 20
+            medicine_id: 47
+            description: Lorem ipsum dolor sit amet
+            expiration_date: '2019-01-01T00:00:00'
+            quantity: 26.5
+            manufacturer_id: 21
+            manufacturing_date: '2019-01-01T00:00:00'
+            supplier_id: 20
+            storage_conditions: Lorem ipsum dolor sit amet
+            observation: Lorem ipsum dolor sit amet

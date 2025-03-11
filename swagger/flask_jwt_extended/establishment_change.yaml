@@ -1,0 +1,71 @@
+Change the Hospital for the logged-in user
+---
+tags:
+  - "jwt"
+description: >
+  Change the Hospital for the logged-in user by issuing a new JWT.
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    schema:
+      type: string
+    default: "Bearer [access_token]"
+  - in: query
+    name: hospital_id
+    description: Hospital ID
+    schema:
+      type: integer
+security:
+  - bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+responses:
+  200:
+    description: Successfully issued a new access token.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            access_token:
+              type: string
+              description: >
+                The newly generated JWT with updated claims.
+  400:
+    description: >
+      Bad Request - Hospital ID is not provided or the user
+      is not found.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: "HOSPITAL_ID_REQUIRED"  # Or "USER_NOT_FOUND"
+  403:
+    description: >
+      Forbidden - User does not have permissions
+      for the given hospital.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: "USER_NOT_ASSOCIATED_WITH_HOSPITAL"
+  404:
+    description: >
+      Not Found - The hospital ID does not exist.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: "HOSPITAL_NOT_FOUND"

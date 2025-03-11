@@ -1,0 +1,283 @@
+Search Treatment Schemas
+---
+tags:
+  - "search"
+summary: "Search Treatment Schemas"
+description:
+  Retrieves a list of treatment schemas that match the specified filters.
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    schema:
+      type: string
+    default: "Bearer [access_token]"
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/TreatmentSchemaSearch"
+  - in: query
+    name: page
+    description: >
+      The page number of the paginated results to retrieve.
+    required: false
+    schema:
+      type: integer
+      minimum: 1
+      default: 1
+    example: 1
+  - in: query
+    name: rowsPerPage
+    description: >
+      The number of items to retrieve per page in the paginated results.
+    required: false
+    schema:
+      type: integer
+      minimum: 1
+      default: 20
+    example: 10
+  - in: query
+    name: sortBy
+    description: >
+      Sorting criteria for the results.
+    required: false
+    schema:
+      type: string
+      example: "name"
+  - in: query
+    name: descending
+    description: >
+      Descending sorting order. If true, the order is descending, if it is
+      false or non-present, the order is ascending.
+    required: false
+    schema:
+      type: string
+      example: "true"
+security:
+  - bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+definitions:
+  TreatmentSchemaSearch:
+    type: object
+    properties:
+      name:
+        type: string
+        example: "Chemotherapy Protocol A"
+        description: Filter schemas that match the specified name.
+      description:
+        type: string
+        example: "A detailed description of the chemotherapy protocol."
+        description: A detailed description of the schema.
+#      periodicity_id:
+#        type: integer
+#        example: 1
+#        description: The periodicity ID of the treatment schema.
+#      series_count:
+#        type: integer
+#        example: 5
+#        description: Number of cycles in the schema.
+#      pre_medication:
+#        type: string
+#        example: "Administer antihistamine before the main treatment."
+#        description: Medications to be given before the treatment.
+#      medication:
+#        type: string
+#        example: "Cisplatin infusion followed by Etoposide."
+#        description: The main medications in the schema.
+#      post_medication:
+#        type: string
+#        example: "Ensure patient hydration post-administration."
+#        description: Medications and instructions post-treatment.
+#      category_id:
+#        type: integer
+#        example: 2
+#        description: ID of the schema category.
+#      notes:
+#        type: string
+#        example: "Additional details about the treatment."
+  schema_product:
+    type: object
+    required:
+      - product_id
+    properties:
+      uuid:
+        type: string
+        format: uuid
+        example: "234e5678-e89b-12d3-a456-426614174111"
+      product_id:
+        type: integer
+        example: 101
+      administration_route_id:
+        type: integer
+        description: Route of administration for the product.
+        example: 3
+      calculation_type_id:
+        type: integer
+        description: Dosage calculation method.
+        example: 2
+      frequency_id:
+        type: integer
+        description: Administration frequency for the product.
+        example: 1
+      note:
+        type: string
+        example: "Administer slowly over 2 hours."
+      adjustable:
+        type: boolean
+        description: Whether the dosage is adjustable.
+        example: true
+      status:
+        type: integer
+        description: >
+          Current status of the treatment scheme product.
+          Values may correspond to (1: active, 0: inactive).
+        example: 1
+      index:
+        type: integer
+        description: >
+          Custom index value to maintain order of products
+          within the treatment scheme.
+        example: 5
+      loading_dose:
+        type: number
+        format: float
+        example: 250.00
+      session_dose:
+        type: number
+        format: float
+        example: 350.00
+      infusion_dose:
+        type: number
+        format: float
+        example: 200.00
+      administration_route:
+        type: object
+        description: "Relationship data for the administration route
+              parameter (if `jsondepth > 1`)."
+        properties:
+          id:
+            type: integer
+            example: 3
+          name:
+            type: string
+            example: "Intravenous"
+      calculation_type:
+        type: object
+        description: "Relationship data for the calculation type
+              parameter (if `jsondepth > 1`)."
+        properties:
+          id:
+            type: integer
+            example: 2
+          name:
+            type: string
+            example: "Weight-based"
+      frequency:
+        type: object
+        description: "Relationship data for the frequency parameter (if
+              `jsondepth > 1`)."
+        properties:
+          id:
+            type: integer
+            example: 1
+          name:
+            type: string
+            example: "Once Daily"
+responses:
+  200:
+    description: Successful retrieval of the filtered treatment schemas.
+    schema:
+      type: object
+      properties:
+        treatment_schemas:
+          type: array
+          items:
+            type: object
+            properties:
+              uuid:
+                type: string
+                example: "4a431e08-e5b4-4d8a-8d7f-2c3a00c6b950"
+              name:
+                type: string
+                example: "Chemotherapy Protocol A"
+              description:
+                type: string
+                example: "A detailed description of the treatment protocol."
+              periodicity_id:
+                type: integer
+                example: 1
+              series_count:
+                type: integer
+                example: 5
+              pre_medication:
+                type: string
+                example: "Give antihistamines before the procedure."
+              medication:
+                type: string
+                example: "Administer Cisplatin infusion."
+              post_medication:
+                type: string
+                example: "Provide hydration and antiemetics."
+              category_id:
+                type: integer
+                example: 2
+              status:
+                type: integer
+                example: 1
+              notes:
+                type: string
+                example: "Patient must be supervised during infusion."
+              administration_time:
+                type: integer
+                description: Administration time (in hours).
+                example: 2
+              preparation_instructions:
+                type: string
+                description: Instructions for treatment preparation.
+                example: "Dilute in 500ml normal saline."
+              schema_products:
+                description: List of products associated with the treatment
+                  schema.
+                type: array
+                items:
+                  $ref: "#/definitions/schema_product"
+              created_at:
+                type: string
+                format: date-time
+                example: "2023-01-18T08:30:00Z"
+  400:
+    description: Invalid input or constraints violation (e.g., missing
+      fields, duplicate `code`).
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "FIELDS_MISSING: name"
+        error:
+          type: string
+          example: "FIELDS_MISSING: name"
+  401:
+    description: Unauthorized - Hospital was not found in the authenticated
+      user's token.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "USER_HOSPITAL_NOT_FOUND"
+  500:
+    description: Internal server error - Unhandled exception during
+      processing.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "PROCESS_ERROR"
+        error:
+          type: string
+          example: "Internal database error"

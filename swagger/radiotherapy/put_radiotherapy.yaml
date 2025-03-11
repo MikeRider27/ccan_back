@@ -1,0 +1,41 @@
+Actualiza Radiotherapy
+---
+tags:
+- "radiotherapy"
+responses:
+  200:
+    description: Se actualiza Radiotherapy
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/RadiotherapyPut"
+definitions:
+    RadiotherapyPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            date:
+                type: "datetime"
+            patient_id:
+                type: "int64"
+            hospital_id:
+                type: "int64"
+        example:
+            id: 20
+            date: '2019-01-01T00:00:00'
+            patient_id: 20
+            hospital_id: 20

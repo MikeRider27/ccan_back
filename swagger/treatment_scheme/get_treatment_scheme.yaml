@@ -1,0 +1,258 @@
+Get a Treatment Schema
+---
+tags:
+  - "treatment-schema"
+summary: "Retrieve a Treatment Schema"
+description: >
+  Retrieves the details of a specific treatment schema based on its unique
+  identifier (`uuid`) and the user's authenticated hospital context.
+  This endpoint requires an access token for authentication, and the treatment
+  schema must belong to the hospital associated with the user making the
+  request.
+  The response includes details about the treatment schema and can include
+  related objects such as `schema_products`, `periodicity`, and `category` if
+  the optional `jsondepth` query parameter is specified.
+parameters:
+  - in: header
+    name: Authorization
+    description: Bearer access token for authentication.
+    required: true
+    schema:
+      type: string
+      example: "Bearer [access_token]"
+  - in: path
+    name: uuid
+    description: >
+      Unique identifier (`uuid`) of the treatment schema to retrieve. This must
+      be a valid UUID format and correspond to an existing treatment schema in
+      the database.
+    required: true
+    schema:
+      type: string
+      format: uuid
+      example: "123e4567-e89b-12d3-a456-426614174000"
+  - in: query
+    name: jsondepth
+    description: >
+      Numeric value indicating the depth of nested objects to include in the
+      response. A higher value retrieves more detailed relationships.
+    required: false
+    schema:
+      type: integer
+      minimum: 0
+      default: 2
+      example: 2
+security:
+  - bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+responses:
+  200:
+    description: Successfully retrieved the treatment schema.
+    schema:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        hospital_id:
+          type: integer
+          example: 15
+        name:
+          type: string
+          example: "Chemotherapy Protocol Alpha"
+        description:
+          type: string
+          example: "Details describing the chemotherapy protocol."
+        periodicity_id:
+          type: integer
+          example: 10
+        periodicity:
+          type: object
+          description: "Optional relationship data for the periodicity
+            parameter (shown when `jsondepth > 0`)."
+          properties:
+            id:
+              type: integer
+              example: 10
+            name:
+              type: string
+              example: "Weekly"
+        series_count:
+          type: integer
+          example: 4
+        pre_medication:
+          type: string
+          example: "Take antihistamine one hour before chemotherapy."
+        medication:
+          type: string
+          example: "Cisplatin 100mg, Etoposide 500mg."
+        post_medication:
+          type: string
+          example: "Drink plenty of fluids and take prescribed painkillers
+            post-administration."
+        category_id:
+          type: integer
+          example: 7
+        category:
+          type: object
+          description: "Optional relationship data for the category parameter
+            (shown when `jsondepth > 0`)."
+          properties:
+            id:
+              type: integer
+              example: 7
+            name:
+              type: string
+              example: "Oncology"
+        notes:
+          type: string
+          example: "Ensure proper hydration during treatment."
+        administration_time:
+          type: integer
+          description: Administration time (in hours).
+          example: 2
+        preparation_instructions:
+          type: string
+          example: "Dilute drug with saline before infusion."
+        status:
+          type: integer
+          example: 1
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-18T12:34:56Z"
+        edited_at:
+          type: string
+          format: date-time
+          example: "2025-02-10T08:15:30Z"
+        schema_products:
+          type: array
+          description: "Optional list of associated schema products (shown
+            when `jsondepth > 0`)."
+          items:
+            type: object
+            properties:
+              uuid:
+                type: string
+                format: uuid
+                example: "234e5678-e89b-12d3-a456-426614174111"
+              product_id:
+                type: integer
+                example: 101
+              administration_route_id:
+                type: integer
+                example: 3
+              calculation_type_id:
+                type: integer
+                example: 2
+              frequency_id:
+                type: integer
+                example: 1
+              note:
+                type: string
+                example: "Administer slowly over 2 hours."
+              adjustable:
+                type: boolean
+                example: true
+              status:
+                type: integer
+                description: >
+                  Current status of the treatment scheme product.
+                  Values may correspond to (1: active, 0: inactive).
+                example: 1
+              index:
+                type: integer
+                description: >
+                  Custom index value to maintain order of products
+                  within the treatment scheme.
+                example: 5
+              loading_dose:
+                type: number
+                format: float
+                example: 250.00
+              session_dose:
+                type: number
+                format: float
+                example: 350.00
+              infusion_dose:
+                type: number
+                format: float
+                example: 200.00
+              administration_route:
+                type: object
+                description: "Relationship data for the administration route
+                  parameter (if `jsondepth > 1`)."
+                properties:
+                  id:
+                    type: integer
+                    example: 3
+                  name:
+                    type: string
+                    example: "Intravenous"
+              calculation_type:
+                type: object
+                description: "Relationship data for the calculation type
+                  parameter (if `jsondepth > 1`)."
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                  name:
+                    type: string
+                    example: "Weight-based"
+              frequency:
+                type: object
+                description: "Relationship data for the frequency parameter (if
+                  `jsondepth > 1`)."
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "Once Daily"
+
+  400:
+    description: >
+      Invalid request due to malformed input or the treatment schema
+      `uuid` not being found for the user's hospital.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "RECORD_NOT_FOUND"
+        error:
+          type: string
+          example: "The specified treatment schema does not exist."
+
+  403:
+    description: >
+      Forbidden. This happens when the user is authenticated, but the request
+      treatment schema does not belong to the user's hospital context.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "FORBIDDEN"
+        error:
+          type: string
+          example: "Treatment schema is not accessible for the current user's
+            hospital context."
+
+  500:
+    description: >
+      Internal server error due to unexpected errors in the back-end processing.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "PROCESS_ERROR"
+        error:
+          type: string
+          example: "Unhandled exception occurred during database query."

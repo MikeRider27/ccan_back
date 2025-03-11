@@ -1,0 +1,56 @@
+{
+  "icon": "chevron_right",
+  "main_title": null,
+  "titles": {
+  },
+  "no_list": [
+    "id"
+  ],
+  "no_edit": [
+    "id"
+  ],
+  "required": [
+    "id",
+    "firstname",
+    "lastname",
+    "state",
+    "birthdate",
+    "menopausal_state",
+    "app_ischemic_heart_disease",
+    "app_heart_failure",
+    "app_arrhythmia",
+    "document_type",
+    "hospital"
+  ],
+  "date_fields": [
+    "birthdate"
+  ],
+  "currency_fields": [ ],
+  "image_fields": [ ],
+  "relations": { 
+    "gender": {
+      "dependent_attr": "gender_id",
+      "origin_attr": "id",
+      "origin_model": "gender",
+      "label_attr": "description"
+    },
+    "menopausal_state": {
+      "dependent_attr": "menopausal_state_id",
+      "origin_attr": "id",
+      "origin_model": "menopausal_state",
+      "label_attr": "description"
+    },
+    "document_type": {
+      "dependent_attr": "document_type_id",
+      "origin_attr": "id",
+      "origin_model": "document_type",
+      "label_attr": "description"
+    },
+    "hospital": {
+      "dependent_attr": "hospital_id",
+      "origin_attr": "id",
+      "origin_model": "hospital",
+      "label_attr": "description"
+    }
+  }
+}

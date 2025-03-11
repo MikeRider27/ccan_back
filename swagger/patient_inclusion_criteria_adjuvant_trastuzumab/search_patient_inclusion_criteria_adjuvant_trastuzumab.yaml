@@ -1,0 +1,52 @@
+Lista de Patient_inclusion_criteria_adjuvant_trastuzumab
+---
+tags:
+  - "search"
+responses:
+  200:
+    description: Se lista Patient_inclusion_criteria_adjuvant_trastuzumab filtrados
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - in: query
+    name: page
+    description: Current items page
+    default: 1
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/PatientInclusionCriteriaAdjuvantTrastuzumabSearch"
+definitions:
+    PatientInclusionCriteriaAdjuvantTrastuzumabSearch:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            patient_id:
+                type: "int64"
+            diagnosed_invasive_adenocarcinoma:
+                type: "boolean"
+            adenocarcinoma_completely_resected:
+                type: "boolean"
+            tumor_diameter_greater_10mm:
+                type: "boolean"
+            adjuvant_trastuzumab_her2_positive:
+                type: "boolean"
+            determination_hormone_receptors:
+                type: "boolean"
+            absolute_neutrophils_eq_greater_1500_ul:
+                type: "boolean"
+            platelets_eq_greater_90000_mm3:
+                type: "boolean"
+            renal_hepatic_appropriate:
+                type: "boolean"
+        example:
+            id: 5
+            patient_id: 24

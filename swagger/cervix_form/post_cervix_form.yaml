@@ -1,0 +1,140 @@
+Guarda un Cervix_form
+---
+tags:
+- "cervix-form"
+responses:
+  200:
+    description: Se guarda Cervix_form
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/CervixFormPost"
+definitions:
+    CervixFormPost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            patient_id:
+              type: "int64"
+            departament:
+              type: "int"
+            parity:
+              type: "boolean"
+            residential_address:
+              type: "string"
+            pmhx:
+              type: "string"
+            presenting_complaint:
+              type: "string"
+            main_physical_clinical_findings:
+              type: "string"
+            performance_status_ecog_id:
+              type: "int64"
+            treatment_decision:
+              type: "string"
+            colposcopy_date:
+              type: "datetime"
+            colposcopy_report_id:
+              type: "int64"
+            cervical_biopsy_date:
+              type: "datetime"
+            cervical_biopsy_histology:
+              type: "string"
+            cervical_biopsy_morphology:
+              type: "string"
+            cervical_biopsy_grade:
+              type: "string"
+            usg_pelvis_abdomen_date:
+              type: "datetime"
+            usg_pelvis_abdomen_site_of_mass_id:
+              type: "int64"
+            usg_pelvis_abdomen_size_of_mass:
+              type: "string"
+            usg_pelvis_abdomen_extensions_id:
+              type: "int64"
+            chest_xray_date:
+              type: "datetime"
+            chest_xray_report_id:
+              type: "int64"
+            chest_xray_summary_id:
+              type: "int64"
+            pelvic_mri_date:
+              type: "datetime"
+            pelvic_mri_site_of_mass_id:
+              type: "int64"
+            pelvic_mri_size_of_mass:
+              type: "string"
+            pelvic_mri_extensions_id:
+              type: "int64"
+            blood_date:
+              type: "datetime"
+            blood_fbc_id:
+              type: "int64"
+            blood_fbc:
+              type: "string"
+            blood_lft_report_id:
+              type: "int64"
+            blood_urea_creatinine_report_id:
+              type: "int64"
+            stage_figo_date:
+              type: "datetime"
+            stage_figo_id:
+              type: "int64"
+            date_create:
+              type: "datetime"
+            user_create:
+              type: "string"
+            date_modify:
+              type: "datetime"
+            user_modify:
+              type: "string"
+        example:
+            id: 16
+            patient_id: 8
+            departament: 46
+            parity: false
+            residential_address: Lorem ipsum dolor sit am
+            pmhx: Lorem ipsum dolor sit am
+            presenting_complaint: Lorem ipsum dolor sit am
+            main_physical_clinical_findings: Lorem ipsum dolor sit am
+            performance_status_ecog_id: 32
+            treatment_decision: Lorem ipsum dolor sit am
+            colposcopy_date: '2019-01-01T00:00:00'
+            colposcopy_report_id: 36
+            cervical_biopsy_date: '2019-01-01T00:00:00'
+            cervical_biopsy_histology: Lorem ipsum dolor sit am
+            cervical_biopsy_morphology: Lorem ipsum dolor sit am
+            cervical_biopsy_grade: Lorem ipsum dolor sit am
+            usg_pelvis_abdomen_date: '2019-01-01T00:00:00'
+            usg_pelvis_abdomen_site_of_mass_id: 7
+            usg_pelvis_abdomen_size_of_mass: Lorem ipsum dolor sit am
+            usg_pelvis_abdomen_extensions_id: 25
+            chest_xray_date: '2019-01-01T00:00:00'
+            chest_xray_report_id: 25
+            chest_xray_summary_id: 8
+            pelvic_mri_date: '2019-01-01T00:00:00'
+            pelvic_mri_site_of_mass_id: 39
+            pelvic_mri_size_of_mass: Lorem ipsum dolor sit am
+            pelvic_mri_extensions_id: 25
+            blood_date: '2019-01-01T00:00:00'
+            blood_fbc_id: 28
+            blood_fbc: Lorem ipsum dolor sit am
+            blood_lft_report_id: 44
+            blood_urea_creatinine_report_id: 36
+            stage_figo_date: '2019-01-01T00:00:00'
+            stage_figo_id: 18
+            date_create: '2019-01-01T00:00:00'
+            user_create: Lorem ipsum dolor sit amet
+            date_modify: '2019-01-01T00:00:00'
+            user_modify: Lorem ipsum dolor sit amet

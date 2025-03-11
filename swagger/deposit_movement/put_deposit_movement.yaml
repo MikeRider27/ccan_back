@@ -1,0 +1,47 @@
+Actualiza Deposit_movement
+---
+tags:
+- "deposit-movement"
+responses:
+  200:
+    description: Se actualiza Deposit_movement
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/DepositMovementPut"
+definitions:
+    DepositMovementPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            deposit_stock_in_id:
+                type: "int64"
+            deposit_stock_out_id:
+                type: "int64"
+            quantity:
+                type: "float"
+            date_create:
+                type: "datetime"
+            user_create:
+              type: "string"
+        example:
+            id: 3
+            deposit_stock_in_id: 9
+            deposit_stock_out_id: 14
+            quantity: 41.5
+            date_create: '2019-01-01T00:00:00'
+            user_create: Lorem ipsum dolor sit amet

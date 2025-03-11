@@ -1,0 +1,5 @@
+treatment_plan:
+  next_number:
+    SELECT (CASE WHEN MAX(number) IS NOT NULL THEN MAX(number) ELSE 0 END) + 1 AS next
+    FROM treatment_plan
+    WHERE patient_id = :patient_id

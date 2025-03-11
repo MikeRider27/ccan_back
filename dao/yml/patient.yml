@@ -1,0 +1,118 @@
+patient:
+  query:
+    select_clause: |
+      SELECT DISTINCT patient.id                                                                            AS id,
+                      patient.registration_date                                                             AS patient_registration_date,
+                      TO_CHAR(patient.registration_date, 'DD/MM/YYYY')                                      AS registration_date,
+                      state.value                                                                           AS state,
+                      state.code                                                                            AS state_code,
+                      document_type.description                                                             AS document_type,
+                      decrypt_data(patient.document_number,
+                                   'q2_fbWIugwcQSwvXE5SVeRBAR0CgLQNGkJYEJsyU5zM=')                          AS document_number,
+                      decrypt_data(patient.firstname, 'q2_fbWIugwcQSwvXE5SVeRBAR0CgLQNGkJYEJsyU5zM=')       AS firstname,
+                      decrypt_data(patient.lastname, 'q2_fbWIugwcQSwvXE5SVeRBAR0CgLQNGkJYEJsyU5zM=')        AS lastname,
+                      gender.description                                                                    AS gender,
+                      patient.origin                                                                        AS origins
+
+    from_clause: |
+      FROM patient
+
+    joins_clause: |
+      LEFT OUTER JOIN parameter AS state ON patient.state_id = state.id AND state.domain = 'PATIENT_STATE'
+      LEFT OUTER JOIN document_type ON patient.document_type_id = document_type.id
+      LEFT OUTER JOIN gender ON patient.gender_id = gender.id
+      LEFT JOIN patient_hospital ON patient.id = patient_hospital.patient_id
+      LEFT JOIN inventory.dispatch_medications ON dispatch_medications.patient_id = patient.id
+      LEFT JOIN medical_consultation ON medical_consultation.patient_id = patient.id
+    where_clause: |
+      WHERE (
+        LOWER(patient.origin) LIKE LOWER(:origin_filter) 
+        OR LOWER(dispatch_medications.origin) LIKE LOWER(:origin_filter)
+        OR LOWER(medical_consultation.origin) LIKE LOWER(:origin_filter)
+      )
+    pagination_clause: |
+      LIMIT :per_page OFFSET :offset
+
+  summarize:
+    SELECT document_type.description                                                             AS patient_document_type,
+           decrypt_data(patient.document_number, :cipher_key) AS patient_document_number,
+           decrypt_data(patient.firstname, :cipher_key)       AS patient_firstname,
+           decrypt_data(patient.lastname, :cipher_key)        AS patient_lastname,
+           patient.birthdate                                                                     AS patient_birthdate,
+           DATE_PART('year', AGE(NOW(), patient.birthdate))                                      AS patient_age,
+           gender.description                                                                    AS patient_gender,
+           country.nationality                                                                   AS patient_nationality,
+           country.nationality                                                                   AS patient_country,
+           area.description                                                                      AS patient_area,
+           city.description                                                                      AS patient_city,
+           patient.address                                                                       AS patient_address,
+           patient.phone                                                                         AS patient_phone,
+           estado.value                                                                           AS patient_state,
+           vital_state.value                                                                     AS patient_vital_state,
+           patient.date_create                                                                   AS patient_date_create,
+           patient.user_create                                                                   AS patient_user_create,
+           patient.date_modify                                                                   AS patient_date_modify,
+           patient.user_modify                                                                   AS patient_user_modify,
+           patient.registration_date                                                             AS patient_registration_date,
+           patient.civil_status_id                                                               AS patient_civil_status_id,
+           patient.responsible_firstname                                                         AS patient_responsible_firstname,
+           patient.responsible_lastname                                                          AS patient_responsible_lastname,
+           patient.responsible_relationship                                                      AS patient_responsible_relationship,
+           patient.responsible_phone                                                             AS patient_responsible_phone,
+           patient.number_card                                                                   AS patient_number_card
+    FROM patient
+             LEFT JOIN parameter AS estado
+                       ON patient.state_id = estado.id AND estado.domain = 'PATIENT_STATE'
+             LEFT JOIN document_type
+                       ON patient.document_type_id = document_type.id
+             LEFT JOIN gender ON patient.gender_id = gender.id
+             LEFT JOIN country ON patient.nationality_id = country.id
+             LEFT JOIN area ON patient.area_id = area.id
+             LEFT JOIN city ON patient.city_id = city.id
+             LEFT JOIN parameter AS vital_state
+                       ON patient.vital_state_id = vital_state.id AND vital_state.domain = 'PATIENT_VITAL_STATE'
+    WHERE patient.id = :patient_id
+
+  origin:
+    SELECT p.origin
+    FROM patient p
+    WHERE p.id = :patient_id
+    UNION
+    SELECT DISTINCT da.origin
+    FROM patient p
+             JOIN diagnosis_ap da ON p.id = da.patient_id
+    WHERE p.id = :patient_id
+
+  patients_document:
+    SELECT pat.id                                         AS patient_id,
+           decrypt_data(pat.document_number, :cipher_key) AS patient_document_number,
+           pat.registration_date                          AS patient_registration_date
+    FROM patient pat
+
+  patients_all:
+    SELECT 
+    decrypt_data(firstname, :cipher_key) AS "Nombre",
+    decrypt_data(lastname, :cipher_key) AS "Apellido",
+    decrypt_data(document_number, :cipher_key) AS "Cédula",
+    (select value from parameter where id = state_id) as "Estado",
+    birthdate as "Fecha de Nacimiento",
+    address as "Dirección",
+    (select description from gender where id = gender_id) as "Género",
+    (select description from document_type where id = document_type_id) as "Tipo de Documento",
+    (select description from country where id = country_id) as "País",
+    (select description from area where id = area_id) as "Departamento",
+    (select description from city where id = city_id) as "Ciudad",
+    phone as "Teléfono",
+    (select nationality from country where id = nationality_id) as "Nacionalidad",
+    (select description from hospital where id = hospital_id) as "Institución",
+    (select value from parameter where id = vital_state_id) as "Estado vital",
+    registration_date as "Fecha de Registro",
+    (select value from parameter where id = civil_status_id) as "Estado Civil",
+    responsible_firstname as "Nombre del Responsable",
+    responsible_lastname as "Apellido del Responsable",
+    responsible_relationship as "Relación con el Responsable",
+    responsible_phone as "Teléfono del Responsable",
+    number_card as "Numero de ficha",
+    origin as "Origen",
+    uuid
+    FROM patient

@@ -1,0 +1,95 @@
+Lista de Treatment_follow_up
+---
+tags:
+  - "search"
+responses:
+  200:
+    description: Se lista Treatment_follow_up filtrados
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - in: query
+    name: page
+    description: Current items page
+    default: 1
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/TreatmentFollowUpSearch"
+definitions:
+    TreatmentFollowUpSearch:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            treatment_plan_id:
+                type: "int64"
+            follow_up_date:
+                type: "date"
+            last_cancer_control_date:
+                type: "date"
+            type_treatment:
+                type: "string"
+            breast:
+                type: "string"
+            armpit:
+                type: "boolean"
+            suspension_treatment:
+                type: "boolean"
+            suspension_treatment_reason:
+                type: "string"
+            suspension_treatment_custom_reason:
+                type: "string"
+            congestive_heart_failure:
+                type: "boolean"
+            fevi_follow_up_date:
+                type: "date"
+            fevi_value:
+                type: "int"
+            fevi_trastuzumab_dose:
+                type: "int"
+            other_severe_adverse_events:
+                type: "boolean"
+            other_severe_adverse_events_detail:
+                type: "string"
+            other_complementary_studies:
+                type: "string"
+            dose_adjustment:
+                type: "boolean"
+            dose_adjustment_reason:
+                type: "string"
+            trastuzumab_dose:
+                type: "int"
+            every_three_weeks:
+                type: "boolean"
+            weekly:
+                type: "boolean"
+            comentaries:
+                type: "string"
+            doctor_id:
+                type: "int64"
+        example:
+            id: 31
+            treatment_plan_id: 20
+            follow_up_date: '2019-01-01'
+            last_cancer_control_date: '2019-01-01'
+            type_treatment: Lorem ipsum dolor sit amet
+            breast: Lorem ipsum dolor sit amet
+            suspension_treatment_reason: Lorem ipsum dolor sit am
+            suspension_treatment_custom_reason: Lorem ipsum dolor sit am
+            fevi_follow_up_date: '2019-01-01'
+            fevi_value: 15
+            fevi_trastuzumab_dose: 32
+            other_severe_adverse_events_detail: Lorem ipsum dolor sit am
+            other_complementary_studies: Lorem ipsum dolor sit am
+            dose_adjustment_reason: Lorem ipsum dolor sit amet
+            trastuzumab_dose: 47
+            comentaries: Lorem ipsum dolor sit am
+            doctor_id: 15

@@ -1,0 +1,62 @@
+Actualiza Treatment_order
+---
+tags:
+- "treatment-order"
+responses:
+  200:
+    description: Se actualiza Treatment_order
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/TreatmentOrderPut"
+definitions:
+    TreatmentOrderPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            date:
+                type: "datetime"
+            number_sessions:
+                type: "int"
+            periodicity_id:
+                type: "int64"
+            observation:
+                type: "string"
+            patient_id:
+                type: "int64"
+            previous:
+                type: "boolean"
+            date_first_cycle:
+                type: "date"
+            date_last_cycle:
+                type: "date"
+            type_id:
+                type: "int64"
+            hospital_id:
+                type: "int64"
+        example:
+            id: 13
+            date: '2019-01-01T00:00:00'
+            number_sessions: 15
+            periodicity_id: 24
+            observation: Lorem ipsum dolor sit am
+            patient_id: 43
+            previous: false
+            date_first_cycle: '2019-01-01'
+            date_last_cycle: '2019-01-01'
+            type_id: 27
+            hospital_id: 27

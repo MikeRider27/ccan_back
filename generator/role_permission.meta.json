@@ -1,0 +1,33 @@
+{
+  "icon": "chevron_right",
+  "main_title": null,
+  "titles": {
+  },
+  "no_list": [
+    "id"
+  ],
+  "no_edit": [
+    "id"
+  ],
+  "required": [
+    "id",
+    "role",
+    "permission"
+  ],
+  "currency_fields": [ ],
+  "image_fields": [ ],
+  "relations": { 
+    "role": {
+      "dependent_attr": "role_id",
+      "origin_attr": "id",
+      "origin_model": "role",
+      "label_attr": "description"
+    },
+    "permission": {
+      "dependent_attr": "permission_id",
+      "origin_attr": "id",
+      "origin_model": "permission",
+      "label_attr": "description"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+Guarda un Mensaje
+---
+tags:
+- "message"
+responses:
+  200:
+    description: Se guarda un Mensaje
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/MessagePost"
+definitions:
+    MessagePost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            mensaje:
+              type: "string"
+            asunto:
+              type: "string"
+            fecha_mensaje:
+              type: "datetime"
+            emisor_id:
+              type: "int64"
+        example:
+            id: 2
+            mensaje: mensaje
+            asunto: asunto
+            fecha_mensaje: '2019-01-01T00:00:00'
+            emisor_id: 1

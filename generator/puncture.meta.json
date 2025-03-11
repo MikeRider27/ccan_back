@@ -1,0 +1,34 @@
+{
+  "icon": "chevron_right",
+  "main_title": null,
+  "titles": {
+  },
+  "no_list": [
+    "id"
+  ],
+  "no_edit": [
+    "id"
+  ],
+  "required": [
+    "id",
+    "patient",
+    "date",
+    "doctor"
+  ],
+  "currency_fields": [ ],
+  "image_fields": [ ],
+  "relations": { 
+    "patient": {
+      "dependent_attr": "patient_id",
+      "origin_attr": "id",
+      "origin_model": "patient",
+      "label_attr": "address"
+    },
+    "doctor": {
+      "dependent_attr": "doctor_id",
+      "origin_attr": "id",
+      "origin_model": "doctor",
+      "label_attr": "document_number"
+    }
+  }
+}

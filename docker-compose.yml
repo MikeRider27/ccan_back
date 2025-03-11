@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: my_python_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "6060:5000"
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - FLASK_ENV=development
+    command: gunicorn -b :5000 --limit-request-field_size 16380 app:app

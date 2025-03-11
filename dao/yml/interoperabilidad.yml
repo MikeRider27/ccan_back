@@ -1,0 +1,291 @@
+map_interoerabilidad_ccan:
+  hospital:
+    - nombre: HOSPITAL NACIONAL DE ITAUGUA
+      interoperabilidad_id: 1
+      ccan_id: 3
+
+interoperabilidad:
+  patient:
+    biopsia: |
+      SELECT b.fecha_informe,
+             NULLIF(p.documento_nro, '')     AS documento_nro,
+             s.idestablecimiento,
+             NULLIF(b.codigo_morfologia, '') AS codigo_morfologia,
+             NULLIF(b.cod_topografia, '')    AS cod_topografia,
+             NULLIF(b.cod_localizacion, '')  AS cod_localizacion,
+             (CASE
+                  WHEN NULLIF(b.re, '') = 'POSITIVO' THEN 'positive'
+                  WHEN NULLIF(b.re, '') = 'NEGATIVO' THEN 'negative'
+                  ELSE 'no_data' END)        AS re,
+             (CASE
+                  WHEN NULLIF(b.rp, '') = 'POSITIVO' THEN 'positive'
+                  WHEN NULLIF(b.rp, '') = 'NEGATIVO' THEN 'negative'
+                  ELSE 'no_data' END)        AS rp,
+             (CASE
+                  WHEN NULLIF(b.her2, '') = 'POSITIVO' THEN 'positive'
+                  WHEN NULLIF(b.her2, '') = 'NEGATIVO' THEN 'negative'
+                  ELSE 'no_data' END)        AS her2,
+             b.tamanho_tumor,
+             NULLIF(s.dx_presuntivo, '')     AS dx_presuntivo,
+             NULLIF(s.material, '')          AS material,
+             NULLIF(b.diagnostico, '')       AS diagnostico,
+             NULLIF(b.clasificacion, '')     AS clasificacion,
+             NULLIF(b.macroscopia, '')       AS macroscopia,
+             NULLIF(b.microscopia, '')       AS microscopia
+      FROM biopsia b
+               JOIN solicitud s ON b.idsolicitud = s.idsolicitud
+               JOIN paciente p ON s.idpaciente = p.idpaciente
+      WHERE fecha_informe >= '2023-01-01'
+        AND p.documento_nro = :patient_document
+      ORDER BY b.fecha_informe
+
+    sigap: |
+      SELECT DISTINCT ON (p.documento_nro) documento_nro,
+                                           nombres,
+                                           apellidos,
+                                           fecha_nac::TIMESTAMP WITHOUT TIME ZONE::DATE        AS fecha_nac,
+                                           direccion,
+                                           CASE
+                                               WHEN sexo = 'F' OR sexo = 'M' THEN sexo
+                                               ELSE 'SD'
+                                               END                                             AS sexo,
+                                           CASE
+                                               WHEN tipo_documento LIKE '%CEDULA%' OR tipo_documento = '1' OR
+                                                    idtipo_documento = 1 THEN 'CI'
+                                               WHEN tipo_documento = '2' OR idtipo_documento = 2 THEN 'PASS'
+                                               ELSE 'PROV'
+                                               END                                             AS tipo_documento,
+                                           c.descripcion                                       AS ciudad,
+                                           (c.iddepartamento - 1)                              AS departamento,
+                                           TRIM(p2.pais_descri)                                AS pais,
+                                           p.telefono_1,
+                                           p.telefono_2,
+                                           p2.nacio                                            AS nacionalidad,
+                                           CASE
+                                               WHEN p.estadocivil LIKE '%CASAD%' THEN 'CAS'
+                                               WHEN p.estadocivil LIKE '%DIVORCIAD%' THEN 'DIV'
+                                               WHEN p.estadocivil LIKE '%SEPARAD%' THEN 'SEP'
+                                               WHEN p.estadocivil LIKE '%VIUD%' THEN 'VIU'
+                                               WHEN p.estadocivil LIKE '%PAR%HECH%' OR p.estadocivil LIKE '%UNI%LIBRE%'
+                                                   THEN 'PAR_HEC'
+                                               ELSE 'SOL'
+                                               END                                             AS estadocivil,
+                                           p.fecha_creacion::TIMESTAMP WITHOUT TIME ZONE::DATE AS fecha_creacion,
+                                           s.idestablecimiento                                 AS id_establecimiento,
+                                           p.nro_ficha,
+                                           NULL                                                AS hospital_codigo,
+                                           'SIGAP'                                             AS origen_interoperabilidad
+      FROM paciente p
+               LEFT JOIN ciudad c ON c.idciudad = p.idlocalidad
+               LEFT JOIN pais p2 ON p2.id_pais = p.idpais
+               JOIN solicitud s ON s.idpaciente = p.idpaciente
+      WHERE p.documento_nro IS NOT NULL
+        AND p.documento_nro <> ''
+        AND p.tipo_documento IS NOT NULL
+        AND p.tipo_documento <> ''
+        AND p.documento_nro IN (SELECT DISTINCT p.documento_nro
+                                FROM biopsia b
+                                         JOIN solicitud s ON b.idsolicitud = s.idsolicitud
+                                         JOIN paciente p ON s.idpaciente = p.idpaciente
+                                WHERE p.documento_nro IS NOT NULL
+                                  AND p.documento_nro <> ''
+                                  AND (p.documento_nro NOT ILIKE '%NO TIENE%' OR
+                                       p.documento_nro NOT ILIKE '%NO COINCIDE%')
+                                  AND s.material ILIKE '%mama%'
+                                  AND (b.clasificacion ILIKE '%NEOPLASICO MALIGNO%'
+                                    OR b.cie10 ILIKE '%c50%' OR b.cod_topografia ILIKE '%c50%' OR
+                                       b.cod_localizacion ILIKE '%c50%')
+                                  AND s.fecha_creacion >= '2023-01-01')
+      UNION
+      SELECT documento_nro,
+             nombres,
+             apellidos,
+             fecha_nac,
+             direccion,
+             sexo,
+             tipo_documento,
+             ciudad,
+             departamento,
+             pais,
+             telefono_1,
+             telefono_2,
+             nacionalidad,
+             estadocivil,
+             fecha_creacion,
+             id_establecimiento,
+             nro_ficha,
+             hospital_codigo,
+             'HIS' AS origen_interoperabilidad
+      FROM (SELECT DISTINCT TRIM(rch.codigo_paciente)                                       AS documento_nro,
+                            TRIM(rch.primer_nombre) || ' ' || TRIM(rch.segundo_nombre)      AS nombres,
+                            TRIM(rch.primer_apellido) || ' ' || TRIM(rch.segundo_apellido)  AS apellidos,
+                            CAST(NULL AS date)                                              AS fecha_nac,
+                            NULL                                                            AS direccion,
+                            CAST((CASE
+                                      WHEN rch.sexo = 'Masculino' THEN 'M'
+                                      WHEN rch.sexo = 'Femenino' THEN 'F'
+                                      ELSE 'SD'
+                                END) AS varchar)                                            AS sexo,
+                            'CI'                                                            AS tipo_documento,
+                            NULL                                                            AS ciudad,
+                            CAST(NULL AS integer)                                           AS departamento,
+                            NULL                                                            AS pais,
+                            NULL                                                            AS telefono_1,
+                            NULL                                                            AS telefono_2,
+                            NULL                                                            AS nacionalidad,
+                            NULL                                                            AS estadocivil,
+                            rch.fecha                                                       AS fecha_creacion,
+                            CAST(NULL AS integer)                                           AS id_establecimiento,
+                            CAST(NULL AS varchar)                                           AS nro_ficha,
+                            e."Codigo_HIS"                                                  AS hospital_codigo,
+                            ROW_NUMBER()
+                            OVER (PARTITION BY rch.codigo_paciente ORDER BY rch.fecha DESC) AS orden
+            FROM receta_consulta_his rch
+                     JOIN establecimientos e ON e."Codigo_HIS" = rch.hospital_codigo
+            WHERE (cie_10_cm ILIKE '%c50%'
+                OR cie_10_diag1 ILIKE '%c50%'
+                OR cie_10_diag2 ILIKE '%c50%')
+              AND fecha >= '2023-01-01'
+              AND e."EstablecimientoCodigo" IN ('226', '245', '803', '801', '204')) t1
+      WHERE orden = 1
+
+  inventario:
+    siciap_mov_origen_lote: |
+      SELECT "Origen.Codigo" AS origen_codigo,
+             "Origen.Tipo"   AS origen_tipo,
+             "Origen.Nombre" AS origen_nombre,
+             numero_lote     AS numero_lote
+      FROM public.movimiento_de_stock
+      WHERE codigo_medicamento = :codigo_medicamento
+      GROUP BY "Origen.Codigo", "Origen.Tipo", "Origen.Nombre", numero_lote
+      ORDER BY "Origen.Nombre", numero_lote
+
+    siciap_mov: |
+      SELECT 'SICIAP' as origin,
+             fecha_hora as date,
+             saldo_disponible as balance,
+             cantidad as quantity,
+             "Tipo Movimiento" as description,
+             observacion as observation,
+             producto_nombre,
+             codigo_medicamento,
+             producto_presentacion,
+             producto_concentracion,
+             producto_forma_farmaceutica,
+             fecha_vencimiento,
+             numero_lote,
+             "Origen.Codigo" as origen_codigo,
+             "Origen.Tipo" as origen_tipo,
+             "Origen.Nombre" as origen_nombre,
+             "Destino.Codigo" as destino_codigo,
+             "Destino.Tipo" as destino_tipo,
+             "Destino.Nombre" as destino_nombre
+      FROM movimiento_de_stock ms
+      WHERE codigo_medicamento = :codigo_medicamento
+      ORDER BY ms.fecha_hora
+
+    ccan_mov_origen_lote: |
+      SELECT orig_dep.code       AS origen_codigo,
+             orig_dep_type.value AS origen_tipo,
+             orig_dep.name       AS origen_nombre,
+             h.num_lot           AS numero_lote
+      FROM inventory.history h
+               LEFT JOIN parameter event ON event.id = h.event_id
+               LEFT JOIN inventory.deposit_stock ods ON ods.id = h.orig_deposit_stock_id
+               LEFT JOIN inventory.deposit orig_dep ON orig_dep.id = ods.deposit_id
+               LEFT JOIN inventory.stock stock ON stock.id = ods.stock_id
+               LEFT JOIN public.medicine med ON med.id = stock.medicine_id
+               LEFT JOIN parameter orig_dep_type ON orig_dep_type.id = orig_dep.type_id
+      GROUP BY orig_dep.code, orig_dep_type.value, orig_dep.name, h.num_lot
+      ORDER BY orig_dep.name, h.num_lot
+
+    ccan_mov: |
+      SELECT COALESCE(h.origin, 'CCAN')      AS origin,
+             COALESCE(h.date, h.date_create) AS date,
+             event.value                     AS enent,
+             h.description                   AS description,
+             h.observation                   AS observation,
+             orig_dep.code                   AS origen_codigo,
+             orig_dep_type.value             AS origen_tipo,
+             orig_dep.name                   AS origen_nombre,
+             dest_dep.code                   AS destino_codigo,
+             dest_dep_type.value             AS destino_tipo,
+             dest_dep.name                   AS destino_nombre,
+             h.quantity                      AS quantity,
+             h.original_quantity             AS original_quantity,
+             h.num_lot                       AS numero_lote,
+             h.origin                        AS origen_interoperabilidad
+      FROM inventory.history h
+               LEFT JOIN parameter event ON event.id = h.event_id
+               LEFT JOIN inventory.deposit_stock ods ON ods.id = h.orig_deposit_stock_id
+               LEFT JOIN inventory.deposit orig_dep ON orig_dep.id = ods.deposit_id
+               LEFT JOIN parameter orig_dep_type ON orig_dep_type.id = orig_dep.type_id
+               LEFT JOIN inventory.deposit_stock dds ON dds.id = h.dest_deposit_stock_id
+               LEFT JOIN inventory.deposit dest_dep ON dest_dep.id = dds.deposit_id
+               LEFT JOIN parameter dest_dep_type ON dest_dep_type.id = dest_dep.type_id
+               LEFT JOIN inventory.stock stock ON stock.id = ods.stock_id
+               LEFT JOIN public.medicine med ON med.id = stock.medicine_id
+      WHERE med.code = :codigo_medicamento
+      ORDER BY COALESCE(h.date, h.date_create), h.description DESC
+
+    dispatch_medication: |
+      SELECT cedula_identidad,
+             nombres,
+             apellidos,
+             nombre,
+             codigo_consumidor,
+             codigo_profesional,
+             sucursal,
+             codigo_sucursal,
+             fecha_hora,
+             producto,
+             codigo_medicamento,
+             precio_unitario,
+             cantidad,
+             comentario,
+             codigo_de_consumo
+      FROM consumo_paciente
+      WHERE trim(cast(codigo_medicamento AS text)) = trim(:medicine_code)
+        AND trim(cast(cedula_identidad AS text)) = trim(:patient_document)
+        AND fecha_hora >= :patient_registration_date
+      ORDER BY fecha_hora
+
+    dispatch_medication_history: |
+      SELECT cedula_identidad,
+             sucursal,
+             codigo_sucursal,
+             fecha_hora,
+             producto,
+             codigo_medicamento,
+             cantidad
+      FROM consumo_paciente
+      WHERE trim(cast(cedula_identidad AS text)) = trim(:patient_document)
+        AND fecha_hora >= :patient_registration_date
+      ORDER BY fecha_hora
+
+  consultation:
+    his: |
+      SELECT DISTINCT r.codigo_paciente,
+                      r.fecha,
+                      r.profesional_de_la_salud,
+                      r.medico_nombres,
+                      r.medico_apellidos,
+                      r.especialidad,
+                      r.cie_10_cm,
+                      r.nom_cie10,
+                      r.nom_cie10_1,
+                      r.nom_cie10_2,
+                      r.cie_10_diag1,
+                      r.cie_10_diag2,
+                      r.codigo_medicamento,
+                      r.descripcion_medicamento,
+                      r.cantidad_dispensada,
+                      r.cantidad_recetada,
+                      r.hospital_codigo,
+                      r.tipo_de_consulta,
+                      r.motivo_consulta,
+                      e. *
+      FROM receta_consulta_his r
+      JOIN establecimientos e ON r.hospital_codigo = e."Codigo_HIS"
+      WHERE r.codigo_paciente = :patient_document
+        AND r.fecha >= :patient_registration_date

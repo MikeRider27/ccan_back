@@ -1,0 +1,82 @@
+Search Drugs
+---
+tags:
+  - "search"
+summary: "Search for drugs based on filters."
+description: "Endpoint to search for drugs using various filters such as 
+  generic name and therapeutic action."
+parameters:
+  - in: header
+    name: Authorization
+    description: "Bearer access token required for authentication."
+    required: true
+    type: string
+    default: "Bearer [access_token]"
+  - in: body
+    name: body
+    description: "Filters to apply for searching drugs."
+    required: false
+    schema:
+      type: object
+      properties:
+        generic_name:
+          type: string
+          description: "The generic name assigned to the drug."
+          example: "Amoxicillin"
+        therapeutic_action:
+          type: string
+          description: "A description of the therapeutic action of the drug."
+          example: "Broad-spectrum antibiotic used to treat bacterial infections."
+        category_id:
+          type: integer
+          description: "Category ID for the drug."
+          example: 10
+        status:
+          type: integer
+          description: "Drug status. Active (1) or Inactive (0)."
+          example: 1
+responses:
+  200:
+    description: "Results of the search query in paginated format."
+    schema:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: "Current page number."
+          example: 1
+        per_page:
+          type: integer
+          description: "Number of records per page."
+          example: 10
+        total:
+          type: integer
+          description: "Total number of drug records."
+          example: 123
+        items:
+          type: array
+          description: "List of drugs in the current page."
+          items:
+            $ref: "#/definitions/Drug"
+  500:
+    description: "Internal server error."
+definitions:
+  Drug:
+    type: object
+    properties:
+      uuid:
+        type: string
+        description: "Unique identifier for the drug."
+        example: "6e9557c3-7b44-4892-97bb-c3dc82d565ab"
+      generic_name:
+        type: string
+        example: "Amoxicillin"
+      therapeutic_action:
+        type: string
+        example: "Broad-spectrum antibiotic"
+      category_id:
+        type: integer
+        example: 10
+      status:
+        type: integer
+        example: 1

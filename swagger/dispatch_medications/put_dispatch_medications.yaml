@@ -1,0 +1,56 @@
+Actualiza Dispatch_medications
+---
+tags:
+- "dispatch-medications"
+responses:
+  200:
+    description: Se actualiza Dispatch_medications
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/DispatchMedicationsPut"
+definitions:
+    DispatchMedicationsPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            deposit_stock_id:
+                type: "int64"
+            patient_id:
+                type: "int64"
+            medicine_medication_order_id:
+                type: "int64"
+            treatment_program:
+                type: "boolean"
+            quantity:
+                type: "float"
+            date_create:
+              type: "datetime"
+            user_create:
+              type: "string"
+            date:
+              type: "string"
+        example:
+            id: 10
+            deposit_stock_id: 22
+            patient_id: 38
+            medicine_medication_order_id: 24
+            treatment_program: false
+            quantity: 43.5
+            date_create: '2019-01-01T00:00:00'
+            user_create: Lorem ipsum dolor sit amet,
+            date: '2019-01-01T00:00:00'

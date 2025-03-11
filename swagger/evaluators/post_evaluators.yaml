@@ -1,0 +1,35 @@
+Guarda un Evaluators
+---
+tags:
+- "evaluators"
+responses:
+  200:
+    description: Se guarda Evaluators
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/EvaluatorsPost"
+definitions:
+    EvaluatorsPost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            evaluacion_id:
+              type: "int64"
+            evaluador_id:
+              type: "int64"
+        example:
+            id: 38
+            evaluacion_id: 40
+            evaluador_id: 41

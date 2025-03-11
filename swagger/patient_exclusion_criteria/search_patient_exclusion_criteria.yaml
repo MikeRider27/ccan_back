@@ -1,0 +1,79 @@
+Lista de Patient_exclusion_criteria
+---
+tags:
+  - "search"
+responses:
+  200:
+    description: Se lista Patient_exclusion_criteria filtrados
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - in: query
+    name: page
+    description: Current items page
+    default: 1
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/PatientExclusionCriteriaSearch"
+definitions:
+    PatientExclusionCriteriaSearch:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            patient_id:
+                type: "int64"
+            distant_metastatic:
+                type: "boolean"
+            life_expectancy_greater_5_comorbidities:
+                type: "boolean"
+            fevi_less_50:
+                type: "boolean"
+            ecog_eq_greater_2:
+                type: "boolean"
+            congestive_ic:
+                type: "boolean"
+            ischemic_heart_disease:
+                type: "boolean"
+            arritmia_inestable:
+                type: "boolean"
+            valve_disease:
+                type: "boolean"
+            uncontrolled_hta:
+                type: "boolean"
+            doxorubicin_greater_360mg_by_m2:
+                type: "boolean"
+            epirrubicina_greater__720mg_by_m2:
+                type: "boolean"
+            pregnancy:
+                type: "boolean"
+            lactation:
+                type: "boolean"
+            patient_received_document:
+                type: "boolean"
+            consent_obtained_through_dialogue:
+                type: "boolean"
+            has_received_sufficient_sufficient:
+                type: "boolean"
+            has_asked_questions_and_can_continue_asking:
+                type: "boolean"
+            informed_receive_permanent_continuous_information:
+                type: "boolean"
+            information_received_clear_complete:
+                type: "boolean"
+            received_information_understandable_language:
+                type: "boolean"
+            treatment_hospital_id:
+                type: "int64"
+        example:
+            id: 27
+            patient_id: 44
+            treatment_hospital_id: 13

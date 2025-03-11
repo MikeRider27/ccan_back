@@ -1,0 +1,45 @@
+Actualiza medicine_treatment_order
+---
+tags:
+- "medicine-treatment-order"
+responses:
+  200:
+    description: Se actualiza medicine_treatment_order
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      schema:
+        $ref: "#/definitions/MedicineTreatmentOrderPut"
+definitions:
+    MedicineTreatmentOrderPut:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            medicine_id:
+              type: "int64"
+            treatment_order_id:
+              type: "int64"
+            quantity:
+              type: "float"
+            observation:
+              type: "string"
+        example:
+            id: 31
+            medicine_id: 5
+            treatment_order_id: 34
+            quantity: 1.5
+            observation: Lorem ipsum dolor sit amet

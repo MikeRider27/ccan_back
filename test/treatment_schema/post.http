@@ -1,0 +1,113 @@
+GET http://localhost:5000/api/treatment_scheme?page=1
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:5000/api/search/treatment_scheme
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "code": "TSC",
+  "name": "Protocol"
+}
+
+###
+GET http://localhost:5000/api/treatment_scheme/f66224cb-ff5b-440b-9463-9b4a573393be
+Authorization: Bearer {{token}}
+
+###
+DELETE http://localhost:5000/api/treatment_scheme/8bfad0ad-18cc-4202-aa0d-c01ae6f6844f
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:5000/api/search/patient_evaluation?page=1
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:5000/api/establishment_change
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "hospital_id":  4
+}
+
+###
+POST http://localhost:5000/api/treatment_scheme
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Chemotherapy Protocol A",
+  "description": "A multi-step chemotherapy protocol.",
+  "periodicity_id": 264,
+  "series_count": 5,
+  "pre_medication": "Administer antihistamines.",
+  "medication": "Cisplatin and Etoposide.",
+  "post_medication": "Ensure hydration.",
+  "category_id": 277,
+  "notes": "Renal function monitoring required.",
+  "preparation_instructions": "Dilute in 500ml saline.",
+  "status": 1,
+  "scheme_products": [
+    {
+      "product_uuid": "7365b412-8dd3-4604-a68b-2492347ddcbb",
+      "administration_route_id": 226,
+      "status": 0
+    }
+  ]
+}
+###
+PUT http://localhost:5000/api/treatment_scheme/bedf2c61-a636-4c13-aa44-0af54839f4c0
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Chemotherapy Protocol A",
+  "description": "A multi-step chemotherapy protocol.",
+  "periodicity_id": 264,
+  "series_count": 5,
+  "pre_medication": "Administer antihistamines.",
+  "medication": "Cisplatin and Etoposide.",
+  "post_medication": "Ensure hydration.",
+  "category_id": 277,
+  "notes": "Renal function monitoring required.",
+  "preparation_instructions": "Dilute in 500ml saline.",
+  "status": 0,
+  "scheme_products": [
+    {
+      "uuid": "2364d028-cac5-4c26-a832-5b9729562c2e",
+      "product_uuid": "7365b412-8dd3-4604-a68b-2492347ddcbb",
+      "administration_route_id": 226,
+      "status": 0
+    }
+  ]
+}
+
+
+###
+PUT http://localhost:5000/api/treatment_scheme/160ee0de-d648-4875-b310-9da845c80458
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "category_id": 2,
+  "cycles": 5,
+  "description": "A description of the chemotherapy protocol.",
+  "duration": 30,
+  "frequency_id": 1,
+  "medication": {
+    "chemo_1": "cisplatin",
+    "chemo_2": "etoposide"
+  },
+  "name": "Chemotherapy Protocol A",
+  "notes": "Additional details about the protocol.",
+  "post_medication": {
+    "relief_med_1": "painkiller"
+  },
+  "pre_medication": {
+    "med_1": "anti-inflammatory",
+    "med_2": "antihistamine"
+  },
+  "status": 1
+}

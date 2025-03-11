@@ -1,0 +1,38 @@
+Actualiza Module_role
+---
+tags:
+- "module-role"
+responses:
+  200:
+    description: Se actualiza Module_role
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/ModuleRolePut"
+definitions:
+    ModuleRolePut:
+        type: "object"
+        properties:
+            id:
+                type: "int"
+            module_id:
+                type: "int64"
+            role_id:
+                type: "int64"
+        example:
+            id: 24
+            module_id: 29
+            role_id: 18

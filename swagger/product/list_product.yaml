@@ -1,0 +1,178 @@
+Fetch All Products
+---
+tags:
+  - "product"
+summary: "Fetch all products"
+description: >
+  Retrieve a paginated list of all products associated with the specified hospital.
+  The products belong to the user's authenticated and selected hospital.
+  This endpoint requires an access token for authentication.
+parameters:
+  - in: header
+    name: Authorization
+    description: >
+      Access Token in the format "Bearer [access_token]".
+      The token must be provided for authorization purposes.
+    required: true
+    schema:
+      type: string
+      default: "Bearer [access_token]"
+  - in: query
+    name: page
+    description: Current page number for pagination.
+    required: false
+    schema:
+      type: integer
+      default: 1
+      example: 2
+  - in: query
+    name: rowsPerPage
+    description: >
+      Number of products to display per page.
+      This controls the page size of the results.
+    required: false
+    schema:
+      type: integer
+      default: 20
+      example: 10
+responses:
+  200:
+    description: Successfully retrieved the list of products.
+    schema:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: The current page number.
+          example: 1
+        per_page:
+          type: integer
+          description: The number of products displayed per page.
+          example: 10
+        total:
+          type: integer
+          description: Total number of products available.
+          example: 500
+        items:
+          type: array
+          description: The list of products on the current page.
+          items:
+            type: object
+            properties:
+              uuid:
+                type: string
+                format: uuid
+                description: The unique identifier for the product.
+                example: "123e4567-e89b-12d3-a456-426614174000"
+              hospital_id:
+                type: integer
+                description: The hospital ID linked to this product.
+                example: 1
+              medicine_id:
+                type: integer
+                description: The ID of the associated medicine.
+                example: 10
+              drug_id:
+                type: string
+                description: UUID of the linked drug entry.
+                example: "abcd1234-5678-4efe-bb89-abcdef123456"
+              code:
+                type: string
+                description: The unique code assigned to the product.
+                example: "MED001"
+              description:
+                type: string
+                description: A brief description of the product.
+                example: "Paracetamol 500mg tablet"
+              concentration:
+                type: number
+                format: float
+                description: The concentration of the product.
+                example: 500.0
+              concentration_unit_id:
+                type: integer
+                description: ID for the product's concentration unit.
+                example: 1
+              quantity:
+                type: number
+                format: float
+                description: The quantity of the product available.
+                example: 10.0
+              quantity_unit_id:
+                type: integer
+                description: ID for the product's quantity unit.
+                example: 2
+              type_id:
+                type: integer
+                description: Product type identifier.
+                example: 3
+              status:
+                type: integer
+                description: "Status of the product (1: Active, 0: Inactive)."
+                example: 1
+              premedication:
+                type: string
+                description: Premedication specifics for the product.
+                example: "Take on an empty stomach"
+              medication:
+                type: string
+                description: Instructions for general medication.
+                example: "One tablet daily"
+              postmedication:
+                type: string
+                description: Post-medication instructions.
+                example: "Drink plenty of water."
+              dose_limit:
+                type: number
+                format: float
+                description: Maximum product dosage permitted.
+                example: 2000.0
+              dose_unit_id:
+                type: integer
+                description: ID for dose measurement unit.
+                example: 4
+              contraindications:
+                type: string
+                description: Possible contraindications for product use.
+                example: "Not recommended for liver patients"
+  400:
+    description: Invalid request data or no records found.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              description: The error message.
+              example: "RECORD_NOT_FOUND"
+            error:
+              type: string
+              description: Details of the error (if provided).
+              example: "Invalid page parameter"
+  403:
+    description: Unauthorized access to the product list.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              description: The error message.
+              example: "UNAUTHORIZED_ACCESS"
+  500:
+    description: Unhandled exception during data retrieval.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Generic error message for processing issues.
+              example: "PROCESS_ERROR"
+            error:
+              type: string
+              description: Detailed explanation of the error.
+              example: "Database connection failure"

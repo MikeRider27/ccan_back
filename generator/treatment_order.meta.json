@@ -1,0 +1,46 @@
+{
+  "icon": "chevron_right",
+  "main_title": null,
+  "titles": {
+  },
+  "no_list": [
+    "id"
+  ],
+  "no_edit": [
+    "id"
+  ],
+  "required": [
+    "id",
+    "date",
+    "number_sessions",
+    "periodicity",
+    "previous",
+    "type_treatment"
+  ],
+  "date_fields": [
+    "date_first_cycle",
+    "date_last_cycle"
+  ],
+  "currency_fields": [ ],
+  "image_fields": [ ],
+  "relations": { 
+    "periodicity": {
+      "dependent_attr": "periodicity_id",
+      "origin_attr": "id",
+      "origin_model": "periodicity",
+      "label_attr": "description"
+    },
+    "patient": {
+      "dependent_attr": "patient_id",
+      "origin_attr": "id",
+      "origin_model": "patient",
+      "label_attr": "address"
+    },
+    "type_treatment": {
+      "dependent_attr": "type_id",
+      "origin_attr": "id",
+      "origin_model": "type_treatment",
+      "label_attr": "description"
+    }
+  }
+}

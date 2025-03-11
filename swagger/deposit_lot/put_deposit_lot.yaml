@@ -1,0 +1,44 @@
+Actualiza deposit_lot
+---
+tags:
+- "deposit_lot"
+responses:
+  200:
+    description: Se actualiza deposit_lot
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/DepositLotPut"
+definitions:
+    DepositLotPut:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            deposit_stock_id:
+              type: "int64"
+            lote_id:
+              type: "int64"
+            medicine_id:
+              type: "int64"
+            quantity:
+              type: "int64"
+        example:
+            id: 22
+            deposit_stock_id: 28
+            lote_id: 47
+            medicine_id: 21
+            quantity: 44

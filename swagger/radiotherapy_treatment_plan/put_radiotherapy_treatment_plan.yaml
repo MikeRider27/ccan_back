@@ -1,0 +1,38 @@
+Actualiza Radiotherapy_treatment_plan
+---
+tags:
+- "radiotherapy-treatment-plan"
+responses:
+  200:
+    description: Se actualiza Radiotherapy_treatment_plan
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/RadiotherapyTreatmentPlanPut"
+definitions:
+    RadiotherapyTreatmentPlanPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            radiotherapy_id:
+                type: "int64"
+            treatment_plan_id:
+                type: "int64"
+        example:
+            id: 24
+            radiotherapy_id: 6
+            treatment_plan_id: 19

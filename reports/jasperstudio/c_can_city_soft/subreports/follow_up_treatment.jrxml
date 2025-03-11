@@ -1,0 +1,1021 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="follow_up_treatment" pageWidth="580" pageHeight="802" columnWidth="580" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c7c61c00-4e93-4df4-87b5-9e013780f4ec">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Readiness"/>
+	<parameter name="patient_id" class="java.lang.Integer"/>
+	<parameter name="follow_up_treatment_report" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select 
+	tp."number" as tp_numero,
+	p.value as tp_estado,
+	tt.description AS tp_tipo_tratamiento,
+	tp.number_sessions as tp_number_sessions,
+	p2.description as tp_periodicidad,
+	to_char(tp.date_first_cycle,'DD-MM-YYYY') AS tp_date_first_cycle,
+	to_char(tp.date_last_cycle,'DD-MM-YYYY') as tp_date_last_cycle,
+	h.description AS fu_hospital,
+	trim(d.firstname)||' '||trim(d.lastname) as fu_doctor_name,
+	to_char(tfu.follow_up_date,'DD-MM-YYYY') AS fu_fecha,
+	to_char(tfu.last_cancer_control_date ,'DD-MM-YYYY') AS fu_last_cancer_control_date,
+	tfu.type_treatment as fu_type_treatment,
+	tfu.breast as fu_mama,
+	case when tfu.armpit is true then 'SI' else 'NO' end as fu_armpit,
+	tfu.suspension_treatment as fu_suspendido,
+	tfu.suspension_treatment_reason as fu_suspencion_causa,
+	tfu.suspension_treatment_custom_reason as fu_suspencion_motivo_pers,
+	case when tfu.congestive_heart_failure is true then 'SI' else 'NO' end as fu_insuf_cardiaca,
+	to_char(tfu.fevi_follow_up_date,'DD-MM-YYYY') AS fevi_follow_up_date,
+	tfu.fevi_value,
+	tfu.fevi_trastuzumab_dose,
+	case when tfu.other_severe_adverse_events is true then 'SI' else 'NO' end as otros_event_adver_severos,
+	tfu.other_severe_adverse_events_detail,
+	tfu.other_complementary_studies,
+	case when tfu.dose_adjustment is true then 'SI' else 'NO' end as ajuste_dosis,
+	tfu.dose_adjustment_reason,
+	tfu.comentaries 
+from follow_up_treatment_plan futp 
+join treatment_plan tp on tp.id =futp.treatment_plan_id 
+join treatment_follow_up tfu on tfu.id=futp.follow_up_id 
+	left join type_treatment tt ON 
+	 tp.type_id = tt.id 
+	left join hospital h ON h.id = tfu.hospital_id 
+	left join "parameter" p on p.id = tp.state_id 
+	left join periodicity p2 on p2.id = tp.periodicity_id 
+	left join doctor d on d.id =tfu.doctor_id
+WHERE 
+	 tp.patient_id = $P{patient_id} 
+	 and $P{follow_up_treatment_report}  =true]]>
+	</queryString>
+	<field name="tp_numero" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="tp_numero"/>
+		<property name="com.jaspersoft.studio.field.label" value="tp_numero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="treatment_plan"/>
+	</field>
+	<field name="tp_estado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tp_estado"/>
+		<property name="com.jaspersoft.studio.field.label" value="tp_estado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="parameter"/>
+	</field>
+	<field name="tp_tipo_tratamiento" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tp_tipo_tratamiento"/>
+		<property name="com.jaspersoft.studio.field.label" value="tp_tipo_tratamiento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="type_treatment"/>
+	</field>
+	<field name="tp_number_sessions" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="tp_number_sessions"/>
+		<property name="com.jaspersoft.studio.field.label" value="tp_number_sessions"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="treatment_plan"/>
+	</field>
+	<field name="tp_periodicidad" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tp_periodicidad"/>
+		<property name="com.jaspersoft.studio.field.label" value="tp_periodicidad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="periodicity"/>
+	</field>
+	<field name="tp_date_first_cycle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tp_date_first_cycle"/>
+		<property name="com.jaspersoft.studio.field.label" value="tp_date_first_cycle"/>
+	</field>
+	<field name="tp_date_last_cycle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tp_date_last_cycle"/>
+		<property name="com.jaspersoft.studio.field.label" value="tp_date_last_cycle"/>
+	</field>
+	<field name="fu_hospital" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fu_hospital"/>
+		<property name="com.jaspersoft.studio.field.label" value="fu_hospital"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hospital"/>
+	</field>
+	<field name="fu_doctor_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fu_doctor_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="fu_doctor_name"/>
+	</field>
+	<field name="fu_fecha" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fu_fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="fu_fecha"/>
+	</field>
+	<field name="fu_last_cancer_control_date" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fu_last_cancer_control_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="fu_last_cancer_control_date"/>
+	</field>
+	<field name="fu_type_treatment" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fu_type_treatment"/>
+		<property name="com.jaspersoft.studio.field.label" value="fu_type_treatment"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="treatment_follow_up"/>
+	</field>
+	<field name="fu_mama" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fu_mama"/>
+		<property name="com.jaspersoft.studio.field.label" value="fu_mama"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="treatment_follow_up"/>
+	</field>
+	<field name="fu_armpit" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fu_armpit"/>
+		<property name="com.jaspersoft.studio.field.label" value="fu_armpit"/>
+	</field>
+	<field name="fu_suspendido" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fu_suspendido"/>
+		<property name="com.jaspersoft.studio.field.label" value="fu_suspendido"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="treatment_follow_up"/>
+	</field>
+	<field name="fu_suspencion_causa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fu_suspencion_causa"/>
+		<property name="com.jaspersoft.studio.field.label" value="fu_suspencion_causa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="treatment_follow_up"/>
+	</field>
+	<field name="fu_suspencion_motivo_pers" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fu_suspencion_motivo_pers"/>
+		<property name="com.jaspersoft.studio.field.label" value="fu_suspencion_motivo_pers"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="treatment_follow_up"/>
+	</field>
+	<field name="fu_insuf_cardiaca" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fu_insuf_cardiaca"/>
+		<property name="com.jaspersoft.studio.field.label" value="fu_insuf_cardiaca"/>
+	</field>
+	<field name="fevi_follow_up_date" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fevi_follow_up_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="fevi_follow_up_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="treatment_follow_up"/>
+	</field>
+	<field name="fevi_value" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="fevi_value"/>
+		<property name="com.jaspersoft.studio.field.label" value="fevi_value"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="treatment_follow_up"/>
+	</field>
+	<field name="fevi_trastuzumab_dose" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="fevi_trastuzumab_dose"/>
+		<property name="com.jaspersoft.studio.field.label" value="fevi_trastuzumab_dose"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="treatment_follow_up"/>
+	</field>
+	<field name="otros_event_adver_severos" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="otros_event_adver_severos"/>
+		<property name="com.jaspersoft.studio.field.label" value="otros_event_adver_severos"/>
+	</field>
+	<field name="other_severe_adverse_events_detail" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="other_severe_adverse_events_detail"/>
+		<property name="com.jaspersoft.studio.field.label" value="other_severe_adverse_events_detail"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="treatment_follow_up"/>
+	</field>
+	<field name="other_complementary_studies" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="other_complementary_studies"/>
+		<property name="com.jaspersoft.studio.field.label" value="other_complementary_studies"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="treatment_follow_up"/>
+	</field>
+	<field name="ajuste_dosis" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ajuste_dosis"/>
+		<property name="com.jaspersoft.studio.field.label" value="ajuste_dosis"/>
+	</field>
+	<field name="dose_adjustment_reason" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dose_adjustment_reason"/>
+		<property name="com.jaspersoft.studio.field.label" value="dose_adjustment_reason"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="treatment_follow_up"/>
+	</field>
+	<field name="comentaries" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="comentaries"/>
+		<property name="com.jaspersoft.studio.field.label" value="comentaries"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="treatment_follow_up"/>
+	</field>
+	<background>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</background>
+	<pageHeader>
+		<band height="22">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<break>
+				<reportElement x="0" y="0" width="580" height="1" uuid="31c507da-1d64-4169-934b-c71d060ed043">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</break>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="2" width="530" height="20" forecolor="#616161" backcolor="#E0E0E0" uuid="83189c82-b4a9-46a6-86b6-94fcf1c2353f">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Seguimiento]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="736">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="10" y="170" width="250" height="20" uuid="936544c6-e82b-45fb-a04e-c6986887369b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e7a406e4-c82f-4ca4-ba8f-30db4c226738"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de seguimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="130" width="250" height="20" uuid="96d99397-1cd8-4a84-9df5-287bc459e763">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a205a8ed-afec-43bb-9422-4773ab55bb54"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Establecimiento de Salud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="30" width="184" height="20" uuid="1cdc2563-cba8-477c-a97b-e25622fc3701">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b97a39d-66c8-41aa-9266-051d262fd436"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de tratamiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="30" width="96" height="20" uuid="6b83e9c8-50f1-4913-8f96-5aaa244f37a6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dab1551b-1657-4181-8833-03125c4f7f6b"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número de sesiones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="30" width="140" height="20" uuid="5af0f814-a1c0-4981-96dc-efa246bf238e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="07fd8595-c54f-474b-bedc-02a2870279c4"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="30" width="110" height="20" uuid="cda9b628-ad85-47ec-abf5-3bdff0ebcaa6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fc7a775a-68a7-4b78-8e84-6661b9b2af95"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="70" width="110" height="20" uuid="3662701e-ca92-4755-aadd-0e50eeed929f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="212f4fff-c79a-4566-b81a-ce4bf99190fe"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Periodicidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="70" width="140" height="20" uuid="09e3b71f-ddde-413e-8d2c-2c99a83ed4bd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2b7f5eba-1813-412d-afb5-d3882b0d4c6a"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Primer Ciclo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="70" width="280" height="20" uuid="a113f05e-92a7-4b14-81c8-9f863487a61e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cad3f1df-7a25-4062-a5eb-6e4714eba51a"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Siguiente Ciclo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="130" width="280" height="20" uuid="e0fb7ccf-cd47-4566-a374-d25d93d6a264">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7253cbcb-051c-4042-a593-796c3ebfe6d3"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Médico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="10" width="530" height="20" forecolor="#616161" backcolor="#E0E0E0" uuid="a1bc9133-8ef3-4943-bdc4-bd723a0c031a">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Plan de Tratamiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="110" width="530" height="20" forecolor="#616161" backcolor="#E0E0E0" uuid="74719cd8-9183-4255-bee2-cadaab2491cb">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Datos generales del formulario de seguimiento]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="50" width="110" height="20" uuid="2a448098-8139-47f4-8c07-87a6b296ee3b">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tp_numero}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="120" y="50" width="140" height="20" uuid="f2ae4407-04da-4452-9400-7d7e568dc3e2">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tp_estado}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="260" y="50" width="184" height="20" uuid="d1b4659e-f2e7-4ba9-986f-e91ae0c0df67">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tp_tipo_tratamiento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="444" y="50" width="96" height="20" uuid="d8db40af-c94d-47ab-8688-44c0861bcbe5">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tp_number_sessions}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="90" width="110" height="20" uuid="9ec90ba0-162a-4cd6-aa42-1b3983f2d55a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tp_periodicidad}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="120" y="90" width="140" height="20" uuid="04301ca2-bc1d-4f05-aac2-82f97f24bdbe">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tp_date_first_cycle}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="260" y="90" width="280" height="20" uuid="b345635f-3747-42ba-8e93-86077bd8bfee">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tp_date_last_cycle}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="260" y="170" width="280" height="20" uuid="d1967526-1be6-4393-b17a-2b66ed4564d3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e7a406e4-c82f-4ca4-ba8f-30db4c226738"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de último control oncológico]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="150" width="250" height="20" uuid="dd0051de-0aef-415b-a839-08dd7b8b055e">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fu_hospital}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="260" y="150" width="280" height="20" uuid="3f8fbe84-9c65-44cc-8adb-c97de62ff0fc">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fu_doctor_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="190" width="250" height="20" uuid="aa36a5ef-a9f5-4079-a074-59aad6c45304">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fu_fecha}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="260" y="190" width="280" height="20" uuid="bb1f60ac-988a-46bd-98c6-feb0e731a2aa">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fu_last_cancer_control_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="230" width="250" height="20" uuid="44c8f4bc-d5b3-4439-8c81-c0a7158dc5ee">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a205a8ed-afec-43bb-9422-4773ab55bb54"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="230" width="184" height="20" uuid="13fc660e-5037-4efb-9622-29f8826ffb4c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7253cbcb-051c-4042-a593-796c3ebfe6d3"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="210" width="530" height="20" forecolor="#616161" backcolor="#E0E0E0" uuid="92ad99ba-dd9b-45db-b64e-e124dfb07a5b">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Tipo de tratamiento en curso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="230" width="96" height="20" uuid="ac796a27-2860-406b-ab30-0cc8c715e836">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7253cbcb-051c-4042-a593-796c3ebfe6d3"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Axila]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="250" width="250" height="20" uuid="c7b943d9-3bf4-4047-9474-267fcb76ef5a">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fu_type_treatment}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="260" y="250" width="184" height="20" uuid="cca8e5de-74d7-40b7-b722-2daa7094178a">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fu_mama}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="444" y="250" width="96" height="20" uuid="5466deee-45c1-4b9b-b12a-6c28669189e7">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fu_armpit}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="290" width="140" height="20" uuid="8eb0c57c-37f2-490e-ab15-b2ffa483f8f0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a205a8ed-afec-43bb-9422-4773ab55bb54"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Suspendido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="290" width="200" height="20" uuid="466439df-e89d-412e-b4ab-34610c86b4fb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7253cbcb-051c-4042-a593-796c3ebfe6d3"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Causa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="270" width="530" height="20" forecolor="#616161" backcolor="#E0E0E0" uuid="64adef47-1349-4e65-866f-1a83ef57209f">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Suspensión del Tratamiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="290" width="190" height="20" uuid="222aab34-20b1-46cb-af4b-4aed7b8a22d3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7253cbcb-051c-4042-a593-796c3ebfe6d3"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Motivo personalizado]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="310" width="140" height="20" uuid="a2a50be4-89f0-49c3-a0e5-209c92cbc45f">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fu_suspendido}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="150" y="310" width="200" height="20" uuid="6d764562-ccb8-425d-8c56-2bfdccfc4c35">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fu_suspencion_causa}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="350" y="310" width="190" height="20" uuid="8f6f2a4d-fc92-4ff0-99b1-2b67f1f2c7f3">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fu_suspencion_motivo_pers}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="350" width="530" height="20" uuid="8f3162dd-4a80-4794-88f4-a087113e9b3c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a205a8ed-afec-43bb-9422-4773ab55bb54"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Insuficiencia cardiaca congestiva]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="330" width="530" height="20" forecolor="#616161" backcolor="#E0E0E0" uuid="0c6ce3c2-cc47-4fa6-92ad-b79634cd0383">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Tolerancia]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="370" width="530" height="20" uuid="987a1eb1-321b-43b7-ba94-2ba9dec65eea">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fu_insuf_cardiaca}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="410" width="250" height="20" uuid="a080ade9-eb70-4727-9f42-78b5244ce5f4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a205a8ed-afec-43bb-9422-4773ab55bb54"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de seguimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="390" width="530" height="20" forecolor="#616161" backcolor="#E0E0E0" uuid="94f567b1-2760-4c8d-bc77-fbefb711078f">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[FEVI cada 4 meses]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="410" width="280" height="20" uuid="186e04c1-7864-4d06-ab2f-6bcf452a7cf0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a205a8ed-afec-43bb-9422-4773ab55bb54"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor de FEVI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="450" width="250" height="20" uuid="edd6cdf7-1d90-471d-9ade-553ca305fd5c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a205a8ed-afec-43bb-9422-4773ab55bb54"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dosis de trastuzumab]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="430" width="250" height="20" uuid="08f19633-6a73-4c87-96f7-14cb5d632b24">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fevi_follow_up_date}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="260" y="430" width="280" height="20" uuid="e83b6355-44a4-488d-a75a-b926af767cf7">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fevi_value}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="470" width="250" height="20" uuid="82db85f2-f3cf-4bfa-8f9c-2b8bd9c4daec">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fevi_trastuzumab_dose}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="490" width="530" height="20" forecolor="#616161" backcolor="#E0E0E0" uuid="ad348059-bd9a-4343-82a9-ca0ad4ffb34b">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Otros eventos adversos severos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="510" width="50" height="20" uuid="93e69796-f76b-48b5-9a8e-d2e2f38943be">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a205a8ed-afec-43bb-9422-4773ab55bb54"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Destalles:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="510" width="90" height="20" uuid="1eb69774-beff-4592-9c21-e549ec2b3d71">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{otros_event_adver_severos}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="150" y="510" width="390" height="20" uuid="3eba3571-49c3-49ca-857f-c86572ef4bd0">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{other_severe_adverse_events_detail}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="530" width="530" height="20" forecolor="#616161" backcolor="#E0E0E0" uuid="6fd5f73f-2e15-4543-a13d-0b47b290e822">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Otros estudios complementarios]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="550" width="530" height="20" uuid="de38e4ef-d07b-4f95-96ea-40771b7c10a0">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{other_complementary_studies}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="590" width="250" height="20" uuid="6b24b164-262b-4440-ada0-e38c31d35205">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a205a8ed-afec-43bb-9422-4773ab55bb54"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ajuste de dosis]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="570" width="530" height="20" forecolor="#616161" backcolor="#E0E0E0" uuid="4d4fff63-6e92-415e-8fed-d1645458c4fe">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Dosis mensual de trastuzumab solicitada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="590" width="280" height="20" uuid="1487ccc6-5aef-4f90-95a1-1fe1458eb872">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a205a8ed-afec-43bb-9422-4773ab55bb54"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Motivo del ajuste]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="610" width="250" height="20" uuid="939426c8-faba-4fd4-bc07-432ac9e2cd05">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ajuste_dosis}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="260" y="610" width="280" height="20" uuid="f075d10e-034f-4109-a74c-cb8088c2275e">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dose_adjustment_reason}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="22" y="650" width="499" height="20" uuid="f015230b-27e5-4751-82e7-29321e8a108c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a205a8ed-afec-43bb-9422-4773ab55bb54"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comentarios]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="22" y="630" width="499" height="20" forecolor="#616161" backcolor="#E0E0E0" uuid="cbbc00b0-4d38-443d-8686-cca5d251c72a">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Medicación]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="22" y="670" width="499" height="20" uuid="0016a5f7-9c62-4755-b8df-67227c57852d">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{comentaries}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

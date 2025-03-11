@@ -1,0 +1,196 @@
+Updates a Treatment Schema
+---
+tags:
+  - "treatment-schema"
+summary: "Updates a Treatment Schema"
+description:
+  Updates an existing treatment schema for a hospital.
+  The hospital is determined from the JWT token of the authenticated user.
+  The `code` must be unique within the hospital's treatment schemas.
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    schema:
+      type: string
+    default: "Bearer [access_token]"
+  - name: uuid
+    in: path
+    description: Identifier
+    schema:
+      type: string
+    required: true
+  - name: body
+    in: body
+    required: true
+    schema:
+      $ref: "#/definitions/TreatmentSchemaPut"
+security:
+  - bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+definitions:
+  TreatmentSchemaPut:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        description: Name of the treatment schema.
+        example: "Chemotherapy Protocol A"
+      description:
+        type: string
+        description: Detailed description of the treatment schema.
+        example: "A comprehensive chemotherapy plan."
+      periodicity_id:
+        type: integer
+        description: Frequency/periodicity of the treatment.
+        example: 1
+      series_count:
+        type: integer
+        description: Number of treatment cycles or series.
+        example: 6
+      pre_medication:
+        type: string
+        description: Details of medications to administer before treatment.
+        example: "Administer antihistamines."
+      medication:
+        type: string
+        description: Details of primary medication.
+        example: "Infuse Cisplatin."
+      post_medication:
+        type: string
+        description: Details of any post-treatment instructions.
+        example: "Ensure adequate hydration."
+      category_id:
+        type: integer
+        description: ID of the treatment category.
+        example: 3
+      schema_products:
+        type: array
+        description: Details of products associated with the schema.
+        items:
+          $ref: "#/definitions/schema_products"
+      administration_time:
+        type: integer
+        description: Administration time (in hours).
+        example: 2
+      preparation_instructions:
+        type: string
+        description: Instructions for treatment preparation.
+        example: "Dilute in 500ml normal saline."
+      notes:
+        type: string
+        description: Additional notes or information.
+        example: "For patients with renal impairment, use caution."
+  schema_products:
+    type: array
+    description: List of products associated with the treatment schema.
+    items:
+      type: object
+      required:
+        - product_id
+      properties:
+        uuid:
+          type: string
+          description: UUID of the schema product (for updates).
+          example: "5fa85f64-571e-4562-b3fc-2c963f66afa6"
+        product_id:
+          type: integer
+          description: ID of the product.
+          example: 12
+        administration_route_id:
+          type: integer
+          description: Route of administration ID for the product.
+          example: 3
+        calculation_type_id:
+          type: integer
+          description: Method of dosage calculation.
+          example: 2
+        frequency_id:
+          type: integer
+          description: Administration frequency (parameter ID).
+          example: 1
+        administration_time:
+          type: integer
+          description: Administration time (in hours).
+          example: 2
+        note:
+          type: string
+          description: Additional notes for this product.
+          example: "Administer with food."
+        adjustable:
+          type: boolean
+          description: Whether the dose is adjustable.
+          example: true
+        status:
+          type: integer
+          description: Status of the product (active/inactive).
+          example: 1
+        loading_dose:
+          type: number
+          format: float
+          description: Initial loading dose for the product.
+          example: 50.00
+        session_dose:
+          type: number
+          format: float
+          description: Dose per session.
+          example: 30.00
+        infusion_dose:
+          type: number
+          format: float
+          description: Infusion dose.
+          example: 20.00
+responses:
+  200:
+    description: Treatment schema successfully updated.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Treatment schema updated successfully."
+            treatment_schema:
+              $ref: "#/definitions/TreatmentSchemaPut"
+  400:
+    description: Validation or input error.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "FIELDS_MISSING: name"
+            error:
+              type: string
+              example: "FIELDS_MISSING: name"
+  404:
+    description: Treatment schema not found.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "TREATMENT_SCHEMA_NOT_FOUND"
+  500:
+    description: Internal Server Error.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "PROCESS_ERROR"
+            error:
+              type: string
+              example: "Database connection failed."

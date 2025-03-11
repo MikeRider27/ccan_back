@@ -1,0 +1,93 @@
+Get a Drug
+---
+tags:
+  - "drug"
+summary: "Retrieve details of a drug by its UUID"
+description: Retrieves detailed information about a drug.
+parameters:
+  - in: path
+    name: uuid
+    required: true
+    type: string
+    description: "The UUID of the drug to retrieve."
+  - in: header
+    name: Authorization
+    required: true
+    type: string
+    description: "Bearer token for authorization"
+    default: "Bearer <access_token>"
+  - in: query
+    name: jsondepth
+    required: false
+    type: integer
+    description: "Determines the depth of nested objects in the response JSON. Defaults to 0."
+    default: 0
+responses:
+  200:
+    description: "A JSON object containing the details of the drug."
+    schema:
+      type: object
+      properties:
+        drug:
+          schema:
+            $ref: "#/definitions/Drug"
+  400:
+    description: "Drug not found."
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "Error message indicating why the request failed."
+          example: "RECORD_NOT_FOUND"
+  500:
+    description: "Internal server error."
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "A general error message for unexpected server errors."
+          example: "INTERNAL_SERVER_ERROR"
+definitions:
+  Drug:
+    type: object
+    properties:
+      uuid:
+        type: string
+        description: "The unique UUID of the drug."
+        example: "6e9557c3-7b44-4892-97bb-c3dc82d565ab"
+      generic_name:
+        type: string
+        description: "The generic name assigned to the drug."
+        example: "Amoxicillin"
+      therapeutic_action:
+        type: string
+        description: "A description of the therapeutic action of the drug."
+        example: "The therapeutic action of Amoxicillin is that it works as a
+          broad-spectrum antibiotic belonging to the penicillin class.
+          Amoxicillin is used to treat bacterial infections by inhibiting the
+          growth of bacteria."
+      category_id:
+        type: integer
+        description: "Category ID for the drug."
+        example: 10
+      status:
+        type: integer
+        description: "Drug status. Active (1) or Inactive (0)."
+        example: 1
+      category:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: "The category ID that defines the drug group."
+            example: 10
+          name:
+            type: string
+            description: "Constant Name."
+            example: "CHEMOTHERAPY"
+          text:
+            type: string
+            description: "Translated name."
+            example: "Chemotherapy"

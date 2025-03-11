@@ -1,0 +1,53 @@
+Actualiza User
+---
+tags:
+- "user"
+responses:
+  200:
+    description: Se actualiza User
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/UserPut"
+definitions:
+    UserPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            user:
+                type: "string"
+            state:
+                type: "string"
+            password:
+                type: "string"
+            firstname:
+                type: "string"
+            lastname:
+                type: "string"
+            administrator:
+                type: "boolean"
+            email:
+                type: "string"
+        example:
+            id: 36
+            user: Lorem ipsum dolor sit amet
+            state: L
+            password: Lorem ipsum dolor sit amet
+            firstname: Lorem ipsum dolor sit amet
+            lastname: Lorem ipsum dolor sit amet
+            administrator: false
+            email: Lorem ipsum dolor sit amet

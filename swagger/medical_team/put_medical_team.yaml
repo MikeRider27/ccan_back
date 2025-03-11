@@ -1,0 +1,41 @@
+Actualiza Medical_team
+---
+tags:
+- "medical-team"
+responses:
+  200:
+    description: Se actualiza Medical_team
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/MedicalTeamPut"
+definitions:
+    MedicalTeamPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            surgery_id:
+                type: "int64"
+            doctor_id:
+                type: "int64"
+            rol:
+                type: "string"
+        example:
+            id: 34
+            surgery_id: 15
+            doctor_id: 23
+            rol: Lorem ipsum dolor sit amet

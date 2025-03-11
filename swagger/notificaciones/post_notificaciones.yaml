@@ -1,0 +1,38 @@
+Guarda las Notificaciones
+---
+tags:
+- "notificaciones"
+responses:
+  200:
+    description: Se guardan las notificaciones
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/NotificacionesPost"
+definitions:
+    NotificacionesPost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            user_id:
+              type: "int64"
+            message_id:
+              type: "int64"
+            leida:
+              type: "boolean"
+        example:
+            id: 2
+            user_id: 3
+            message_id: 5
+            leida: 'false'

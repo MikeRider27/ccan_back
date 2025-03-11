@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="diagnosis" pageWidth="580" pageHeight="802" columnWidth="580" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c7c61c00-4e93-4df4-87b5-9e013780f4ec">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[Y2llXzEwICwyMDMsMTUsOWMwMWNmYWUtYTg5ZC00Zjk1LTk3ZDEtNzZlM2MzM2U5YjM5O2NpZV9v
+X21vcnBob2xvZ3kgLDI4MiwxNSxiNDlmYTNkOC1iM2U1LTRmYTktYjc2Ni05M2ExNjU4M2E5YTQ7
+Y2llX29fdG9wb2dyYXBoeSAsNDQ1LDE1LGZiNjc1ZWI2LTNhNzAtNGE5MS1hOTA2LTM2YzZhNGRh
+MzdmNjtjaWVfb190dW1vcl9sb2NhdGlvbiAsNjAzLDE1LDkwZTE0Y2IwLThiODEtNGY5MS1hZDA4
+LTk3OWJiOTk4ZjFkYTtob3NwaXRhbCAsMTEzLDE1LGNjZTgzMGI2LTYxNjEtNDgxZC04Yzk5LWI4
+NDg2NzExOWU3MjtkaWFnbm9zaXMgLDE1LDE1LDQ0Nzc2ZWE0LTMxYjQtNDA2MC05NDlkLWJmNDMy
+OGRlNWVhNTs=]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="arasydev"/>
+	<parameter name="patient_id" class="java.lang.Integer"/>
+	<parameter name="diagnosis_report" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select h.description  as establecimiento,cast(d."date" as date) as fecha, c.description_es as cie_10,
+com.code||' - '|| com.term_es as cie_o_morfologia,
+cot2.code||' - '|| cot2.description_es  as cie_o_topografia,
+cotl.code||' - '|| cotl.description_es  as cie_o_localizacion_tumor
+from diagnosis d
+left join hospital h on h.id = d.hospital_id
+left join cie_10 c on c.id =d.cie_10_code_id 
+left join cie_o_morphology com on com.id =d.cie_o_morphology_id 
+left join cie_o_topography cot2 on cot2.id =d.cie_o_topography_id 
+left join cie_o_tumor_location cotl on cotl.id =d.cie_o_tumor_location_id 
+where patient_id = $P{patient_id} 
+and $P{diagnosis_report}=true]]>
+	</queryString>
+	<field name="establecimiento" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="establecimiento"/>
+		<property name="com.jaspersoft.studio.field.label" value="establecimiento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hospital"/>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="diagnosis"/>
+	</field>
+	<field name="cie_10" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cie_10"/>
+		<property name="com.jaspersoft.studio.field.label" value="cie_10"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cie_10"/>
+	</field>
+	<field name="cie_o_morfologia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cie_o_morfologia"/>
+		<property name="com.jaspersoft.studio.field.label" value="cie_o_morfologia"/>
+	</field>
+	<field name="cie_o_topografia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cie_o_topografia"/>
+		<property name="com.jaspersoft.studio.field.label" value="cie_o_topografia"/>
+	</field>
+	<field name="cie_o_localizacion_tumor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cie_o_localizacion_tumor"/>
+		<property name="com.jaspersoft.studio.field.label" value="cie_o_localizacion_tumor"/>
+	</field>
+	<background>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</background>
+	<pageHeader>
+		<band height="1">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<break>
+				<reportElement x="0" y="0" width="580" height="1" uuid="31c507da-1d64-4169-934b-c71d060ed043">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</break>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="165">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="20" width="530" height="20" forecolor="#616161" backcolor="#E0E0E0" uuid="a1bc9133-8ef3-4943-bdc4-bd723a0c031a">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+					<paragraph lineSpacingSize="1.0" rightIndent="0" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Diagnóstico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="40" width="370" height="20" uuid="cda9b628-ad85-47ec-abf5-3bdff0ebcaa6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fc7a775a-68a7-4b78-8e84-6661b9b2af95"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Establecimiento de Salud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="40" width="160" height="20" uuid="5af0f814-a1c0-4981-96dc-efa246bf238e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="07fd8595-c54f-474b-bedc-02a2870279c4"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="80" width="530" height="20" uuid="3662701e-ca92-4755-aadd-0e50eeed929f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="212f4fff-c79a-4566-b81a-ce4bf99190fe"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CIE-10]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="120" width="180" height="20" uuid="8eb0c57c-37f2-490e-ab15-b2ffa483f8f0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a205a8ed-afec-43bb-9422-4773ab55bb54"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CIE-O Morfología]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="120" width="170" height="20" uuid="466439df-e89d-412e-b4ab-34610c86b4fb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7253cbcb-051c-4042-a593-796c3ebfe6d3"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CIE-O Topografía]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="120" width="180" height="20" uuid="222aab34-20b1-46cb-af4b-4aed7b8a22d3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7253cbcb-051c-4042-a593-796c3ebfe6d3"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CIE-O Localización del Tumor]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="60" width="370" height="20" uuid="64127b37-3cae-47aa-8348-b3988289e3e1">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{establecimiento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="380" y="60" width="160" height="20" uuid="28a99877-9322-4366-a311-07ab922a9ab9">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="100" width="530" height="20" uuid="4a1356b9-e81b-434f-a383-16199d46196a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cie_10}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="140" width="180" height="20" uuid="5e96f612-15a3-4b88-81b4-e1a058149839">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cie_o_morfologia}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="190" y="140" width="170" height="20" uuid="e85590c6-bafa-494f-a7c5-f57f4aa05d95">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cie_o_topografia}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="360" y="140" width="180" height="20" uuid="6e4b8e76-acb7-423a-8dfd-7ebebc7f021c">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="10"/>
+					<paragraph firstLineIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cie_o_localizacion_tumor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

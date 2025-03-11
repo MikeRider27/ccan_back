@@ -1,0 +1,38 @@
+Guarda un Medical_committee
+---
+tags:
+- "medical-committee"
+responses:
+  200:
+    description: Se guarda Medical_committee
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/MedicalCommitteePost"
+definitions:
+    MedicalCommitteePost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            committee_id:
+              type: "int64"
+            doctor_id:
+              type: "int64"
+            priority:
+              type: "string"
+        example:
+            id: 12
+            committee_id: 48
+            doctor_id: 3
+            priority: Lorem ipsum dolor sit amet

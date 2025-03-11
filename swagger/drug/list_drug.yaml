@@ -1,0 +1,102 @@
+List All Drugs
+---
+tags:
+  - "drug"
+summary: "List all drugs"
+description: Retrieves a paginated list of all drugs.
+parameters:
+  - in: header
+    name: Authorization
+    required: true
+    type: string
+    description: "Bearer token for authorization. Format: Bearer <token>"
+    default: "Bearer <access_token>"
+  - in: query
+    name: page
+    required: false
+    type: integer
+    description: "Page number for pagination."
+    default: 1
+  - in: query
+    name: rowsPerPage
+    required: false
+    type: integer
+    description: "Number of records per page."
+    default: 20
+responses:
+  200:
+    description: "A paginated list of all drugs."
+    schema:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: "Current page number."
+          example: 1
+        per_page:
+          type: integer
+          description: "Number of records per page."
+          example: 10
+        total:
+          type: integer
+          description: "Total number of drug records."
+          example: 123
+        items:
+          type: array
+          description: "List of drugs in the current page."
+          items:
+            type: object
+            properties:
+              uuid:
+                type: string
+                description: "The unique identifier of the drug."
+                example: "6e9557c3-7b44-4892-97bb-c3dc82d565ab"
+              generic_name:
+                type: string
+                description: "The generic name assigned to the drug."
+                example: "Amoxicillin"
+              therapeutic_action:
+                type: string
+                description: "A description of the therapeutic action of the drug."
+                example: "A broad-spectrum antibiotic used to treat bacterial infections."
+              category_id:
+                type: integer
+                description: "Category ID for the drug."
+                example: 10
+              status:
+                type: integer
+                description: "Drug status. Active (1) or Inactive (0)."
+                example: 1
+              category:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: "The category ID that defines the drug group."
+                    example: 10
+                  name:
+                    type: string
+                    description: "Constant Name."
+                    example: "CHEMOTHERAPY"
+                  text:
+                    type: string
+                    description: "Translated name."
+                    example: "Chemotherapy"
+  400:
+    description: "Record not found or invalid pagination request."
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "Error message indicating why the request failed."
+          example: "RECORD_NOT_FOUND"
+  500:
+    description: "Internal server error encountered while fetching the list."
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "A general error message for unexpected server failures."
+          example: "INTERNAL_SERVER_ERROR"

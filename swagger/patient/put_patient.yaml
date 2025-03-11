@@ -1,0 +1,104 @@
+Actualiza Patient
+---
+tags:
+- "patient"
+responses:
+  200:
+    description: Se actualiza Patient
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/PatientPut"
+definitions:
+    PatientPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            firstname:
+                type: "string"
+            lastname:
+                type: "string"
+            document_number:
+                type: "string"
+            vital_state_id:
+                type: "int64"
+            state_id:
+                type: "int64"
+            birthdate:
+                type: "date"
+            address:
+                type: "string"
+            gender_id:
+                type: "int64"
+            menopausal_state_id:
+                type: "int64"
+            app_ischemic_heart_disease:
+                type: "boolean"
+            app_heart_failure:
+                type: "boolean"
+            app_funtional_class_nyha:
+                type: "string"
+            app_arrhythmia:
+                type: "boolean"
+            app_others:
+                type: "string"
+            app_heart_others:
+                type: "string"
+            fevi_percentage:
+                type: "int"
+            fevi_date:
+                type: "datetime"
+            document_type_id:
+                type: "int64"
+            country_id:
+                type: "int64"
+            area_id:
+                type: "int64"
+            city_id:
+                type: "int64"
+            phone:
+                type: "string"
+            photo:
+                type: "string"
+            nationality_id:
+                type: "int64"
+        example:
+            id: 16
+            firstname: Lorem ipsum dolor sit amet
+            lastname: Lorem ipsum dolor sit amet
+            document_number: Lorem ipsum dolor sit amet
+            state_id: 1
+            vital_state_id: 1
+            birthdate: '2019-01-01'
+            address: Lorem ipsum dolor sit amet
+            gender_id: 44
+            menopausal_state_id: 19
+            app_ischemic_heart_disease: false
+            app_heart_failure: false
+            app_funtional_class_nyha: Lorem
+            app_arrhythmia: false
+            app_others: Lorem ipsum dolor sit am
+            app_heart_others: Lorem ipsum dolor sit am
+            fevi_percentage: 37
+            fevi_date: '2019-01-01T00:00:00'
+            document_type_id: 49
+            country_id: 49
+            hospital_id: 49
+            area_id: 1
+            city_id: 1
+            nationality_id: 1
+            phone: Lorem ipsum dolor sit am

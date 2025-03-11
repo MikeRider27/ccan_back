@@ -1,0 +1,42 @@
+Lista de Patient_family_with_cancer
+---
+tags:
+  - "search"
+responses:
+  200:
+    description: Se lista Patient_family_with_cancer filtrados
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - in: query
+    name: page
+    description: Current items page
+    default: 1
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/PatientFamilyWithCancerSearch"
+definitions:
+    PatientFamilyWithCancerSearch:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            personal_pathological_history_id:
+                type: "int64"
+            family_id:
+                type: "int64"
+            family_vital_state_id:
+                type: "int64"
+        example:
+            id: 29
+            personal_pathological_history_id: 26
+            family_id: 8
+            family_vital_state_id: 13

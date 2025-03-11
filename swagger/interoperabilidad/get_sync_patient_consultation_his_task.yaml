@@ -1,0 +1,11 @@
+Tareas de interoperabilidad
+---
+tags:
+- "interoperabilidad"
+responses:
+  200:
+    description: Se realiza las tareas programadas de interoperabilidad
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)

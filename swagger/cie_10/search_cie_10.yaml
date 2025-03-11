@@ -1,0 +1,60 @@
+Lista de Cie_10
+---
+tags:
+  - "search"
+responses:
+  200:
+    description: Se lista Cie_10 filtrados
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - in: query
+    name: page
+    description: Current items page
+    default: 1
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/Cie_10Search"
+definitions:
+    Cie_10Search:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            level:
+                type: "int"
+            code:
+                type: "string"
+            description_es:
+                type: "string"
+            code_0:
+                type: "string"
+            code_1:
+                type: "string"
+            code_2:
+                type: "string"
+            code_3:
+                type: "string"
+            code_4:
+                type: "string"
+            description_en:
+                type: "string"
+        example:
+            id: 40
+            level: 42
+            code: Lorem ipsum dolor sit amet
+            description_es: Lorem ipsum dolor sit amet
+            code_0: Lorem ipsum dolor sit amet
+            code_1: Lorem ipsum dolor sit amet
+            code_2: Lorem ipsum dolor sit amet
+            code_3: Lorem ipsum dolor sit amet
+            code_4: Lorem ipsum dolor sit am
+            description_en: Lorem ipsum dolor sit amet

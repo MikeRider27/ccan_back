@@ -1,0 +1,28 @@
+medical_documents:
+  requirements_list:
+    SELECT mdt.description                      AS type_description,
+           mdt.code                             AS type_code,
+           TRUE                                 AS is_document,
+           mdt.orden                            AS orden,
+           md.id,
+           mdt.id                               AS medical_document_type_id,
+           md.description,
+           TO_CHAR(md.study_date, 'DD/MM/YYYY') AS study_date,
+           md.path,
+           md.hospital_id
+    FROM medical_document_type mdt
+             LEFT JOIN medical_document md
+                       ON md.medical_document_type_id = mdt.id
+                              AND (md.modulo = 'patient_requirements' or md.modulo = 'patient_inclusion_exclusion_criteria_form')
+                              AND md.patient_id = :patient_id
+    WHERE mdt.code IN (
+                              'PATHO_ANAT',
+                              'IM_HIST_CHEM',
+                              'IMAG_STAG',
+                              'ECHOCARD',
+                              'INCL_FORM',
+                              'EXCL_FORM',
+                              'CONSENT',
+                              'CONSENT_DATA'
+        )
+    ORDER BY mdt.orden

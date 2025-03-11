@@ -1,0 +1,85 @@
+Deletes a Treatment Schema
+---
+tags:
+  - "treatment-schema"
+summary: "Delete a Treatment Schema"
+description: >
+  This endpoint deletes a specific treatment schema by its `uuid`.
+  The `schema_products` associated with the treatment schema will also be
+  removed from the database.
+  Requires valid hospital context and proper user permissions.
+parameters:
+  - in: header
+    name: Authorization
+    description: Bearer token for authentication.
+    required: true
+    schema:
+      type: string
+      default: "Bearer [access_token]"
+  - in: path
+    name: uuid
+    description: >
+      Unique identifier (`uuid`) of the treatment schema to delete.
+      Must be a valid UUID format.
+    required: true
+    schema:
+      type: string
+      format: uuid
+      example: "123e4567-e89b-12d3-a456-426614174000"
+
+responses:
+  200:
+    description: Treatment schema deleted successfully.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "PROCESS_SUCCESS"
+  400:
+    description: >
+      The request was invalid. Possible causes include:
+      - Invalid `uuid` format.
+      - Treatment schema not found.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "RECORD_NOT_FOUND"
+        error:
+          type: string
+          example: "The provided UUID does not correspond to an existing
+            treatment schema."
+  403:
+    description: >
+      Forbidden. Possible reasons include:
+      - The user does not have sufficient permissions to delete treatment
+      schemas.
+      - The treatment schema belongs to a hospital the user does not have
+      access to.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "FORBIDDEN"
+        error:
+          type: string
+          example: "You do not have permission to delete treatment schemas for
+            this hospital."
+  500:
+    description: >
+      Internal server error occurred during the deletion process. This is
+      typically caused by
+      unexpected database errors or other unhandled exceptions.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "PROCESS_ERROR"
+        error:
+          type: string
+          example: "Unexpected database error occurred while deleting the
+            treatment schema."

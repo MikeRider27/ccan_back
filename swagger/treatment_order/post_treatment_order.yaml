@@ -1,0 +1,59 @@
+Guarda un Treatment_order
+---
+tags:
+- "treatment-order"
+responses:
+  200:
+    description: Se guarda Treatment_order
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/TreatmentOrderPost"
+definitions:
+    TreatmentOrderPost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            date:
+              type: "datetime"
+            number_sessions:
+              type: "int"
+            periodicity_id:
+              type: "int64"
+            observation:
+              type: "string"
+            patient_id:
+              type: "int64"
+            previous:
+              type: "boolean"
+            date_first_cycle:
+              type: "date"
+            date_last_cycle:
+              type: "date"
+            type_id:
+              type: "int64"
+            hospital_id:
+              type: "int64"
+        example:
+            id: 40
+            date: '2019-01-01T00:00:00'
+            number_sessions: 27
+            periodicity_id: 50
+            observation: Lorem ipsum dolor sit am
+            patient_id: 42
+            previous: false
+            date_first_cycle: '2019-01-01'
+            date_last_cycle: '2019-01-01'
+            type_id: 38
+            hospital_id: 38

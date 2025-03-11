@@ -1,0 +1,154 @@
+Create a new treatment schema
+---
+tags:
+  - "treatment-schema"
+summary: "Create a new treatment schema"
+description: >
+  This endpoint creates a new treatment schema for the hospital associated
+  with the authenticated user. The schema details include products and
+  periodicity.
+parameters:
+  - in: header
+    name: Authorization
+    description: Bearer token for authentication.
+    required: true
+    schema:
+      type: string
+      example: "Bearer [access_token]"
+  - name: body
+    in: body
+    required: true
+    description: JSON payload for the treatment schema.
+    schema:
+      $ref: "#/definitions/TreatmentSchemaPost"
+security:
+  - bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+definitions:
+  TreatmentSchemaPost:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        description: Descriptive name of the treatment schema.
+        example: "Chemotherapy Protocol A"
+      description:
+        type: string
+        description: Detailed description of the treatment schema.
+        example: "A multi-step chemotherapy protocol."
+      periodicity_id:
+        type: integer
+        description: Frequency/periodicity of the treatment.
+        example: 1
+      series_count:
+        type: integer
+        description: Number of cycles in the protocol.
+        example: 5
+      pre_medication:
+        type: string
+        description: Pre-treatment medications or instructions.
+        example: "Administer antihistamines."
+      medication:
+        type: string
+        description: Details of medications during the treatment.
+        example: "Cisplatin and Etoposide."
+      post_medication:
+        type: string
+        description: Post-treatment medications or instructions.
+        example: "Ensure hydration."
+      category_id:
+        type: integer
+        description: Category ID for the treatment.
+        example: 3
+      notes:
+        type: string
+        description: Additional notes or details about the schema.
+        example: "Renal function monitoring required."
+      administration_time:
+        type: integer
+        description: Administration time (in hours).
+        example: 2
+      preparation_instructions:
+        type: string
+        description: Instructions for preparing the treatment.
+        example: "Dilute in 500ml saline."
+      status:
+        type: integer
+        description: "Status of the treatment schema (1 = active)."
+        example: 1
+      schema_products:
+        type: array
+        description: Products associated with the schema.
+        items:
+          $ref: "#/definitions/TreatmentSchemaProduct"
+
+  TreatmentSchemaProduct:
+    type: object
+    required:
+      - product_id
+    properties:
+      uuid:
+        type: string
+        description: UUID for existing schema_product (update action only).
+        example: "3fa85f64-5717-4562-b3fc-2c967f66afa6"
+      product_id:
+        type: integer
+        description: ID of the product.
+        example: 12
+      administration_route_id:
+        type: integer
+        description: Route of administration.
+        example: 2
+      status:
+        type: integer
+        description: "Status (1 = active, 0 = inactive)."
+        example: 1
+
+responses:
+  201:
+    description: Treatment schema was created successfully.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "PROCESS_SUCCESS"
+        treatment_schema:
+          $ref: "#/definitions/TreatmentSchemaPost"
+  400:
+    description: Validation error or duplicate record.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "FIELDS_MISSING: name, hospital_id"
+        errors:
+          type: object
+          description: Detail of validation failures.
+          example:
+            name: "This field is required."
+            schema_products: "This field must be an array."
+  401:
+    description: Authorization error (e.g., hospital mismatch).
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "USER_HOSPITAL_NOT_FOUND"
+  500:
+    description: Internal server error.
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "PROCESS_ERROR"
+        error:
+          type: string
+          example: "Unhandled exception occurred."

@@ -1,0 +1,107 @@
+Guarda un Treatment_plan
+---
+tags:
+- "treatment-plan"
+responses:
+  200:
+    description: Se guarda Treatment_plan
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/TreatmentPlanPost"
+definitions:
+    TreatmentPlanPost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            patient_id:
+              type: "int64"
+            hospital_id:
+              type: "int64"
+            date:
+              type: "datetime"
+            historical:
+              type: "boolean"
+            doctor_id:
+              type: "int64"
+            size:
+              type: "float"
+            weight:
+              type: "float"
+            sc:
+              type: "float"
+            medical_visit_observation:
+              type: "string"
+            codification_type:
+              type: "string"
+            confirmed:
+              type: "boolean"
+            cie_10_code_id:
+              type: "int64"
+            cie_o_morphology_id:
+              type: "int64"
+            cie_o_topography_id:
+              type: "int64"
+            cie_o_tumor_location_id:
+              type: "int64"
+            type_id:
+              type: "int64"
+            number_sessions:
+              type: "int"
+            periodicity_id:
+              type: "int64"
+            date_first_cycle:
+              type: "date"
+            date_last_cycle:
+              type: "date"
+            observation:
+              type: "string"
+            origin:
+              type: "string"
+            date_create:
+              type: "datetime"
+            user_create:
+              type: "string"
+            date_modify:
+              type: "datetime"
+            user_modify:
+              type: "string"
+        example:
+            id: 5
+            patient_id: 47
+            hospital_id: 31
+            date: '2019-01-01T00:00:00'
+            historical: false
+            doctor_id: 28
+            size: 19.5
+            weight: 34.5
+            sc: 25.5
+            medical_visit_observation: Lorem ipsum dolor sit am
+            codification_type: Lorem ipsu
+            confirmed: false
+            cie_10_code_id: 4
+            cie_o_morphology_id: 46
+            cie_o_topography_id: 45
+            cie_o_tumor_location_id: 31
+            type_id: 35
+            number_sessions: 1
+            periodicity_id: 30
+            date_first_cycle: '2019-01-01'
+            date_last_cycle: '2019-01-01'
+            observation: Lorem ipsum dolor sit am
+            origin: Lorem ipsum dolor sit am
+            date_create: '2019-01-01T00:00:00'
+            user_create: Lorem ipsum dolor sit amet
+            date_modify: '2019-01-01T00:00:00'
+            user_modify: Lorem ipsum dolor sit amet

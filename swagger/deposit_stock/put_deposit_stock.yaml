@@ -1,0 +1,41 @@
+Actualiza Deposit_stock
+---
+tags:
+- "deposit-stock"
+responses:
+  200:
+    description: Se actualiza Deposit_stock
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: id
+    in: path
+    required: true
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/DepositStockPut"
+definitions:
+    DepositStockPut:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            deposit_id:
+                type: "int64"
+            stock_id:
+                type: "int64"
+            quantity:
+                type: "float"
+        example:
+            id: 33
+            deposit_id: 10
+            stock_id: 42
+            quantity: 35.5

@@ -1,0 +1,54 @@
+Lista de Medicine
+---
+tags:
+  - "search"
+responses:
+  200:
+    description: Se lista Medicine filtrados
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - in: query
+    name: page
+    description: Current items page
+    default: 1
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/MedicineSearch"
+definitions:
+    MedicineSearch:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            description:
+                type: "string"
+            code:
+                type: "string"
+            concentration:
+                type: "string"
+            pharmaceutical_form:
+                type: "string"
+            via_admin:
+                type: "string"
+            presentation:
+                type: "string"
+            stock_control:
+                type: "boolean"
+        example:
+            id: 12
+            description: Lorem ipsum dolor sit amet
+            code: Lorem ipsum dolor sit amet
+            concentration: Lorem ipsum dolor sit amet
+            pharmaceutical_form: Lorem ipsum dolor sit amet
+            via_admin: Lorem ipsum dolor sit amet
+            presentation: Lorem ipsum dolor sit amet
+            stock_control: false

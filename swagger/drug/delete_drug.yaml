@@ -1,0 +1,47 @@
+Delete Drug
+---
+tags:
+  - "drug"
+summary: "Delete a drug by UUID"
+description: Deletes a drug record from the system.
+parameters:
+  - in: path
+    name: uuid
+    required: true
+    type: string
+    description: "The unique identifier of the drug to delete."
+    example: "6e9557c3-7b44-4892-97bb-c3dc82d565ab"
+  - in: header
+    name: Authorization
+    required: true
+    type: string
+    description: "Bearer token for authorization"
+    default: "Bearer <access_token>"
+responses:
+  200:
+    description: "Drug successfully deleted."
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "A confirmation message on successful deletion."
+          example: "PROCESS_SUCCESS"
+  400:
+    description: "Drug not found."
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "Error message indicating why the request failed."
+          example: "RECORD_NOT_FOUND"
+  500:
+    description: "Internal server error."
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "A general error message for unexpected server errors."
+          example: "INTERNAL_SERVER_ERROR"

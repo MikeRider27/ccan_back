@@ -1,0 +1,62 @@
+Lista de Treatment_order
+---
+tags:
+  - "search"
+responses:
+  200:
+    description: Se lista Treatment_order filtrados
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - in: query
+    name: page
+    description: Current items page
+    default: 1
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/TreatmentOrderSearch"
+definitions:
+    TreatmentOrderSearch:
+        type: "object"
+        properties:
+            id:
+                type: "int64"
+            date:
+                type: "datetime"
+            number_sessions:
+                type: "int"
+            periodicity_id:
+                type: "int64"
+            observation:
+                type: "string"
+            patient_id:
+                type: "int64"
+            previous:
+                type: "boolean"
+            date_first_cycle:
+                type: "date"
+            date_last_cycle:
+                type: "date"
+            type_id:
+                type: "int64"
+            hospital_id:
+                type: "int64"
+        example:
+            id: 34
+            date: '2019-01-01T00:00:00'
+            number_sessions: 32
+            periodicity_id: 43
+            observation: Lorem ipsum dolor sit am
+            patient_id: 46
+            date_first_cycle: '2019-01-01'
+            date_last_cycle: '2019-01-01'
+            type_id: 28
+            hospital_id: 28

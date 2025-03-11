@@ -1,0 +1,41 @@
+Guarda un Cie-O Morfologia
+---
+tags:
+- "cie-o-morphology"
+responses:
+  200:
+    description: Se guarda Cie-O Morfologia
+  401:
+    description: Las credenciales proveídas en los datos de login son inválidos
+  422:
+    description: El access_token no es válido. (Not enough segments, invalid utf-8 chars, etc.)
+parameters:
+  - in: header
+    name: Authorization
+    description: Access token
+    required: true
+    default: Bearer [access_token]
+  - name: body
+    in: body
+    schema:
+      $ref: "#/definitions/Cie_OPost"
+definitions:
+    Cie_OPost:
+        type: "object"
+        properties:
+            id:
+              type: "int64"
+            icd032:
+              type: "string"
+            level:
+              type: "string"
+            term_es:
+              type: "string"
+            term_en:
+              type: "string"
+        example:
+            id: 12
+            icd032: Lorem ipsum dolor sit am
+            leve: Lorem ipsum dolor sit am
+            term_es: Lorem ipsum dolor sit am
+            term:en: Lorem ipsum dolor sit am

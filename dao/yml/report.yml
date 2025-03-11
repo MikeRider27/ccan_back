@@ -1,0 +1,564 @@
+report:
+  indicador_1: |
+    select 
+    hos.description as "Institución",
+    pat.registration_date::date as "Fecha de Registro",
+    sta.value as "Estado",
+    pat.id "Id del Paciente",
+    trim(decrypt_data(pat.lastname , :cipher_key)) AS "Apellido",
+    trim(decrypt_data(pat.firstname  , :cipher_key)) AS "Nombre",
+    decrypt_data(pat.document_number, :cipher_key) AS "Cédula de Identidad",
+    EXTRACT(YEAR FROM age(birthdate)) AS "Edad",
+    ap."AP Fecha",
+    ap."AP Topografía CieO",
+    ap."AP Localización CieO",
+    ap."AP Morfología CieO",
+    ap."AP Grado",
+    ihq."IHQ Fecha",
+    ihq."RE",
+    ihq."RP",
+    ihq."Her2",
+    ihq."IHQ Her2",
+    ihq."KI 67",
+    otp."Fecha Prueba",
+    otp."FISH",
+    otp."SISH",
+    otp."CISH",
+    dat."Tamaño > 2",
+    dat."Axila",
+    dat."Marcación lecho tumoral",
+    null as "Fecha Mamografía",
+    null as "Tamaño del Tumor",
+    null as "Mamografía Ubicación",
+    null as "Birads",
+    null as "Microcalcificaciones",
+    null as "Laterilidad",
+    null as "Fecha Ecocardio",
+    null as "FEVI %",
+    null as "Fecha Tomografía",
+    null as "Metástasis",
+    null as "tomografía Ubicación",
+    null as "Tamaño",
+    null as "Tamaño Tumor Mama Derecha(mm)",
+    null as "Tamaño Tumor Mama Izquierda (mm)",
+    eva."Fecha de solicitud de Evaluación", 
+    eva."Fecha de Evaluación",
+    plan."Fecha de Inicio del Tratamiento",
+    plan."Fecha de fin del Tratamiento",
+    plan."Estado del tratamiento",
+    null as "Razon del tratamiento"
+    from patient pat 
+    join patient_hospital pat_hos on pat_hos.patient_id =pat.id 
+    join hospital hos on hos.id =pat_hos.hospital_id 
+    join "parameter" sta on sta.id = pat.state_id
+    left join (
+        WITH ranked_diagnosis AS (
+            SELECT 
+                da.patient_id,
+                da."date"::date AS "AP Fecha",
+                cot2.code AS "AP Topografía CieO",
+                cotl.code AS "AP Localización CieO",
+                com.code AS "AP Morfología CieO",
+                null AS "AP Grado",
+                ROW_NUMBER() OVER (PARTITION BY da.patient_id ORDER BY da."date" DESC) AS rn
+            FROM 
+                diagnosis_ap da 
+            LEFT JOIN 
+                cie_o_morphology com ON com.id = da.cie_o_morphology_id 
+            LEFT JOIN 
+                cie_o_topography cot2 ON cot2.id = da.cie_o_topography_id 
+            LEFT JOIN 
+                cie_o_tumor_location cotl ON cotl.id = da.cie_o_tumor_location_id
+        )
+        SELECT 
+            patient_id,
+            "AP Fecha",
+            "AP Topografía CieO",
+            "AP Localización CieO",
+            "AP Morfología CieO",
+            "AP Grado"
+        FROM 
+            ranked_diagnosis
+        WHERE 
+            rn = 1
+    ) as ap on ap. patient_id = pat.id
+    left join (
+        WITH ranked_ihq AS (
+            SELECT 
+                da.patient_id,
+                md.study_date::date as "IHQ Fecha",
+                case when da.re like '%pos%' then 'Pos'
+                        when da.re like '%neg%' then 'Neg'
+                end as "RE",
+                case when da.rp like '%pos%' then 'Pos'
+                        when da.rp like '%neg%' then 'Neg'
+                end as "RP",
+                case when da.her2 like '%pos%' then 'Pos'
+                        when da.her2 like '%neg%' then 'Neg'
+                end as "Her2",
+                her.code as "IHQ Her2",
+                null as "KI 67",
+                ROW_NUMBER() OVER (PARTITION BY da.patient_id ORDER BY md.study_date DESC) AS rn
+            FROM 
+                diagnosis_ap da 
+            left join 
+                medical_document md on md.patient_id = da .patient_id 
+                                    and md.medical_document_type_id =5
+            LEFT JOIN 
+                parameter her on her.id = da.her2_positive_id 
+                            and her.id = 62
+        )
+        SELECT 
+            patient_id,
+            "IHQ Fecha",
+            "RE",
+            "RP",
+            "Her2",
+            "IHQ Her2",
+            "KI 67"
+        FROM 
+            ranked_ihq
+        WHERE 
+            rn = 1
+    ) as ihq on ihq.patient_id=pat.id 
+    left join (
+        WITH ranked_ihq AS (
+            SELECT 
+                da.patient_id,
+                md.study_date::date as "Fecha Prueba",
+                case when her.code='FISH' then 'SI' end as "FISH",
+                case when her.code='SISH' then 'SI' end as "SISH",
+                case when her.code='CISH' then 'SI' end as "CISH",
+                ROW_NUMBER() OVER (PARTITION BY da.patient_id ORDER BY md.study_date DESC) AS rn
+            FROM 
+                diagnosis_ap da 
+            left join 
+                medical_document md on md.patient_id = da .patient_id 
+                                    and md.medical_document_type_id =5
+            JOIN 
+                parameter her on her.id = da.her2_positive_id 
+                            and her.id not in (62)
+        )
+        SELECT 
+            patient_id,
+            "Fecha Prueba",
+            "FISH",
+            "SISH",
+            "CISH"
+        FROM 
+            ranked_ihq
+        WHERE 
+            rn = 1
+    ) as otp on otp.patient_id=pat.id
+    left join (
+        select pic.patient_id,
+        case when picnt.tumor_eq_ge_2cm is true then 'Si' else 'No' end as "Tamaño > 2",
+        case when picnt.positive_axilla is true then 'Pos' else 'Neg' end as "Axila",
+        case when picnt.marked_tumor_bed is true then 'Si' else 'No' end as "Marcación lecho tumoral"
+        from patient_inclusion_criteria pic 
+        join patient_inclusion_criteria_neoadjuvant_trastuzumab picnt on picnt.id = pic.patient_inclusion_criteria_neoadjuvant_id
+    ) as dat on dat.patient_id = pat.id
+    left join (
+        select patient_id, 
+        min(date_start)::date as "Fecha de solicitud de Evaluación", 
+        max(date_end)::date as "Fecha de Evaluación" 
+        from evaluation e
+        group  by 1
+    ) as eva on eva.patient_id = pat.id 
+    left join (
+        WITH ranked_treat AS (
+            SELECT 
+                tp.patient_id, 
+                tp.hospital_id, 
+                tp.date_first_cycle "Fecha de Inicio del Tratamiento",
+                tp.date_last_cycle "Fecha de fin del Tratamiento",
+                pa.value as "Estado del tratamiento",
+                ROW_NUMBER() OVER (PARTITION BY tp.patient_id  ORDER BY tp."date"  DESC) AS rn
+            FROM 
+                treatment_plan tp 
+            join
+                parameter pa on 
+                tp.state_id = pa.id 
+        )
+        SELECT 
+            patient_id,
+            hospital_id, 
+            "Fecha de Inicio del Tratamiento",
+            "Fecha de fin del Tratamiento",
+            "Estado del tratamiento"
+        FROM 
+            ranked_treat
+        WHERE 
+            rn = 1
+    ) as plan on plan.patient_id=pat.id
+            and plan.hospital_id=hos.id
+
+  indicador_2:
+    report_medications_used: |
+      SELECT utilizadas.establecimiento                                    AS "Institución",
+             CASE
+                 WHEN utilizadas.anho IS NULL THEN donadas.anho
+                 ELSE utilizadas.anho
+                 END                                                       AS "Año",
+             CASE
+                 WHEN utilizadas.mes IS NULL THEN donadas.mes
+                 ELSE utilizadas.mes
+                 END                                                       AS "Mes",
+             donadas.code                                                  AS "Código Medicamento",
+             donadas.nombre_medicamento                                    AS "Nombre Medicamento",
+             donadas.total_donadas_acumulado                               AS "Total Medicinas Donadas",
+             utilizadas.medicinas_usadas                                   AS "Total Medicinas Usadas",
+             (utilizadas.medicinas_usadas * 100 / total_donadas_acumulado) AS "% de Usadas "
+      FROM (SELECT *, SUM(cantidad) OVER (PARTITION BY code,nombre_medicamento ORDER BY anho,mes) AS total_donadas_acumulado
+            FROM (SELECT m.code,
+                         m.description                AS nombre_medicamento,
+                         EXTRACT(MONTH FROM e."date") AS mes,
+                         EXTRACT(YEAR FROM e."date")  AS anho,
+                         SUM(e.quantity)              AS cantidad
+                  FROM inventory.entries e
+                           INNER JOIN public.medicine m ON e.medicine_id = m.id
+                  WHERE m.stock_control = TRUE
+                  GROUP BY m.code, m.description, m.presentation, mes, anho, e.quantity) AS t1
+            GROUP BY code, nombre_medicamento, mes, anho, cantidad
+            ORDER BY code, nombre_medicamento, anho, mes) AS donadas
+               LEFT JOIN (SELECT h.description                 AS establecimiento,
+                                 m.code,
+                                 m.description                 AS nombre_medicamento,
+                                 EXTRACT(MONTH FROM dm."date") AS mes,
+                                 EXTRACT(YEAR FROM dm."date")  AS anho,
+                                 SUM(dm.quantity)              AS medicinas_usadas
+                          FROM inventory.dispatch_medications dm
+                                   LEFT OUTER JOIN inventory.deposit_stock ds ON dm.deposit_stock_id = ds.id
+                                   LEFT OUTER JOIN inventory.deposit d ON ds.deposit_id = d.id
+                                   LEFT OUTER JOIN public.hospital h ON d.hospital_id = h.id
+                                   LEFT OUTER JOIN public.medicine m ON dm.medicine_id = m.id
+                          WHERE m.stock_control = TRUE
+                          GROUP BY h.description, m.code, m.description, mes, anho) AS utilizadas
+                         ON donadas.mes = utilizadas.mes AND donadas.anho = utilizadas.anho AND donadas.code = utilizadas.code
+      ORDER BY utilizadas.establecimiento, utilizadas.anho, utilizadas.mes
+
+  donation_medications: |
+    SELECT dm.patient_id                       AS "ID paciente",
+           m.code                              AS "Código Medicamento",
+           m.description                       AS "Nombre Medicamento",
+           TO_CHAR(MIN(dm.date), 'DD/MM/YYYY') AS "Fecha de Inicio Medicamento",
+           TO_CHAR(MAX(dm.date), 'DD/MM/YYYY') AS "Fecha de Fin Medicamento",
+           SUM(dm.quantity)                    AS "Cantidad",
+           m.concentration                     AS "Mg"
+    FROM inventory.dispatch_medications dm
+             LEFT JOIN public.medicine m ON m.id = dm.medicine_id
+    GROUP BY dm.patient_id, m.code, m.description, m.concentration
+    ORDER BY dm.patient_id
+
+  patient:
+    personal_data: |
+      SELECT document_type.description AS "Tipo Documento",
+      decrypt_data( patient.document_number, :cipher_key ) AS "Número de Documento",
+      decrypt_data( patient.firstname, :cipher_key ) AS "Nombres",
+      decrypt_data( patient.lastname, :cipher_key ) AS "Apellidos",
+      patient.birthdate::text AS "Fecha de Nacimiento",
+      DATE_PART('year', AGE(NOW(), patient.birthdate)) AS "Edad",
+      gender.description AS "Sexo",
+      country.nationality AS "Nacionalidad",
+      country.nationality AS "País",
+      area.description AS "Departamento",
+      city.description AS "Ciudad",
+      patient.address AS "Dirección",
+      patient.phone AS "Teléfono",
+      estado.value AS "Estado",
+      vital_state.value AS "Estado Vital"
+      FROM patient
+      LEFT JOIN parameter AS estado ON
+      patient.state_id = estado.id
+      AND estado.domain = 'PATIENT_STATE'
+      LEFT JOIN document_type ON
+      patient.document_type_id = document_type.id
+      LEFT JOIN gender ON
+      patient.gender_id = gender.id
+      LEFT JOIN country ON
+      patient.nationality_id = country.id
+      LEFT JOIN area ON
+      patient.area_id = area.id
+      LEFT JOIN city ON
+      patient.city_id = city.id
+      LEFT JOIN parameter AS vital_state ON
+      patient.vital_state_id = vital_state.id
+      AND vital_state.domain = 'PATIENT_VITAL_STATE'
+      WHERE
+      patient.id = :patient_id
+
+    diagnosis: |
+      select 
+      h.description  as "Establecimiento de Salud",
+      cast(d."date" as date)::text as "Fecha", 
+      c.description_es as "CIE-10",
+      com.code||' - '|| com.term_es as "CIE-O Morfología",
+      cot2.code||' - '|| cot2.description_es  as "CIE-O Topografía",
+      cotl.code||' - '|| cotl.description_es  as "CIE-O Localización del Tumor"
+      from diagnosis d
+      left join hospital h on h.id = d.hospital_id
+      left join cie_10 c on c.id =d.cie_10_code_id 
+      left join cie_o_morphology com on com.id =d.cie_o_morphology_id 
+      left join cie_o_topography cot2 on cot2.id =d.cie_o_topography_id 
+      left join cie_o_tumor_location cotl on cotl.id =d.cie_o_tumor_location_id 
+      where patient_id = :patient_id
+
+    pathological_history: |
+      select 
+      h.description as "Establecimiento de Salud",
+      case when pph.family_members_with_cancer like '%yes%' then 'Si' 
+          else 'No' end as "Familiares con Cáncer",
+      c.description_es as "CIE-10",
+      pph.observation as "Observaciones",
+      p.value as "Clase funcional NYHA",
+      case when pph.app_ischemic_heart_disease is true then 'SI' else 'NO' end as "Cardiopatía isquémica",
+      case when pph.app_heart_failure  is true then 'SI' else 'NO' end as "Insuficiencia cardiaca",
+      case when pph.app_arrhythmia  is true then 'SI' else 'NO' end as "Arritmias",
+      case when pph.app_heart_others  is true then 'SI' else 'NO' end as "Otros",
+      pph.app_heart_others_input as "Descripción",
+      ms.description as "Estado Menopáusico",
+      pph.app_menopausal_others as "Otro",
+      pph.fevi_percentage as "FEVI %",
+      to_char(pph.fevi_date ,'DD-MM-YYYY') as "Fecha FEVI",
+      p1.value as "Familiar",
+      p2.value as "Estado Vital del Familiar"
+      from personal_pathological_history pph 
+      left join hospital h on pph.hospital_id =h.id 
+      left join cie_10 c on pph.cie_10_code_id = c.id  
+      left join menopausal_state ms on pph.menopausal_state_id = ms.id
+      left join "parameter" p on pph.app_funtional_class_nyha_id = p.id
+      left join patient_family_with_cancer pfwc on pfwc.personal_pathological_history_id =pph.id
+      left join "parameter" p1 on p1.id =pfwc.family_id 
+      left join "parameter" p2 on p2.id =pfwc.family_vital_state_id 
+      where
+      patient_id = :patient_id
+
+    medical_consultation: |
+      select
+      h.description  as "Establecimiento de Salud",
+      to_char(mc.date_consultation ,'DD-MM-YYYY') as "Fecha de la consulta",
+      trim(d.firstname)||' '||trim(d.lastname) as "Médico responsable",
+      to_char(mc.date_first_diagnosis ,'DD-MM-YYYY') as "Fecha Primer Diagnóstico",
+      p.value as "Diagnóstico por",
+      c.description_es as "Diagnóstico CIE-10",
+      case when mc.apply_chemotherapy like '%yes%' then 'Si' 
+              when  mc.apply_chemotherapy like '%does_not_apply%' then 'No aplica'
+              end as "Es apto para Quimioterapia",
+      mc.observation "Observaciones",
+      m.description as "Medicamento", mmc.presentation as "Presentación", mmc.concentration as "Consentración",
+      mmc.quantity "Cantidad", mmc.dose as "Dosis", mmc.observation as "Comentarios"
+      from medical_consultation mc
+      left join cie_10 c on c.id = mc.cie_10_id 
+      left join hospital h on h.id = mc.hospital_id
+      left join doctor d on d.id = mc.responsible_doctor_id
+      left join "parameter" p on p.id = mc.diagnosis_by_id
+      left join medicine_medical_consultation mmc on mc.id = mmc.medical_consultation_id 
+      left join medicine m on m.id = mmc.medicine_id 
+      where patient_id = :patient_id	
+      order by mc.date_consultation asc
+
+    diagnosis_ap: |
+      select
+      d.firstname||' '||d.lastname as "Médico Patólogo", 
+      to_char(da."date" ,'DD-MM-YYYY') as "Fecha",
+      h.description as "Establecimiento de Salud",
+      da.tumor_size as "Tamaño tumoral",
+      com.code||' - '||com.term_es as "CIE-O Morfología",
+      cot2.code||' - '||cot2.description_es  as "CIE-O Topografía",
+      cotl.code||' - '||cotl.description_es  as "CIE-O Localización del tumor",
+      case when da.armpit = 'positive' then 'Positivo'
+          when da.armpit = 'negative' then 'Negativo'
+          else 'Sin Dato'
+      end as "Axila",
+      case when da.re  = 'positive' then 'Positivo'
+          when da.re = 'negative' then 'Negativo'
+          else 'Sin Determinar'
+      end as "RE",
+      case when da.rp = 'positive' then 'Positivo'
+          when da.rp = 'negative' then 'Negativo'
+          else 'Sin Determinar'
+      end as "RP",
+      case when da.her2  = 'positive' then 'Positivo'
+          when da.her2 = 'negative' then 'Negativo'
+          else 'Sin Dato'
+      end as "HER2",
+      p2.value as "HER2 Positivo",
+      da.observation as "Observaciones",
+      da.dx_presuntivo as "Diagnóstivo presuntivo",
+      da.material as "Material",
+      da.diagnostico as "Diagnóstico",
+      da.clasificacion as "Clasificación",
+      da.macroscopia as "Macroscopía",
+      da.microscopia as "Microscopía"
+      from diagnosis_ap da 
+      left join patient p on p.id=da.patient_id 
+      left join hospital h on h.id =da.hospital_id 
+      left join doctor d on d.id =da.doctor_id 
+      left join cie_o_morphology com on com.id=da.cie_o_morphology_id 
+      left join cie_o_topography cot2 on cot2.id =da.cie_o_topography_id 
+      left join cie_o_tumor_location cotl on cotl.id =da.cie_o_tumor_location_id 
+      left join "parameter" p2 on p2.id = da.her2_positive_id 
+      where
+      patient_id = :patient_id
+
+    treatment_plan: |
+      select tp.patient_id, h.description AS "Establecimiento de Salud",
+          to_char(tp."date",'DD-MM-YYYY') AS "Fecha",
+          p.value as "Estado",
+          tp."number" as "Número",
+          tt.description AS "Tipo de tratamiento",
+          tp.number_sessions as "Número de Sesiones",
+          p2.description as "Periodicidad",
+          to_char(tp.date_first_cycle,'DD-MM-YYYY') AS "Fecha Primer Ciclo",
+          to_char(tp.date_last_cycle,'DD-MM-YYYY') AS "Fecha Último Ciclo",
+          trim(d.firstname)||' '||trim(d.lastname) as "Médico",
+          m.description as "Medicamento", mtp.dose as "Dosis", mtp.concentration as "Concentration",mtp.presentation as "Presentación",mtp.quantity as "Cantidad"
+      FROM treatment_plan tp
+          left join type_treatment tt ON 
+           tp.type_id = tt.id 
+          left join hospital h ON 
+           h.id = tp.hospital_id 
+          left join "parameter" p on p.id = tp.state_id 
+          left join periodicity p2 on p2.id = tp.periodicity_id 
+          left join doctor d on d.id =tp.doctor_id
+          left join medicine_treatment_plan mtp on mtp.treatment_plan_id =tp.id 
+          left join medicine m on m.id =mtp.medicine_id 
+      WHERE 
+           tp.patient_id = :patient_id 
+      ORDER BY tp."date" desc
+
+    follow_up: |
+      select
+      tp."number" as "Número",
+      p.value as "Estado",
+      tt.description AS "Tipo de tratamiento",
+      tp.number_sessions as "Número de sesiones",
+      p2.description as "Periodicidad",
+      to_char(tp.date_first_cycle,'DD-MM-YYYY') AS "Fecha Primer Ciclo",
+      to_char(tp.date_last_cycle,'DD-MM-YYYY') as "Fecha Último Ciclo",
+      h.description AS "Establecimiento de Salud",
+      trim(d.firstname)||' '||trim(d.lastname) as "Médico",
+      to_char(tfu.follow_up_date,'DD-MM-YYYY') AS "Fecha",
+      to_char(tfu.last_cancer_control_date ,'DD-MM-YYYY') AS "Fecha último control",
+      tfu.type_treatment as "Tipo Tratamiento",
+      tfu.breast as "Mama",
+      case when tfu.armpit is true then 'SI' else 'NO' end as "Axila",
+      tfu.suspension_treatment as "Suspención del Tratamiento",
+      tfu.suspension_treatment_reason as "Causa",
+      tfu.suspension_treatment_custom_reason as "Otros",
+      case when tfu.congestive_heart_failure is true then 'SI' else 'NO' end as "Insuficiencia Cardiaca",
+      to_char(tfu.fevi_follow_up_date,'DD-MM-YYYY') AS "Fecha de seguimiento",
+      tfu.fevi_value as "Valor de la FEVI",
+      tfu.fevi_trastuzumab_dose as "Dosis solicitada de Trastuzumab",
+      case when tfu.other_severe_adverse_events is true 
+          then 'SI' else 'NO' end as "Otros eventos adversos severos",
+      tfu.other_severe_adverse_events_detail as "Detalle",
+      tfu.other_complementary_studies as "Otros estudios complementarios",
+      case when tfu.dose_adjustment is true then 'SI' else 'NO' end as "Ajuste de Dosis",
+      tfu.dose_adjustment_reason as "Motivo",
+      tfu.comentaries "Comentarios"
+      from follow_up_treatment_plan futp 
+      join treatment_plan tp on tp.id =futp.treatment_plan_id 
+      join treatment_follow_up tfu on tfu.id=futp.follow_up_id 
+      left join type_treatment tt ON tp.type_id = tt.id 
+      left join hospital h ON h.id = tfu.hospital_id 
+      left join "parameter" p on p.id = tp.state_id 
+      left join periodicity p2 on p2.id = tp.periodicity_id 
+      left join doctor d on d.id =tfu.doctor_id
+      WHERE tp.patient_id = :patient_id
+
+    chemotherapy: |
+      select 
+      h.description as "Establecimiento de Salud",
+      to_char(c."date", 'DD-MM-YYYY') as "Fecha",
+      d.document_number||' - '||d.firstname||' '||d.lastname as "Médico",
+      c.nro_session as "Numero de sesión",
+      p.value as "Estado de la solicitud",
+      p1.value  as "Estado de la sesion",
+      c.technician as "Técnico",
+      c.nurse as "Enfermería",
+      c.observation as "Observaciones",
+      tp."number" as "Numero",
+      p2.value as "Estado",
+      tt.description as "Tipo de Tratamiento",
+      tp.number_sessions as "Número de sesiones",
+      p3.description as "Periodicidad",
+      to_char(tp.date_first_cycle, 'DD-MM-YYYY') as "Fecha primer ciclo",
+      to_char(tp.date_last_cycle, 'DD-MM-YYYY') as "Fecha último ciclo",
+      ctp.num_session as "Número de sesión",
+      m.description as "Medicamento",
+      mc.presentation as "Presentación",
+      mc.concentration as "Concentración",
+      mc.quantity as "Cantidad",
+      mc.dose as "Dosis",
+      mc.observation as "Obsercación"
+      from chemotherapy c 
+      left join hospital h on h.id = c.hospital_id
+      left join doctor d on d.id = c.doctor_id
+      left join "parameter" p on p.id = c.request_state_id 
+      left join "parameter" p1 on p1.id =c.session_state_id 
+      left join chemotherapy_treatment_plan ctp on ctp.chemotherapy_id=c.id
+      left join treatment_plan tp on tp.id =ctp.treatment_plan_id 
+      left join "parameter" p2 on p2.id = tp.state_id 
+      left join type_treatment tt on tt.id = tp.type_id 
+      left join periodicity p3 on p3.id =tp.periodicity_id 
+      left join medicine_chemotherapy mc on mc.chemotherapy_id = c.id 
+      left join medicine m on m.id =mc.medicine_id 
+      where c.patient_id = :patient_id
+
+    radiotherapy: |
+      select
+      h.description as "Establecimiento de Salud",
+      to_char(c."date", 'DD-MM-YYYY') as "Fecha",
+      d.document_number||' - '||d.firstname||' '||d.lastname as "Médico",
+      c.nro_session as "Numero de sesión",
+      p1.value  as "Estado",
+      c.technician as "Técnico",
+      c.nurse as "Enfermería",
+      c.observation as "Observación",
+      tp."number" as  "Número",
+      p2.value as "Estado" ,
+      tt.description as "Tipo de Tratamiento",
+      tp.number_sessions as "Numero de sesiones",
+      p3.description as "Periodicidad",
+      to_char(tp.date_first_cycle, 'DD-MM-YYYY') as "Fecha Primer Ciclo",
+      to_char(tp.date_last_cycle, 'DD-MM-YYYY') as "Fecha Último Ciclo",
+      ctp.num_session as "Número de sesión"
+      from radiotherapy c 
+      left join hospital h on h.id = c.hospital_id
+      left join doctor d on d.id = c.doctor_id
+      left join "parameter" p1 on p1.id =c.session_state_id 
+      left join radiotherapy_treatment_plan ctp on ctp.radiotherapy_id =c.id
+      left join treatment_plan tp on tp.id =ctp.treatment_plan_id 
+      left join "parameter" p2 on p2.id = tp.state_id 
+      left join type_treatment tt on tt.id = tp.type_id 
+      left join periodicity p3 on p3.id =tp.periodicity_id 
+      where c.patient_id =  :patient_id
+
+    surgery: |
+      select 
+      h.description as "Establecimiento de Salud",
+      to_char(s."date", 'DD-MM-YYYY') as "Fecha",
+      s.surgical_technique as "Técnica Quirúrgica",
+      s.observation as "Observaciones",
+      d.document_number||' - '||d.firstname||' '||d.lastname as "Médico",
+      mt.rol as "Rol" 
+      from surgery s  
+      join hospital h on s.hospital_id = h.id 
+      left join medical_team mt on mt.surgery_id=s.id
+      left join doctor d on d.id =mt.doctor_id 
+      where
+      patient_id = :patient_id
+
+    committee: |
+      select 
+      h.description as "Establecimiento de Salud",
+      to_char(c."date", 'DD-MM-YYYY') as "Fecha",
+      c.observation as "Conclusión del Comité",
+      d.document_number||' - '||d.firstname||' '||d.lastname as "Médico"
+      from committee c 
+      join hospital h on c.hospital_id = h.id 
+      left join medical_committee mc on mc.committee_id =c.id 
+      left join doctor d on d.id =mc.doctor_id 
+      where
+      patient_id = :patient_id
